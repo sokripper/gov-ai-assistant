@@ -1,0 +1,9 @@
+{
+  "stage": "prototype-done",
+  "mode": "new",
+  "design_ready": false,
+  "development_ready": false,
+  "current_task": null,
+  "blocked": false,
+  "notes": "对齐稿已更新至 v3；原型已完成桌面响应式与跨模块状态流优化，问答→写作→校核、上传→文档库→问答、ASR→会议纪要三条主链已在真实浏览器走通。已通过 1920x1080、1440x900、1366x768、1280x720、1024x768 五档验证。PRD.md 待补（用户要求先出 demo）"
+}

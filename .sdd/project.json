@@ -1,0 +1,11 @@
+{
+  "id": "gov-ai-assistant",
+  "name": "政府侧AI助手平台",
+  "project_type": "web",
+  "source": "new",
+  "repo_url": null,
+  "created_at": "2026-08-19 02:13:23",
+  "last_active": "2026-08-19 02:13:23",
+  "harness_version": "V7.1",
+  "notes": "底层模型=豆包系列；知识库=豆包VikingDB(备选RAGFlow)；一期无权限体系"
+}

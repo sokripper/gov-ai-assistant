@@ -1,0 +1,2515 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>政府侧AI助手平台 · 交互原型</title>
+<link rel="icon" type="image/svg+xml" href="./logo-梵行.svg">
+<style>
+/* ============ 设计 Token：政务蓝融合方案 ============ */
+:root{
+  --brand:#1856A7; --brand-d:#123F7B; --brand-l:#EAF1FA; --brand-l2:#D3E2F4;
+  --bg:#F4F6F9; --surface:#FFFFFF; --surface-2:#FAFBFD;
+  --text:#1F2733; --text-2:#5A6675; --text-3:#8A94A3;
+  --border:#E3E8EF; --border-2:#EDF1F6;
+  --ok:#2E7D4F; --ok-l:#E9F5ED; --warn:#C77A0A; --warn-l:#FDF3E3;
+  --err:#C0392B; --err-l:#FBECEA; --purple:#6B4FA8; --purple-l:#F0EBF9;
+  --r-s:4px; --r:6px; --r-l:10px;
+  --sh-1:0 1px 2px rgba(31,39,51,.06); --sh-2:0 2px 10px rgba(31,39,51,.08);
+  --sh-3:0 8px 28px rgba(31,39,51,.14);
+  --nav-w:228px; --top-h:56px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Source Han Sans SC","Noto Sans CJK SC",sans-serif;
+  background:var(--bg); color:var(--text); font-size:14px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+svg.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic-l{width:20px;height:20px} .ic-xl{width:26px;height:26px} .ic-s{width:13px;height:13px}
+
+/* ============ 应用骨架 ============ */
+.app{display:flex;height:100vh;height:100dvh;overflow:hidden}
+
+/* --- 左侧导航 --- */
+.side{width:var(--nav-w);flex:none;display:flex;flex-direction:column;
+  background:linear-gradient(180deg,#123F7B 0%,#0E3466 100%);color:#DCE7F5}
+.side-brand{height:var(--top-h);display:flex;align-items:center;gap:9px;padding:0 16px;
+  border-bottom:1px solid rgba(255,255,255,.1);flex:none}
+.side-brand .mark{width:34px;height:38px;border-radius:8px;padding:3px;background:rgba(255,255,255,.96);
+  display:grid;place-items:center;flex:none;overflow:hidden;box-shadow:0 2px 8px rgba(3,24,59,.18)}
+.side-brand .mark img{display:block;width:100%;height:100%;object-fit:contain}
+.side-brand b{font-size:14.5px;color:#fff;font-weight:600;letter-spacing:.2px}
+.nav{padding:10px 10px 4px}
+.nav-t{font-size:11px;color:rgba(220,231,245,.5);padding:8px 8px 5px;letter-spacing:.6px}
+.nav-i{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r);
+  color:#C9DAEE;font-size:13.5px;margin-bottom:2px;transition:.15s;width:100%;text-align:left}
+.nav-i:hover{background:rgba(255,255,255,.09);color:#fff}
+.nav-i.on{background:rgba(255,255,255,.16);color:#fff;font-weight:500}
+.nav-i .badge{margin-left:auto;font-size:10.5px;background:rgba(255,255,255,.18);
+  padding:1px 6px;border-radius:9px}
+.side-sp{flex:1;min-height:0;overflow-y:auto;padding:0 10px}
+.recent-row{display:flex;align-items:center;border-radius:var(--r);transition:.15s}
+.recent-row:hover{background:rgba(255,255,255,.08)}
+.recent-i{display:flex;align-items:center;gap:8px;padding:7px 4px 7px 10px;color:rgba(201,218,238,.85);
+  font-size:12.5px;min-width:0;flex:1;text-align:left}
+.recent-row:hover .recent-i{color:#fff}
+.recent-i span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.recent-more{width:24px;height:24px;color:rgba(201,218,238,.45);display:grid;place-items:center;opacity:0}
+.recent-row:hover .recent-more{opacity:1}.recent-more:hover{color:#fff}
+.side-ft{padding:10px;border-top:1px solid rgba(255,255,255,.1);flex:none}
+.side-ft .tip{font-size:11px;color:rgba(220,231,245,.45);line-height:1.5}
+
+/* --- 主区 --- */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:var(--top-h);flex:none;background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 20px;gap:12px}
+.crumb{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-3);
+  min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600;font-size:15px}
+.crumb .sep{color:var(--border)}
+.top-r{margin-left:auto;display:flex;align-items:center;gap:14px;flex:none}
+.user{display:flex;align-items:center;gap:9px;padding:4px 8px;border-radius:var(--r);transition:.15s}
+.user:hover{background:var(--surface-2)}
+.avatar{width:29px;height:29px;border-radius:50%;background:var(--brand-l);color:var(--brand);
+  display:grid;place-items:center;font-size:12.5px;font-weight:600;flex:none}
+.user .nm{font-size:13px;font-weight:500;line-height:1.25}
+.user .dp{font-size:11px;color:var(--text-3);line-height:1.25}
+.view{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
+.pad{width:100%;max-width:1440px;margin:0 auto;padding:22px 26px}
+.pad-lg{width:100%;max-width:1320px;margin:0 auto;padding:26px 30px}
+
+/* ============ 通用组件 ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 14px;
+  border-radius:var(--r);font-size:13px;background:var(--surface);border:1px solid var(--border);
+  color:var(--text-2);transition:.15s;white-space:nowrap}
+.btn:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-l)}
+.btn:active{transform:translateY(.5px)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:500}
+.btn.pri:hover{background:var(--brand-d);border-color:var(--brand-d);color:#fff}
+.btn.sm{height:27px;padding:0 10px;font-size:12.5px}
+.btn.lg{height:38px;padding:0 20px;font-size:14px}
+.btn.dgr:hover{border-color:var(--err);color:var(--err);background:var(--err-l)}
+.btn:disabled,.btn.dis{opacity:.45;cursor:not-allowed;background:var(--surface-2)}
+.btn:disabled:hover,.btn.dis:hover{border-color:var(--border);color:var(--text-2);background:var(--surface-2)}
+.btn.gho{border-color:transparent;background:transparent}
+.btn.gho:hover{background:var(--brand-l)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-l);box-shadow:var(--sh-1)}
+.card-h{padding:14px 18px;border-bottom:1px solid var(--border-2);display:flex;align-items:center;gap:10px}
+.card-h h3{font-size:14.5px;font-weight:600}
+.card-h .more{margin-left:auto}
+.card-b{padding:18px}
+
+.tag{display:inline-flex;align-items:center;gap:4px;height:21px;padding:0 7px;border-radius:var(--r-s);
+  font-size:11.5px;background:var(--surface-2);color:var(--text-2);border:1px solid var(--border-2);white-space:nowrap}
+.tag.b{background:var(--brand-l);color:var(--brand);border-color:var(--brand-l2)}
+.tag.g{background:var(--ok-l);color:var(--ok);border-color:#CDE7D7}
+.tag.y{background:var(--warn-l);color:var(--warn);border-color:#F3E0BE}
+.tag.r{background:var(--err-l);color:var(--err);border-color:#F2CFCA}
+.tag.p{background:var(--purple-l);color:var(--purple);border-color:#DCD1EF}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+
+.sec-t{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:11px;
+  display:flex;align-items:center;gap:8px}
+.sec-t .cnt{font-weight:400;color:var(--text-3);font-size:12px}
+.sec-t .ln{flex:1;height:1px;background:var(--border-2)}
+
+.fld{margin-bottom:15px}
+.fld label{display:block;font-size:12.5px;color:var(--text-2);margin-bottom:6px;font-weight:500}
+.fld label .req{color:var(--err);margin-left:2px}
+.inp,.sel,.ta{width:100%;height:34px;padding:0 11px;border:1px solid var(--border);
+  border-radius:var(--r);background:var(--surface);transition:.15s;font-size:13.5px}
+.ta{height:auto;padding:9px 11px;resize:vertical;line-height:1.7}
+.inp:focus,.sel:focus,.ta:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-l)}
+.inp::placeholder,.ta::placeholder{color:var(--text-3)}
+.sel{appearance:none;background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A94A3' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 11px center;padding-right:30px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{display:inline-flex;align-items:center;gap:5px;height:29px;padding:0 11px;border-radius:15px;
+  border:1px solid var(--border);background:var(--surface);font-size:12.5px;color:var(--text-2);transition:.15s}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip.on{background:var(--brand-l);border-color:var(--brand);color:var(--brand);font-weight:500}
+.chk{width:14px;height:14px;border:1.5px solid var(--border);border-radius:3px;display:grid;place-items:center;
+  flex:none;background:var(--surface);transition:.15s}
+.chip.on .chk,.chk.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.chk svg{width:10px;height:10px;stroke-width:3;opacity:0}
+.chip.on .chk svg,.chk.on svg{opacity:1}
+.swt{width:34px;height:19px;border-radius:10px;background:var(--border);position:relative;transition:.18s;flex:none}
+.swt::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;
+  background:#fff;box-shadow:var(--sh-1);transition:.18s}
+.swt.on{background:var(--brand)} .swt.on::after{transform:translateX(15px)}
+
+/* --- 表格 --- */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:9px 12px;background:var(--surface-2);color:var(--text-2);
+  font-weight:600;font-size:12.5px;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--border-2);vertical-align:middle}
+.tbl tbody tr{transition:.12s}
+.tbl tbody tr:hover{background:var(--brand-l)}
+.tbl .num{font-variant-numeric:tabular-nums;color:var(--text-2)}
+.tbl .fname{display:flex;align-items:center;gap:8px;font-weight:500}
+.tbl .acts{display:flex;gap:2px;opacity:.35;transition:.15s}
+.tbl tr:hover .acts{opacity:1}
+.lnk{color:var(--brand);cursor:pointer}
+.lnk:hover{text-decoration:underline}
+
+/* --- 空态 / 加载 / 失败 --- */
+.empty{padding:52px 20px;text-align:center;color:var(--text-3)}
+.empty .eic{width:52px;height:52px;border-radius:50%;background:var(--surface-2);color:var(--border);
+  display:grid;place-items:center;margin:0 auto 14px;border:1px solid var(--border-2)}
+.empty h4{font-size:14px;color:var(--text-2);margin-bottom:5px;font-weight:600}
+.empty p{font-size:12.5px;line-height:1.7}
+.skel{background:linear-gradient(90deg,var(--border-2) 25%,#F6F8FB 37%,var(--border-2) 63%);
+  background-size:400% 100%;animation:sk 1.3s ease infinite;border-radius:var(--r-s);height:11px}
+@keyframes sk{0%{background-position:100% 50%}100%{background-position:0 50%}}
+.spin{width:14px;height:14px;border:2px solid var(--brand-l2);border-top-color:var(--brand);
+  border-radius:50%;animation:sp .7s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* --- 提示条 --- */
+.toast{position:fixed;left:50%;top:22px;transform:translate(-50%,-16px);z-index:99;
+  background:#1F2733;color:#fff;padding:9px 17px;border-radius:var(--r);font-size:13px;
+  box-shadow:var(--sh-3);opacity:0;pointer-events:none;transition:.22s;display:flex;align-items:center;gap:8px}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.ok{background:#1D6B44} .toast.warn{background:#A9660B} .toast.err{background:#A63325}
+
+/* --- 抽屉 / 弹窗 --- */
+.mask{position:fixed;inset:0;background:rgba(20,28,40,.42);z-index:60;opacity:0;pointer-events:none;transition:.2s}
+.mask.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:456px;background:var(--surface);z-index:61;
+  transform:translateX(100%);transition:.26s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;
+  box-shadow:-6px 0 26px rgba(31,39,51,.13)}
+.drawer.on{transform:none}
+.dlg{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%) scale(.97);z-index:61;
+  background:var(--surface);border-radius:var(--r-l);box-shadow:var(--sh-3);width:600px;max-height:84vh;
+  display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:.2s}
+.dlg.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.pnl-h{padding:15px 20px;border-bottom:1px solid var(--border-2);display:flex;align-items:center;gap:10px;flex:none}
+.pnl-h h3{font-size:15px;font-weight:600}
+.pnl-h .x{margin-left:auto;width:28px;height:28px;border-radius:var(--r);display:grid;place-items:center;color:var(--text-3)}
+.pnl-h .x:hover{background:var(--surface-2);color:var(--text)}
+.pnl-b{flex:1;min-height:0;overflow-y:auto;padding:20px}
+.pnl-f{padding:13px 20px;border-top:1px solid var(--border-2);display:flex;gap:9px;justify-content:flex-end;flex:none}
+
+/* ============ 首页工作台 ============ */
+.hero{display:flex;align-items:flex-end;gap:16px;margin-bottom:20px}
+.hero h1{font-size:23px;font-weight:600;letter-spacing:-.2px}
+.hero p{color:var(--text-3);font-size:13px;margin-top:3px}
+.hero .stats{margin-left:auto;display:flex;gap:26px}
+.hero .stats div{text-align:right}
+.hero .stats b{display:block;font-size:19px;font-weight:600;color:var(--brand);font-variant-numeric:tabular-nums}
+.hero .stats span{font-size:11.5px;color:var(--text-3)}
+.ent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.ent{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-l);padding:18px;
+  text-align:left;transition:.18s;box-shadow:var(--sh-1);position:relative;overflow:hidden}
+.ent:hover{border-color:var(--brand);box-shadow:var(--sh-2);transform:translateY(-2px)}
+.ent .eic{width:38px;height:38px;border-radius:9px;background:var(--brand-l);color:var(--brand);
+  display:grid;place-items:center;margin-bottom:13px}
+.ent h4{font-size:15px;font-weight:600;margin-bottom:5px}
+.ent p{font-size:12.5px;color:var(--text-3);line-height:1.65}
+.ent .arw{position:absolute;right:16px;top:20px;color:var(--border);transition:.18s}
+.ent:hover .arw{color:var(--brand);transform:translateX(3px)}
+.home-2{display:grid;grid-template-columns:1fr 340px;gap:16px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.qk{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid var(--border);
+  border-radius:var(--r);background:var(--surface);transition:.15s;text-align:left}
+.qk:hover{border-color:var(--brand);background:var(--brand-l)}
+.qk .qic{width:30px;height:30px;border-radius:7px;background:var(--surface-2);color:var(--text-2);
+  display:grid;place-items:center;flex:none;transition:.15s}
+.qk:hover .qic{background:var(--surface);color:var(--brand)}
+.qk b{font-size:13px;font-weight:500;display:block}
+.qk span{font-size:11.5px;color:var(--text-3)}
+.rc{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border-2)}
+.rc:last-child{border-bottom:none}
+.rc .ric{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;flex:none}
+.rc .txt{flex:1;min-width:0}
+.rc b{font-size:13px;font-weight:500;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc span{font-size:11.5px;color:var(--text-3)}
+
+/* ============ 对话页 ============ */
+.chat{display:flex;flex-direction:column;height:100%}
+.chat-bar{padding:11px 26px;background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;flex:none}
+.chat-bar .lb{font-size:12.5px;color:var(--text-2);font-weight:500;flex:none}
+.chat-body{flex:1;min-height:0;overflow-y:auto;padding:24px 0}
+.chat-in{width:100%;max-width:820px;margin:0 auto;padding:0 26px}
+.msg{margin-bottom:26px}
+.msg-u{display:flex;justify-content:flex-end}
+.msg-u .bub{background:var(--brand);color:#fff;padding:10px 15px;border-radius:12px 12px 3px 12px;
+  max-width:76%;font-size:14px;line-height:1.7}
+.msg-a{display:flex;gap:12px}
+.ava-a{width:30px;height:30px;border-radius:7px;background:var(--brand-l);color:var(--brand);
+  display:grid;place-items:center;flex:none}
+.msg-a .bd{flex:1;min-width:0}
+.ans{background:var(--surface);border:1px solid var(--border);border-radius:3px 12px 12px 12px;
+  padding:15px 17px;font-size:14px;line-height:1.85;box-shadow:var(--sh-1)}
+.ans p{margin-bottom:9px} .ans p:last-child{margin-bottom:0}
+.ans ol,.ans ul{margin:8px 0 9px 19px} .ans li{margin-bottom:5px}
+.ans strong{font-weight:600;color:var(--brand-d)}
+.ans .sup{display:inline-flex;align-items:center;justify-content:center;min-width:15px;height:15px;
+  padding:0 3px;border-radius:3px;background:var(--brand-l);color:var(--brand);font-size:10.5px;
+  font-weight:600;vertical-align:2px;margin:0 1px;cursor:pointer;transition:.15s}
+.ans .sup:hover{background:var(--brand);color:#fff}
+.src{margin-top:13px;padding-top:12px;border-top:1px dashed var(--border)}
+.src-t{font-size:11.5px;color:var(--text-3);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.src-l{display:flex;flex-direction:column;gap:6px}
+.src-i{display:flex;align-items:flex-start;gap:9px;padding:8px 11px;border:1px solid var(--border);
+  border-radius:var(--r);background:var(--surface-2);text-align:left;transition:.15s;width:100%}
+.src-i:hover{border-color:var(--brand);background:var(--brand-l)}
+.src-i .n{width:16px;height:16px;border-radius:3px;background:var(--brand-l2);color:var(--brand-d);
+  font-size:10.5px;font-weight:600;display:grid;place-items:center;flex:none;margin-top:2px}
+.src-i .info{flex:1;min-width:0}
+.src-i b{font-size:12.5px;font-weight:500;display:block;margin-bottom:2px}
+.src-i .frag{font-size:11.5px;color:var(--text-3);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.src-i .meta{font-size:11px;color:var(--text-3);margin-top:3px;display:flex;gap:9px}
+.acts-row{display:flex;align-items:center;gap:4px;margin-top:9px}
+.aicon{width:27px;height:27px;border-radius:var(--r);display:grid;place-items:center;
+  color:var(--text-3);transition:.15s}
+.aicon:hover{background:var(--brand-l);color:var(--brand)}
+.aicon.on{color:var(--brand);background:var(--brand-l)}
+.aicon.on-r{color:var(--err);background:var(--err-l)}
+.followup{margin-top:11px;display:flex;flex-wrap:wrap;gap:7px}
+.fu{padding:6px 11px;border:1px solid var(--border);border-radius:14px;background:var(--surface);
+  font-size:12.5px;color:var(--brand);transition:.15s}
+.fu:hover{background:var(--brand-l);border-color:var(--brand)}
+.nohit{border-left:3px solid var(--warn);background:var(--warn-l);border-color:#F3E0BE}
+.nohit .hint{margin-top:10px;padding-top:9px;border-top:1px dashed #E8CFA3;font-size:12.5px;color:#8A5A08}
+.chat-ft{flex:none;padding:14px 0 20px;background:linear-gradient(180deg,rgba(244,246,249,0),var(--bg) 22%)}
+.composer{max-width:820px;margin:0 auto;padding:0 26px}
+.cmp-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-l);
+  box-shadow:var(--sh-2);transition:.15s;overflow:hidden}
+.cmp-box:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-l),var(--sh-2)}
+.cmp-box textarea{width:100%;border:none;padding:13px 15px 5px;resize:none;height:52px;
+  font-size:14px;line-height:1.6;background:transparent}
+.cmp-box textarea:focus{outline:none}
+.cmp-bar{display:flex;align-items:center;gap:7px;padding:6px 10px 9px 13px}
+.cmp-bar .kb{margin-left:auto;font-size:11px;color:var(--text-3)}
+.send{width:31px;height:31px;border-radius:var(--r);background:var(--brand);color:#fff;
+  display:grid;place-items:center;transition:.15s}
+.send:hover{background:var(--brand-d)}
+.send:disabled{background:var(--border);cursor:not-allowed}
+.starter{max-width:820px;margin:0 auto;padding:0 26px}
+.starter .wel{text-align:center;padding:46px 0 30px}
+.starter .wel .lg{width:52px;height:52px;border-radius:13px;background:var(--brand-l);color:var(--brand);
+  display:grid;place-items:center;margin:0 auto 16px}
+.starter .wel h2{font-size:20px;font-weight:600;margin-bottom:7px}
+.starter .wel p{color:var(--text-3);font-size:13px}
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ex{padding:13px 15px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);
+  text-align:left;transition:.15s;display:flex;gap:10px;align-items:flex-start}
+.ex:hover{border-color:var(--brand);box-shadow:var(--sh-1);background:var(--brand-l)}
+.ex .exi{color:var(--text-3);margin-top:2px;flex:none}
+.ex:hover .exi{color:var(--brand)}
+.ex b{font-size:13px;font-weight:500;display:block;line-height:1.55}
+.ex span{font-size:11.5px;color:var(--text-3)}
+
+/* ============ 工具 / 助手广场 ============ */
+.sq-top{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.sq-top h2{font-size:19px;font-weight:600}
+.sq-top p{font-size:12.5px;color:var(--text-3);margin-top:2px}
+.search{position:relative;margin-left:auto;width:236px}
+.search .ic{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-3)}
+.search input{padding-left:32px}
+.sq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:26px}
+.tool{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-l);padding:16px;
+  text-align:left;transition:.18s;box-shadow:var(--sh-1);position:relative;display:flex;gap:13px}
+.tool:hover{border-color:var(--brand);box-shadow:var(--sh-2);transform:translateY(-2px)}
+.tool .tic{width:40px;height:40px;border-radius:9px;display:grid;place-items:center;flex:none;
+  background:var(--brand-l);color:var(--brand)}
+.tool .tb{flex:1;min-width:0}
+.tool h4{font-size:14.5px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.tool p{font-size:12.5px;color:var(--text-3);line-height:1.65}
+.tool .fav{position:absolute;right:13px;top:13px;color:var(--border);transition:.15s}
+.tool .fav:hover,.tool .fav.on{color:#D9A404}
+.tool.soon{opacity:.62;cursor:not-allowed;background:var(--surface-2);border-style:dashed}
+.tool.soon:hover{transform:none;box-shadow:var(--sh-1);border-color:var(--border)}
+.tool.soon .tic{background:var(--surface);color:var(--text-3)}
+.tool.p1{border-left:none}
+.tool .tic.g{background:var(--ok-l);color:var(--ok)}
+.tool .tic.y{background:var(--warn-l);color:var(--warn)}
+.tool .tic.p{background:var(--purple-l);color:var(--purple)}
+.tool .tic.r{background:var(--err-l);color:var(--err)}
+
+/* ============ 工具工作台 ============ */
+.wb{display:flex;height:100%}
+.wb-l{width:46%;min-width:400px;border-right:1px solid var(--border);background:var(--surface);
+  display:flex;flex-direction:column}
+.wb-r{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--surface-2)}
+.wb-h{padding:13px 20px;border-bottom:1px solid var(--border-2);display:flex;align-items:center;gap:9px;flex:none}
+.wb-h h3{font-size:14px;font-weight:600}
+.wb-h .rt{margin-left:auto;display:flex;gap:6px}
+.wb-b{flex:1;min-height:0;overflow-y:auto;padding:18px 20px}
+.wb-f{padding:12px 20px;border-top:1px solid var(--border-2);display:flex;align-items:center;gap:9px;flex:none;background:var(--surface)}
+.drop{border:1.5px dashed var(--border);border-radius:var(--r-l);padding:34px 20px;text-align:center;
+  background:var(--surface-2);transition:.18s;cursor:pointer}
+.drop:hover{border-color:var(--brand);background:var(--brand-l)}
+.drop .dic{width:44px;height:44px;border-radius:50%;background:var(--surface);color:var(--brand);
+  display:grid;place-items:center;margin:0 auto 12px;border:1px solid var(--border)}
+.drop b{font-size:14px;font-weight:500;display:block;margin-bottom:5px}
+.drop p{font-size:12px;color:var(--text-3);line-height:1.7}
+.file-i{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--border);
+  border-radius:var(--r);background:var(--surface);margin-bottom:9px}
+.file-i .fic{width:34px;height:34px;border-radius:7px;display:grid;place-items:center;flex:none;
+  background:var(--err-l);color:var(--err)}
+.file-i .fic.w{background:var(--brand-l);color:var(--brand)}
+.file-i .fic.a{background:var(--purple-l);color:var(--purple)}
+.file-i .fi{flex:1;min-width:0}
+.file-i b{font-size:13px;font-weight:500;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-i span{font-size:11.5px;color:var(--text-3)}
+.res{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-l);padding:20px 22px;
+  font-size:14px;line-height:1.9;box-shadow:var(--sh-1)}
+.res h4{font-size:15px;font-weight:600;margin:16px 0 8px}
+.res h4:first-child{margin-top:0}
+.res p{margin-bottom:10px} .res ul,.res ol{margin:8px 0 11px 20px} .res li{margin-bottom:5px}
+.res .doc-title{text-align:center;font-size:19px;font-weight:600;color:#C0392B;
+  font-family:"STZhongsong","SimSun",serif;letter-spacing:2px;margin-bottom:6px}
+.res .doc-no{text-align:center;font-size:13px;color:var(--text-2);margin-bottom:16px;
+  padding-bottom:13px;border-bottom:2px solid #C0392B}
+.res .doc-body{font-family:"STFangsong","FangSong",serif;font-size:15.5px;line-height:2.1;text-indent:2em}
+.res .doc-sign{text-align:right;margin-top:26px;line-height:2;font-size:14.5px}
+.tabs{display:flex;gap:3px;border-bottom:1px solid var(--border);padding:0 20px;background:var(--surface);flex:none}
+.tab{padding:10px 14px;font-size:13.5px;color:var(--text-2);border-bottom:2px solid transparent;
+  transition:.15s;margin-bottom:-1px}
+.tab:hover{color:var(--brand)}
+.tab.on{color:var(--brand);border-bottom-color:var(--brand);font-weight:500}
+.diff-add{background:#E6F4EB;color:#1D6B44;padding:1px 2px;border-radius:2px}
+.diff-del{background:#FBECEA;color:#A63325;text-decoration:line-through;padding:1px 2px;border-radius:2px}
+
+/* ============ 写作工作台 ============ */
+.editor{flex:1;min-height:0;overflow-y:auto;padding:30px 44px;background:var(--surface-2)}
+.paper{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  box-shadow:var(--sh-2);padding:46px 54px;min-height:100%;max-width:800px;margin:0 auto}
+.paper:focus{outline:none}
+.paper .ti{text-align:center;font-size:21px;font-weight:600;line-height:1.7;margin-bottom:8px;
+  font-family:"STZhongsong","SimSun",serif}
+.paper .sub{text-align:center;font-size:13px;color:var(--text-3);margin-bottom:26px}
+.paper p{font-family:"STFangsong","FangSong",serif;font-size:16px;line-height:2.15;text-indent:2em;margin-bottom:13px}
+.paper h5{font-family:"STZhongsong","SimSun",serif;font-size:16.5px;font-weight:600;
+  margin:20px 0 10px;text-indent:2em}
+.paper .sign{text-align:right;margin-top:34px;line-height:2.1;font-size:15px;font-family:"STFangsong","FangSong",serif}
+.ed-bar{padding:9px 20px;border-bottom:1px solid var(--border-2);display:flex;align-items:center;gap:7px;
+  flex:none;background:var(--surface)}
+.ed-bar .wc{margin-left:auto;font-size:11.5px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.chat-side{width:400px;flex:none;border-right:1px solid var(--border);background:var(--surface);
+  display:flex;flex-direction:column}
+.cs-body{flex:1;min-height:0;overflow-y:auto;padding:18px}
+.cs-msg{margin-bottom:17px}
+.cs-msg.u{display:flex;justify-content:flex-end}
+.cs-msg.u .b{background:var(--brand);color:#fff;padding:8px 12px;border-radius:10px 10px 3px 10px;
+  max-width:82%;font-size:13px;line-height:1.7}
+.cs-msg.a .b{background:var(--surface-2);border:1px solid var(--border-2);padding:10px 13px;
+  border-radius:3px 10px 10px 10px;font-size:13px;line-height:1.75}
+.cs-msg.a .b b{color:var(--brand-d)}
+
+/* ============ 校核工作台 ============ */
+.rv-top{padding:13px 22px;background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;flex:none}
+.verdict{display:flex;align-items:center;gap:9px;padding:7px 14px;border-radius:var(--r);
+  background:var(--warn-l);border:1px solid #F3E0BE;color:#8A5A08}
+.verdict b{font-size:14px;font-weight:600}
+.rv-stats{display:flex;gap:8px}
+.rv-doc{flex:1;min-width:0;overflow-y:auto;padding:26px 34px;background:var(--surface-2)}
+.rv-paper{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  box-shadow:var(--sh-1);padding:40px 46px;max-width:730px;margin:0 auto}
+.rv-paper .ti{text-align:center;font-size:19px;font-weight:600;font-family:"STZhongsong","SimSun",serif;
+  line-height:1.7;margin-bottom:22px}
+.rv-paper p{font-family:"STFangsong","FangSong",serif;font-size:15.5px;line-height:2.15;
+  text-indent:2em;margin-bottom:12px}
+.mk{border-radius:2px;padding:1px 2px;cursor:pointer;transition:.15s;border-bottom:2px solid}
+.mk.fmt{background:#EAF1FA;border-color:#1856A7} .mk.typo{background:#FBECEA;border-color:#C0392B}
+.mk.word{background:#FDF3E3;border-color:#C77A0A} .mk.pol{background:#F0EBF9;border-color:#6B4FA8}
+.mk:hover{filter:brightness(.95)}
+.mk.act{box-shadow:0 0 0 2px var(--brand)}
+.mk.done{background:#E9F5ED;border-color:#2E7D4F;text-decoration:none}
+.rv-side{width:410px;flex:none;border-left:1px solid var(--border);background:var(--surface);
+  display:flex;flex-direction:column}
+.iss{border:1px solid var(--border);border-radius:var(--r);margin-bottom:11px;overflow:hidden;transition:.16s}
+.iss:hover{border-color:var(--brand);box-shadow:var(--sh-1)}
+.iss.done{opacity:.6;background:var(--surface-2)}
+.iss-h{padding:9px 12px;display:flex;align-items:center;gap:7px;background:var(--surface-2);
+  border-bottom:1px solid var(--border-2)}
+.iss-h .idx{font-size:11px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.iss-b{padding:11px 12px}
+.iss-row{display:flex;gap:8px;margin-bottom:7px;font-size:12.5px;line-height:1.65}
+.iss-row:last-child{margin-bottom:0}
+.iss-row .k{color:var(--text-3);flex:none;width:52px}
+.iss-row .v{flex:1;min-width:0;color:var(--text-2)}
+.iss-row .v .old{color:var(--err);text-decoration:line-through}
+.iss-row .v .new{color:var(--ok);font-weight:500}
+.iss-f{padding:8px 12px;border-top:1px solid var(--border-2);display:flex;gap:7px;background:var(--surface-2)}
+
+/* ============ 知识库管控 ============ */
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 15px;
+  box-shadow:var(--sh-1);transition:.15s}
+.kpi:hover{border-color:var(--brand-l2);box-shadow:var(--sh-2)}
+.kpi .lb{font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:5px;margin-bottom:7px}
+.kpi b{font-size:23px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.4px;line-height:1.2}
+.kpi .un{font-size:12px;color:var(--text-3);font-weight:400;margin-left:3px}
+.kpi .dt{font-size:11.5px;color:var(--text-3);margin-top:5px;display:flex;align-items:center;gap:4px}
+.kpi .up{color:var(--ok)} .kpi .dn{color:var(--err)} .kpi .al{color:var(--warn)}
+.kpi.alert{border-color:#F3E0BE;background:#FFFCF6}
+.dash-2{display:grid;grid-template-columns:1.55fr 1fr;gap:14px;margin-bottom:14px}
+.dash-3{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:14px;margin-bottom:14px}
+.bars{display:flex;align-items:flex-end;gap:5px;height:142px;padding-top:8px}
+.bar-w{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.bar{width:100%;max-width:23px;background:linear-gradient(180deg,#3A78C4,#1856A7);border-radius:3px 3px 0 0;
+  transition:.2s;position:relative}
+.bar-w:hover .bar{background:linear-gradient(180deg,#5A93D8,#1E63BC)}
+.bar-w .bl{font-size:10.5px;color:var(--text-3);white-space:nowrap}
+.bar-w .bv{font-size:10.5px;color:var(--text-2);font-variant-numeric:tabular-nums;opacity:0;transition:.15s}
+.bar-w:hover .bv{opacity:1}
+.hbar{margin-bottom:12px}
+.hbar:last-child{margin-bottom:0}
+.hbar .hh{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:12.5px}
+.hbar .hh .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbar .hh .vv{color:var(--text-2);font-variant-numeric:tabular-nums;font-weight:500}
+.hbar .tr{height:7px;border-radius:4px;background:var(--border-2);overflow:hidden}
+.hbar .fl{height:100%;border-radius:4px;background:var(--brand);transition:.3s}
+.legend{display:flex;flex-direction:column;gap:9px;font-size:12.5px}
+.legend .li{display:flex;align-items:center;gap:8px}
+.legend .sw{width:9px;height:9px;border-radius:2px;flex:none}
+.legend .nm{flex:1}
+.legend .vv{color:var(--text-2);font-variant-numeric:tabular-nums}
+.todo{display:flex;align-items:center;gap:11px;padding:12px 14px;border:1px solid var(--border);
+  border-radius:var(--r);background:var(--surface);transition:.15s;width:100%;text-align:left;margin-bottom:9px}
+.todo:hover{border-color:var(--brand);background:var(--brand-l)}
+.todo:last-child{margin-bottom:0}
+.todo .tdi{width:32px;height:32px;border-radius:7px;display:grid;place-items:center;flex:none}
+.todo .tt{flex:1;min-width:0}
+.todo b{font-size:13px;font-weight:500;display:block}
+.todo span{font-size:11.5px;color:var(--text-3)}
+.todo .cnt{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.filters{display:flex;align-items:center;gap:9px;padding:13px 0;flex-wrap:wrap}
+.filters .sel,.filters .inp{width:auto;min-width:132px;height:31px;font-size:13px}
+.bulk{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--brand-l);
+  border:1px solid var(--brand-l2);border-radius:var(--r);margin-bottom:11px;font-size:13px}
+.bulk b{color:var(--brand);font-variant-numeric:tabular-nums}
+.pager{display:flex;align-items:center;gap:7px;padding:13px 0;font-size:12.5px;color:var(--text-3)}
+.pager .pg{margin-left:auto;display:flex;gap:4px}
+.pg-b{min-width:28px;height:28px;padding:0 8px;border:1px solid var(--border);border-radius:var(--r-s);
+  display:grid;place-items:center;font-size:12.5px;transition:.15s;background:var(--surface)}
+.pg-b:hover{border-color:var(--brand);color:var(--brand)}
+.pg-b.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.q-item{border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;margin-bottom:9px;
+  display:flex;align-items:center;gap:11px;background:var(--surface)}
+.q-item .qp{flex:1;min-width:0}
+.q-item .prog{height:5px;border-radius:3px;background:var(--border-2);overflow:hidden;margin-top:6px}
+.q-item .prog i{display:block;height:100%;background:var(--brand);border-radius:3px;transition:.4s}
+.q-item.fail{border-color:#F2CFCA;background:#FFFAF9}
+.q-item.done{border-color:#CDE7D7;background:#FAFEFB}
+.chunk{border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:10px;
+  transition:.15s;background:var(--surface)}
+.chunk:hover{border-color:var(--brand-l2);box-shadow:var(--sh-1)}
+.chunk.off{opacity:.55;background:var(--surface-2)}
+.chunk-h{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.chunk-h .cid{font-size:11.5px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.chunk-h .ca{margin-left:auto;display:flex;gap:4px}
+.chunk p{font-size:13px;line-height:1.8;color:var(--text-2)}
+.chunk.off p{text-decoration:line-through;text-decoration-color:var(--text-3)}
+
+/* ============ 桌面分辨率适配 ============ */
+.table-scroll{overflow-x:auto;overscroll-behavior-x:contain}
+
+/* 1366 及以下优先保留名称、知识库、状态、引用和操作，避免轻微横向滚动。 */
+@media (max-width:1366px){
+  .doc-table th:nth-child(5),.doc-table td:nth-child(5),
+  .doc-table th:nth-child(6),.doc-table td:nth-child(6),
+  .doc-table th:nth-child(8),.doc-table td:nth-child(8){display:none}
+}
+
+/* 浏览器缩放或小尺寸办公屏下收起导航文字，为业务工作区释放宽度。 */
+@media (max-width:1279px){
+  :root{--nav-w:72px}
+  .side-brand{justify-content:center;padding:0}
+  .side-brand b,.nav-i>span:not(.badge),.side-sp,.side-ft{display:none}
+  .nav{padding:10px 8px 4px}
+  .nav-i{position:relative;justify-content:center;padding:10px 8px}
+  .nav-i .badge{position:absolute;right:3px;top:3px;min-width:16px;padding:0 4px;text-align:center}
+  .top{padding:0 16px}
+  .user .dp{display:none}
+  .pad,.pad-lg{padding-left:20px;padding-right:20px}
+
+  .wb-l{width:38%!important;min-width:320px!important}
+  .chat-side{width:320px}
+  .rv-side{width:340px}
+  .editor{padding:20px}
+  .paper{padding:36px 40px}
+  .rv-doc{padding:20px}
+  .rv-paper{padding:32px 36px}
+  .ed-bar,.rv-top,.rv-stats{flex-wrap:wrap}
+  .ed-bar{row-gap:8px}
+  .rv-top{gap:9px}
+
+  .doc-table th:nth-child(4),.doc-table td:nth-child(4),
+  .doc-table th:nth-child(7),.doc-table td:nth-child(7){display:none}
+}
+
+/* 低高度笔记本采用紧凑纵向节奏，仍保留内容滚动缓冲。 */
+@media (max-height:760px) and (min-width:1200px){
+  .pad-lg{padding-top:20px;padding-bottom:20px}
+  .hero{margin-bottom:16px}
+  .ent-grid{margin-bottom:18px}
+  .ent{padding:15px 16px}
+  .ent .eic{margin-bottom:10px}
+  .qk{padding:9px 11px}
+  .todo{padding:10px 12px}
+}
+
+/* 弹层始终限制在当前浏览器内容视口内。 */
+.drawer{max-width:calc(100vw - 24px)}
+.dlg{max-width:calc(100vw - 32px)}
+
+/* 高频元信息不低于 12px，提升高分屏和系统缩放下的可读性。 */
+.side-ft .tip,.hero .stats span,.tag,.qk span,.rc span,.file-i span,
+.src-t,.src-i .frag,.kpi .dt,.todo span,.chunk-h .cid{font-size:12px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.8-.8L3 21l1.9-5.1A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 19h8"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+<symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/><path d="M4 11.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20h14V9.8"/><path d="M9.5 20v-6h5v6"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M8.5 12.5h7M8.5 16.5h7"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M21.5 12 3 3.5l3 8.5-3 8.5z"/><path d="M6 12h15.5"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-dl" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M12 15V3"/></symbol>
+<symbol id="i-up" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M16.5 7.5 12 3 7.5 7.5"/><path d="M12 3v13"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3.5V10h-6.4"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9.5 17 4 11.5"/></symbol>
+<symbol id="i-arw" viewBox="0 0 24 24"><path d="M5 12h13"/><path d="m12.5 5.5 6.5 6.5-6.5 6.5"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H6"/><path d="M11.5 5.5 5 12l6.5 6.5"/></symbol>
+<symbol id="i-warn" viewBox="0 0 24 24"><path d="M10.3 3.8 1.9 18a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 3.8a2 2 0 0 0-3.4 0z"/><path d="M12 9v4.5M12 17.2h.01"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4.5M12 8h.01"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></symbol>
+<symbol id="i-quote" viewBox="0 0 24 24"><path d="M6 17c-1.7 0-3-1.4-3-3.2 0-3.4 2.4-6.4 5.5-7.8l.8 1.6C7 8.7 5.6 10.4 5.4 12c.2-.1.5-.2.9-.2 1.5 0 2.7 1.2 2.7 2.7S7.6 17 6 17zm10 0c-1.7 0-3-1.4-3-3.2 0-3.4 2.4-6.4 5.5-7.8l.8 1.6c-2.3 1.1-3.7 2.8-3.9 4.4.2-.1.5-.2.9-.2 1.5 0 2.7 1.2 2.7 2.7S17.6 17 16 17z"/></symbol>
+<symbol id="i-up-th" viewBox="0 0 24 24"><path d="M7 21H4.5A1.5 1.5 0 0 1 3 19.5v-7A1.5 1.5 0 0 1 4.5 11H7"/><path d="M7 11.5 12 2a2.6 2.6 0 0 1 2.6 2.6V9h4.6a2 2 0 0 1 2 2.4l-1.5 7.6a2 2 0 0 1-2 1.4H7z"/></symbol>
+<symbol id="i-dn-th" viewBox="0 0 24 24"><path d="M17 3h2.5A1.5 1.5 0 0 1 21 4.5v7a1.5 1.5 0 0 1-1.5 1.5H17"/><path d="M17 12.5 12 22a2.6 2.6 0 0 1-2.6-2.6V15H4.8a2 2 0 0 1-2-2.4l1.5-7.6a2 2 0 0 1 2-1.4H17z"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></symbol>
+<symbol id="i-align" viewBox="0 0 24 24"><path d="M4 6h16M4 10.5h11M4 15h16M4 19.5h11"/></symbol>
+<symbol id="i-spell" viewBox="0 0 24 24"><path d="m3 17 5.5-12L14 17"/><path d="M5.1 12.5h6.8"/><path d="m16 15.5 2.2 2.2 4-4.4"/></symbol>
+<symbol id="i-polish" viewBox="0 0 24 24"><path d="m9 4.5 1.3 3.2L13.5 9l-3.2 1.3L9 13.5l-1.3-3.2L4.5 9l3.2-1.3z"/><path d="m17.5 13 .8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></symbol>
+<symbol id="i-read" viewBox="0 0 24 24"><path d="M2.5 5.5A18 18 0 0 1 12 7a18 18 0 0 1 9.5-1.5v13A18 18 0 0 0 12 20a18 18 0 0 0-9.5-1.5z"/><path d="M12 7v13"/></symbol>
+<symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="m21 15.5-4.5-4.5L5 21.5"/></symbol>
+<symbol id="i-audio" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5 11.5a7 7 0 0 0 14 0"/><path d="M12 18.5V22"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7.5 15.5v2.5M12 10v8M16.5 6.5v11.5"/></symbol>
+<symbol id="i-compare" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M6 7H3v10h3z"/><path d="M21 7h-3v10h3z"/><path d="M9 12H3M21 12h-6"/></symbol>
+<symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9.5h18M3 15.5h18M9.5 3v18"/></symbol>
+<symbol id="i-lang" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3.2 9.5h17.6M3.2 14.5h17.6"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 4 5.5v6c0 5 3.4 8.9 8 10 4.6-1.1 8-5 8-10v-6z"/><path d="m9 12 2.2 2.2L15.5 10"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10"/><path d="M4.5 8.5h15"/><path d="m4.5 8.5-2.5 6h5zM19.5 8.5 17 14.5h5z"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><path d="M4 5h16M4 12h9M4 19h16"/><circle cx="17.5" cy="12" r="3.5"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/></symbol>
+<symbol id="i-news" viewBox="0 0 24 24"><path d="M4 4h13a1 1 0 0 1 1 1v14a2 2 0 0 0 2 2H5a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1z"/><path d="M7 8h7M7 12h7M7 16h4"/><path d="M18 9h2a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.8-7 10-7 10 7 10 7-3.8 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3.5 6h17M8.5 6V4.5a1.5 1.5 0 0 1 1.5-1.5h4a1.5 1.5 0 0 1 1.5 1.5V6"/><path d="M18.5 6v14a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 20V6"/><path d="M10 11v6M14 11v6"/></symbol>
+<symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2.5 9.5 5-9.5 5-9.5-5z"/><path d="m2.5 12.5 9.5 5 9.5-5"/><path d="m2.5 17 9.5 5 9.5-5"/></symbol>
+<symbol id="i-hdd" viewBox="0 0 24 24"><rect x="2.5" y="13" width="19" height="7.5" rx="2"/><path d="M5.5 13 8 4h8l2.5 9"/><path d="M6.5 16.8h.01M10 16.8h.01"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 21V4"/><path d="M4 4.5h12l-2 4 2 4H4"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v18H5.5A1.5 1.5 0 0 1 4 19.5z"/><path d="M4 17.5h15"/><path d="M8 3v14.5"/></symbol>
+</defs></svg>
+
+<div class="app">
+  <aside class="side">
+    <div class="side-brand">
+      <span class="mark"><img src="./logo-梵行.svg" alt="梵行"></span>
+      <b>政务AI助手平台</b>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-sp">
+      <div class="nav-t">最近会话</div>
+      <div id="recent"></div>
+    </div>
+    <div class="side-ft">
+      <div class="tip">交互原型 · 示例数据<br>底层模型：豆包系列</div>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="top">
+      <div class="crumb" id="crumb"></div>
+      <div class="top-r">
+        <button class="user">
+          <span class="avatar">陈</span>
+          <span><span class="nm">陈静</span><span class="dp">市政府办公室 · 综合科</span></span>
+        </button>
+      </div>
+    </header>
+    <div class="view" id="view"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="mask" id="mask"></div>
+<aside class="drawer" id="drawer"></aside>
+<div class="dlg" id="dlg"></div>
+
+<script>
+/* =============== 工具函数 =============== */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const ic = (n,c='ic')=>`<svg class="${c}"><use href="#i-${n}"/></svg>`;
+const esc = s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+let toastT;
+function toast(msg,type=''){
+  const t=$('#toast');
+  t.className='toast on '+type;
+  t.innerHTML=(type==='ok'?ic('check'):type==='warn'?ic('warn'):type==='err'?ic('warn'):ic('info'))+`<span>${msg}</span>`;
+  clearTimeout(toastT); toastT=setTimeout(()=>t.className='toast '+type,2200);
+}
+function closeAll(){ $('#mask').classList.remove('on'); $('#drawer').classList.remove('on'); $('#dlg').classList.remove('on'); }
+function openDrawer(html){ $('#drawer').innerHTML=html; $('#mask').classList.add('on'); $('#drawer').classList.add('on'); }
+function openDlg(html,w){ const d=$('#dlg'); d.innerHTML=html; if(w) d.style.width=w+'px'; $('#mask').classList.add('on'); d.classList.add('on'); }
+$('#mask').onclick=closeAll;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+</script>
+<script>
+/* =============== 示例数据 =============== */
+const NAV=[
+  {id:'home',  ic:'home', t:'首页工作台'},
+  {id:'qa',    ic:'chat', t:'知识库问答'},
+  {id:'tools', ic:'grid', t:'AI 工具', badge:'6'},
+  {id:'assist',ic:'pen',  t:'AI 助手', badge:'6'},
+  {id:'kb',    ic:'db',   t:'知识库管控'}
+];
+let RECENT=[
+  {t:'市级财政专项资金申报材料', ic:'chat', v:'qa',q:'市级财政专项资金申报需要提交哪些材料？'},
+  {t:'关于开展安全生产大检查的通知', ic:'pen', v:'write',aid:'gw'},
+  {t:'全市经济运行分析会纪要', ic:'mic', v:'minutes'},
+  {t:'政务服务中心窗口设置标准', ic:'chat', v:'qa',q:'政务服务中心窗口的设置标准是什么？'},
+  {t:'2026 年上半年政务服务工作总结',ic:'book',v:'write',aid:'zh'},
+  {t:'政务公开工作要点校核结果',ic:'shield',v:'review'},
+  {t:'12345 热线工单办理时限',ic:'chat',v:'qa',q:'12345 热线工单的办理时限是多久？'},
+  {t:'全市安全生产工作部署会讲话稿',ic:'mic',v:'write',aid:'jh'},
+  {t:'机关档案管理通知速读',ic:'read',v:'tools',tool:'read'},
+  {t:'一件事一次办改革新闻稿',ic:'news',v:'write',aid:'xc'}
+];
+const KBS=[
+  {id:'law',  t:'政策法规库', n:412},
+  {id:'rule', t:'本单位制度库', n:286},
+  {id:'guide',t:'政务服务办事指南库', n:358},
+  {id:'meet', t:'会议纪要与文件库', n:230}
+];
+const TOOLS=[
+  {id:'align', t:'公文格式排版', d:'按党政机关公文格式国家标准一键规范排版，自动校正版头、字体、行距与页边距', ic:'align', c:'', mode:'text', hot:1},
+  {id:'spell', t:'错别字与用语检查', d:'检查错别字、标点误用、数字用法与计量单位规范，逐条给出修改建议', ic:'spell', c:'r', mode:'text', hot:1},
+  {id:'polish',t:'文本润色', d:'提供书面化、精简、扩写三种模式，保留公文语体不改变原意', ic:'polish', c:'p', mode:'text', hot:1},
+  {id:'read',  t:'文档速读', d:'上传长文档，输出内容摘要、核心要点与结构大纲，快速掌握上级文件精神', ic:'read', c:'g', mode:'file'},
+  {id:'ocr',   t:'图文识别（OCR）', d:'扫描件、照片、纸质红头文件转为可编辑文本，保留段落结构', ic:'img', c:'y', mode:'file'},
+  {id:'asr',   t:'录音转文字', d:'会议录音转写为文字稿，自动区分发言人并标注时间轴', ic:'audio', c:'p', mode:'file'}
+];
+const TOOLS_SOON=[
+  {t:'文件对比', d:'新旧两版文件逐条比对，标出增、删、改', ic:'compare'},
+  {t:'表格抽取', d:'从文档或图片中抽取表格与结构化字段', ic:'table'},
+  {t:'多语翻译', d:'中外互译，保留公文语体与专有名词', ic:'lang'},
+  {t:'数据图表生成', d:'上传或粘贴表格，一句话生成统计图表', ic:'chart'}
+];
+const ASSIST=[
+  {id:'gw',   t:'公文起草助手', d:'通知、请示、报告、函、批复等法定文种，按文种规范模板生成', ic:'doc', c:'', g:'写作类', v:'form'},
+  {id:'zh',   t:'综合材料助手', d:'工作总结、工作计划、情况汇报、经验做法，支持按提纲逐段展开', ic:'book', c:'g', g:'写作类', v:'form'},
+  {id:'jh',   t:'讲话稿助手', d:'领导讲话、会议致辞、发言提纲、主持词，可指定场合与时长', ic:'mic', c:'y', g:'写作类', v:'form'},
+  {id:'xc',   t:'政务宣传助手', d:'政务新闻稿、政策解读稿、政务新媒体推文，贴合宣传口径', ic:'news', c:'p', g:'写作类', v:'form'},
+  {id:'jh2',  t:'公文校核助手', d:'格式规范、文字差错、用语规范、政治表述风险四维合一校核', ic:'shield', c:'r', g:'审核类', v:'review'},
+  {id:'jy',   t:'会议纪要助手', d:'上传录音或速记稿，产出规范纪要、议定事项与待办清单', ic:'mic', c:'', g:'事务类', v:'minutes'}
+];
+const ASSIST_SOON=[
+  {t:'保密与敏感信息审核助手', d:'涉密要素、个人信息、未公开数据识别与提示', ic:'ban', g:'审核类'},
+  {t:'政策一致性审核助手', d:'与上位法、上级文件比对，指出冲突点与依据缺失', ic:'scale', g:'审核类'},
+  {t:'民生诉求答复助手', d:'涉及事实认定、政策依据和对外答复，待完成业务规则与人工复核机制后上线', ic:'mail', g:'事务类'}
+];
+/* 知识库管控 · 文档 */
+const DOCS=[
+  {n:'关于进一步优化政务服务提升行政效能的实施意见.pdf', kb:'政策法规库', tag:'政策文件', f:'PDF', sz:'2.4 MB', ck:186, up:'陈静', dt:'2026-08-14 09:22', st:'ok', cite:98},
+  {n:'市级财政专项资金管理办法（2026 年修订）.docx', kb:'政策法规库', tag:'管理办法', f:'Word', sz:'860 KB', ck:94, up:'陈静', dt:'2026-08-13 16:40', st:'ok', cite:126},
+  {n:'政务服务中心窗口服务规范.pdf', kb:'政务服务办事指南库', tag:'服务规范', f:'PDF', sz:'1.1 MB', ck:72, up:'王磊', dt:'2026-08-12 11:05', st:'ok', cite:87},
+  {n:'2026 年第三季度全市经济运行分析会纪要.docx', kb:'会议纪要与文件库', tag:'会议纪要', f:'Word', sz:'420 KB', ck:38, up:'刘敏', dt:'2026-08-18 14:31', st:'parsing', cite:0},
+  {n:'安全生产大检查工作台账（扫描件）.pdf', kb:'本单位制度库', tag:'工作台账', f:'PDF', sz:'18.6 MB', ck:0, up:'王磊', dt:'2026-08-18 10:12', st:'fail', cite:0, err:'文件为扫描件且已加密，无法提取文本'},
+  {n:'机关公文处理工作办法.docx', kb:'本单位制度库', tag:'管理办法', f:'Word', sz:'640 KB', ck:76, up:'陈静', dt:'2026-08-09 08:55', st:'ok', cite:71},
+  {n:'行政审批事项目录清单（2026 版）.xlsx', kb:'政务服务办事指南库', tag:'目录清单', f:'Excel', sz:'1.8 MB', ck:214, up:'刘敏', dt:'2026-08-07 15:18', st:'ok', cite:64},
+  {n:'关于加强机关档案管理工作的通知.pdf', kb:'本单位制度库', tag:'通知', f:'PDF', sz:'520 KB', ck:31, up:'王磊', dt:'2026-07-28 09:40', st:'ok', cite:3},
+  {n:'政务公开工作年度报告模板.docx', kb:'本单位制度库', tag:'模板', f:'Word', sz:'310 KB', ck:22, up:'陈静', dt:'2026-07-21 17:02', st:'off', cite:0},
+  {n:'12345 政务服务便民热线办理规程.pdf', kb:'政务服务办事指南库', tag:'办理规程', f:'PDF', sz:'980 KB', ck:58, up:'刘敏', dt:'2026-07-15 10:26', st:'ok', cite:52},
+  {n:'市政府公报历史文件索引.pdf', kb:'政策法规库', tag:'政策文件', f:'PDF', sz:'3.6 MB', ck:0, up:'王磊', dt:'2026-08-17 18:06', st:'fail', cite:0, err:'文档下载超时，可重试后继续解析'}
+];
+const ST={ok:{t:'已生效',c:'g'}, parsing:{t:'解析中',c:'b'}, queue:{t:'排队中',c:''}, fail:{t:'解析失败',c:'r'}, off:{t:'已停用',c:''}};
+const APP={generated:128, qaTotal:3472, monthNew:168};
+const flowState={handoff:null, draft:null, review:null, transcript:null};
+const totalDocs=()=>KBS.reduce((n,k)=>n+k.n,0);
+const statusCount=st=>DOCS.filter(d=>d.st===st).length;
+const stripHtml=s=>{ const d=document.createElement('div'); d.innerHTML=s||''; return d.textContent.trim(); };
+function kbIdByName(name){ return (KBS.find(k=>k.t===name)||{}).id; }
+function formatNow(){ return '2026-08-19 '+new Date().toTimeString().slice(0,5); }
+
+/* =============== 路由 =============== */
+const ROUTES={};
+let cur='home', ctx={};
+function go(v,c={}){ cur=v; ctx=c; render(); $('#view').scrollTop=0; closeAll(); }
+function render(){
+  const r=ROUTES[cur]||ROUTES.home;
+  $('#view').innerHTML=r.html(ctx);
+  $('#crumb').innerHTML=r.crumb(ctx);
+  $$('#nav .nav-i').forEach(b=>b.classList.toggle('on', b.dataset.v===(r.nav||cur)));
+  if(r.init) r.init(ctx);
+}
+function crumbOf(root,sub){
+  return `<b>${root}</b>`+(sub?`<span class="sep">/</span><span>${sub}</span>`:'');
+}
+function backCrumb(to,root,sub){
+  return `<button class="btn sm gho" onclick="go('${to}')">${ic('back','ic ic-s')}返回</button>
+    <span class="sep">|</span><b>${root}</b>`+(sub?`<span class="sep">/</span><span>${sub}</span>`:'');
+}
+/* 侧栏渲染 */
+$('#nav').innerHTML=NAV.map(n=>`<button class="nav-i" data-v="${n.id}" title="${n.t}" aria-label="${n.t}" onclick="go('${n.id}')">
+  ${ic(n.ic)}<span>${n.t}</span>${n.badge?`<span class="badge">${n.badge}</span>`:''}</button>`).join('');
+function renderRecent(){
+  $('#recent').innerHTML=RECENT.slice(0,10).map((r,i)=>`<div class="recent-row"><button class="recent-i" onclick="openRecent(${i})">
+    ${ic(r.ic,'ic ic-s')}<span>${r.t}</span></button><button class="recent-more" title="重命名或删除" onclick="editRecent(${i})">${ic('more','ic ic-s')}</button></div>`).join('');
+}
+function openRecent(i){
+  const r=RECENT[i]; if(!r) return;
+  if(r.v==='qa'){
+    qaMsgs=[]; go('qa'); if(r.q) $('#qaIn').value=r.q; return;
+  }
+  if(r.v==='write'){
+    const a=ASSIST.find(x=>x.id===(r.aid||'gw'))||ASSIST[0], built=buildDraft(a,{},null);
+    flowState.draft={assistantId:a.id,payload:{},useKb:true,handoff:null,title:built.title,html:built.html,version:1};
+    wMsgs=[{r:'a',t:'已从最近会话恢复文稿和编辑上下文。'}]; go('write',{a}); return;
+  }
+  if(r.v==='review'){
+    reviewState=null; flowState.review=null; ISS=DEFAULT_ISS.map(x=>({...x})); iState=ISS.map(()=>0); go('review'); return;
+  }
+  if(r.v==='tools'&&r.tool){ const t=TOOLS.find(x=>x.id===r.tool); go(t.mode==='file'?'tool-file':'tool-text',{tool:t}); return; }
+  go(r.v);
+}
+function editRecent(i){
+  const r=RECENT[i]; if(!r) return;
+  openDlg(`<div class="pnl-h"><h3>管理最近会话</h3><button class="x" onclick="closeAll()">${ic('x')}</button></div>
+    <div class="pnl-b"><div class="fld" style="margin:0"><label>会话名称</label><input class="inp" id="recentName" value="${esc(r.t)}"></div></div>
+    <div class="pnl-f"><button class="btn dgr" onclick="askRecentDelete(${i})">${ic('trash','ic ic-s')}删除会话</button>
+      <button class="btn" style="margin-left:auto" onclick="closeAll()">取消</button><button class="btn pri" onclick="saveRecent(${i})">保存名称</button></div>`,480);
+}
+function saveRecent(i){
+  const v=$('#recentName').value.trim(); if(!v) return toast('会话名称不能为空','warn');
+  RECENT[i].t=v; renderRecent(); closeAll(); toast('会话已重命名','ok');
+}
+function askRecentDelete(i){
+  const r=RECENT[i]; if(!r) return;
+  openDlg(`<div class="pnl-h"><h3>确认删除会话</h3><button class="x" onclick="closeAll()">${ic('x')}</button></div>
+    <div class="pnl-b"><p style="font-size:13px;line-height:1.8">删除后将从最近会话列表移除「${esc(r.t)}」。</p></div>
+    <div class="pnl-f"><button class="btn" onclick="closeAll()">取消</button><button class="btn pri" style="background:var(--err);border-color:var(--err)" onclick="confirmRecentDelete(${i})">确认删除</button></div>`,460);
+}
+function confirmRecentDelete(i){
+  RECENT.splice(i,1); renderRecent(); closeAll(); toast('会话已从最近列表删除','ok');
+}
+renderRecent();
+</script>
+<script>
+/* =============== P01 首页工作台 =============== */
+ROUTES.home={
+  crumb:()=>crumbOf('首页工作台'),
+  html:()=>`<div class="pad-lg">
+    <div class="hero">
+      <div>
+        <h1>陈静，上午好</h1>
+        <p>市政府办公室 · 综合科　｜　今天是 2026 年 8 月 19 日，星期三</p>
+      </div>
+      <div class="stats">
+        <div><b>${APP.generated.toLocaleString()}</b><span>本月生成材料（篇）</span></div>
+        <div><b>${totalDocs().toLocaleString()}</b><span>知识库文档（份）</span></div>
+        <div><b>${APP.qaTotal.toLocaleString()}</b><span>累计问答（次）</span></div>
+      </div>
+    </div>
+    <div class="ent-grid">
+      ${[['qa','chat','知识库问答','问政策、问制度、问办事流程，答案带原文出处'],
+         ['tools','grid','AI 工具','排版、校错、润色、速读、识别、转写，用完即走'],
+         ['assist','pen','AI 助手','公文起草、材料撰写、公文校核、会议纪要'],
+         ['kb','db','知识库管控','文档入库、解析状态、切片治理与使用情况通览']]
+        .map(([v,i,t,d])=>`<button class="ent" onclick="go('${v}')">
+          <span class="arw">${ic('arw','ic ic-s')}</span>
+          <span class="eic">${ic(i,'ic ic-l')}</span>
+          <h4>${t}</h4><p>${d}</p></button>`).join('')}
+    </div>
+    <div class="home-2">
+      <div>
+        <div class="sec-t">常用工具与助手<span class="ln"></span>
+          <span class="cnt">按你近 30 天使用频次排序</span></div>
+        <div class="quick">
+          ${[['align','公文格式排版','本月用了 23 次','tools','align'],
+             ['spell','错别字与用语检查','本月用了 19 次','tools','spell'],
+             ['doc','公文起草助手','本月用了 16 次','assist','gw'],
+             ['shield','公文校核助手','本月用了 12 次','assist','jh2'],
+             ['read','文档速读','本月用了 9 次','tools','read'],
+             ['mic','会议纪要助手','本月用了 7 次','assist','jy']]
+            .map(([i,t,s,v,id])=>`<button class="qk" onclick="openFrom('${v}','${id}')">
+              <span class="qic">${ic(i)}</span>
+              <span><b>${t}</b><span>${s}</span></span></button>`).join('')}
+        </div>
+        <div class="sec-t" style="margin-top:22px">待你处理<span class="ln"></span></div>
+        <div class="card"><div class="card-b" style="padding:14px">
+          <button class="todo" onclick="go('kb-docs',{f:'fail'})">
+            <span class="tdi" style="background:var(--err-l);color:var(--err)">${ic('warn')}</span>
+            <span class="tt"><b>${statusCount('fail')} 份文档解析失败</b><span>需要重新上传或转换格式后重试</span></span>
+            <span class="cnt" style="color:var(--err)">${statusCount('fail')}</span></button>
+          <button class="todo" onclick="go('kb-docs',{f:'parsing'})">
+            <span class="tdi" style="background:var(--brand-l);color:var(--brand)">${ic('clock')}</span>
+            <span class="tt"><b>${statusCount('parsing')} 份文档正在解析</b><span>《2026 年第三季度全市经济运行分析会纪要》</span></span>
+            <span class="cnt" style="color:var(--brand)">${statusCount('parsing')}</span></button>
+        </div></div>
+      </div>
+      <div>
+        <div class="sec-t">最近会话<span class="ln"></span></div>
+        <div class="card"><div class="card-b" style="padding:8px 14px">
+          ${[['chat','市级财政专项资金申报材料','今天 09:41','qa','var(--brand-l)','var(--brand)'],
+             ['pen','关于开展安全生产大检查的通知','今天 08:55','write','var(--purple-l)','var(--purple)'],
+             ['mic','全市经济运行分析会纪要','昨天 16:20','minutes','var(--warn-l)','var(--warn)'],
+             ['shield','政务公开年度报告 校核结果','昨天 14:07','review','var(--err-l)','var(--err)'],
+             ['chat','政务服务中心窗口设置标准','8 月 17 日','qa','var(--brand-l)','var(--brand)']]
+            .map(([i,t,s,v,bg,cl])=>`<div class="rc">
+              <span class="ric" style="background:${bg};color:${cl}">${ic(i,'ic ic-s')}</span>
+              <span class="txt"><b>${t}</b><span>${s}</span></span>
+              <button class="btn sm gho" onclick="go('${v}')">${ic('arw','ic ic-s')}</button></div>`).join('')}
+        </div></div>
+      </div>
+    </div>
+  </div>`
+};
+function openFrom(v,id){
+  if(v==='tools'){ const t=TOOLS.find(x=>x.id===id); go(t.mode==='file'?'tool-file':'tool-text',{tool:t}); }
+  else { const a=ASSIST.find(x=>x.id===id); go(a.v==='form'?'assist-form':a.v,{a}); }
+}
+
+/* =============== P02 知识库问答 =============== */
+let qaScope=KBS.map(k=>k.id), qaMsgs=[], qaBusy=false;
+const QA_CASES=[
+ {id:'fund-deadline', kb:'law', match:t=>/(专项资金|财政申报)/.test(t)&&/(截止|时间|申报期|窗口)/.test(t),
+  q:'申报截止时间是什么时候？',
+  a:`<p>专项资金申报分为<strong>集中申报</strong>和<strong>补充申报</strong>两个窗口：</p>
+     <ul><li><strong>集中申报期</strong>：每年 3 月 1 日至 3 月 31 日<span class="sup" data-s="4">1</span></li>
+       <li><strong>补充申报期</strong>：每年 9 月 1 日至 9 月 15 日<span class="sup" data-s="2">2</span></li></ul>
+     <p>主管部门应在集中申报期结束后 10 个工作日内完成初审并汇总上报<span class="sup" data-s="4">1</span>。</p>`,
+  s:[4,2], fu:['市级财政专项资金申报需要提交哪些材料？','初审不通过可以补正吗？']},
+ {id:'fund-materials', kb:'law', match:t=>/(市级财政|专项资金)/.test(t)&&/(申报|材料|提交)/.test(t), q:'市级财政专项资金申报需要提交哪些材料？',
+  a:`<p>依据《市级财政专项资金管理办法（2026 年修订）》第十二条，申报单位需提交以下材料：</p>
+     <ol>
+       <li><strong>专项资金申报书</strong>（须加盖单位公章）<span class="sup" data-s="1">1</span></li>
+       <li><strong>项目实施方案与绩效目标表</strong>，明确资金用途、实施周期与量化指标<span class="sup" data-s="1">1</span></li>
+       <li>单位法人证书、开户许可证复印件<span class="sup" data-s="2">2</span></li>
+       <li>上年度专项资金使用情况说明及审计报告（首次申报单位可不提供）<span class="sup" data-s="1">1</span></li>
+       <li>项目配套资金证明材料<span class="sup" data-s="2">2</span></li>
+     </ol>
+     <p>需注意：上述材料由<strong>主管部门初审汇总后统一报送</strong>市财政局，不受理申报单位直接报送<span class="sup" data-s="3">3</span>。</p>`,
+  s:[1,2,3],
+  fu:['申报截止时间是什么时候？','绩效目标表有没有固定模板？','初审不通过可以补正吗？']},
+ {id:'doc-date', kb:'rule', match:t=>/(公文|文件)/.test(t)&&/(成文日期|日期标注)/.test(t), q:'机关公文的成文日期应该怎么标注？',
+  a:`<p>成文日期应使用阿拉伯数字将年、月、日标全，年份标全称，月、日不编虚位<span class="sup" data-s="5">1</span>。</p>
+     <p>成文日期以负责人签发日期为准；联合行文时，以最后签发机关负责人的签发日期为准<span class="sup" data-s="5">1</span>。</p>`,
+  s:[5], fu:['公文的发文字号怎么写？','附件说明如何编排？']},
+ {id:'window-standard', kb:'guide', match:t=>/(政务服务中心|综合窗口|窗口)/.test(t)&&/(设置|标准|规范)/.test(t), q:'政务服务中心窗口的设置标准是什么？',
+  a:`<p>政务服务中心应按“前台综合受理、后台分类审批、统一窗口出件”设置综合窗口，并统一标识、服务用语和办事流程<span class="sup" data-s="6">1</span>。</p>`,
+  s:[6], fu:['窗口工作人员有哪些服务规范？','综合窗口如何分类审批？']},
+ {id:'hotline-time', kb:'guide', match:t=>/(12345|热线工单|便民热线)/.test(t)&&/(时限|多久|办理)/.test(t), q:'12345 热线工单的办理时限是多久？',
+  a:`<p>一般诉求应在 <strong>5 个工作日</strong>内办结并反馈；情况复杂的，延长后的办理时限不超过 15 个工作日，并应告知诉求人<span class="sup" data-s="7">1</span>。</p>
+     <p>涉及紧急安全风险的工单须即时转办，不适用一般时限<span class="sup" data-s="7">1</span>。</p>`,
+  s:[7], fu:['12345 工单如何申请延期？','不属于本单位职责怎么办？']}
+];
+const SRC=[
+ null,
+ {t:'市级财政专项资金管理办法（2026 年修订）.docx', kb:'政策法规库', loc:'第十二条 · 第 6 页',
+  frag:'申报单位应当提交专项资金申报书、项目实施方案与绩效目标表、上年度专项资金使用情况说明及审计报告等材料，并对所提交材料的真实性、完整性负责。',
+  hl:'专项资金申报书、项目实施方案与绩效目标表'},
+ {t:'关于进一步优化政务服务提升行政效能的实施意见.pdf', kb:'政策法规库', loc:'第四部分 · 第 14 页',
+  frag:'各申报单位需一并提供单位法人证书、开户许可证复印件及项目配套资金证明材料。自二〇二六年起，在原集中申报窗口基础上增设补充申报窗口，具体时间为每年九月一日至九月十五日。',
+  hl:'增设补充申报窗口，具体时间为每年九月一日至九月十五日'},
+ {t:'行政审批事项目录清单（2026 版）.xlsx', kb:'政务服务办事指南库', loc:'第 87 行 · 财政类',
+  frag:'事项名称：市级财政专项资金申报审核。受理方式：由主管部门初审汇总后统一报送，不受理申报单位直接报送。承诺办结时限：20 个工作日。',
+  hl:'由主管部门初审汇总后统一报送，不受理申报单位直接报送'},
+ {t:'市级财政专项资金管理办法（2026 年修订）.docx', kb:'政策法规库', loc:'第十三条 · 第 6 页',
+  frag:'专项资金集中申报期为每年三月一日至三月三十一日，逾期不再受理。主管部门应当在申报期结束后十个工作日内完成初审并汇总上报。', hl:'每年三月一日至三月三十一日'},
+ {t:'机关公文处理工作办法.docx', kb:'本单位制度库', loc:'第十八条 · 第 9 页',
+  frag:'成文日期以负责人签发日期为准；联合行文以最后签发机关负责人的签发日期为准。用阿拉伯数字将年、月、日标全，年份应标全称，月、日不编虚位。', hl:'用阿拉伯数字将年、月、日标全'},
+ {t:'政务服务中心窗口服务规范.pdf', kb:'政务服务办事指南库', loc:'第三章 · 第 5 页',
+  frag:'政务服务中心应统一设置综合窗口，实行前台综合受理、后台分类审批、统一窗口出件，并统一窗口标识、服务用语和办事流程。', hl:'前台综合受理、后台分类审批、统一窗口出件'},
+ {t:'12345 政务服务便民热线办理规程.pdf', kb:'政务服务办事指南库', loc:'第十五条 · 第 8 页',
+  frag:'一般诉求应当自承办单位收到工单之日起五个工作日内办结并反馈。情况复杂的，经批准可延长至十五个工作日，并应告知诉求人。涉及紧急安全风险的工单应当即时转办。', hl:'五个工作日内办结并反馈'}
+];
+function noHitAnswer(txt,reason=''){
+  const names=qaScope.map(id=>(KBS.find(k=>k.id===id)||{}).t).filter(Boolean);
+  return {nohit:true, a:`<p><strong>知识库中未找到可支撑结论的内容。</strong></p>
+    <p>已检索 ${names.length} 个知识库：${names.join('、')}。${reason||`未命中与“${esc(txt)}”相关的有效切片。`}</p>`,
+    hint:'建议换个说法、扩大检索范围，或联系知识库管理员补充文件。为避免无依据编造，本次不生成推测性答案。'};
+}
+function qaAnswerFor(txt){
+  const c=QA_CASES.find(x=>x.match(txt));
+  if(c&&!qaScope.includes(c.kb)){
+    const kb=KBS.find(k=>k.id===c.kb);
+    return noHitAnswer(txt,`相关内容位于未选中的「${kb.t}」，当前不越过检索范围回答。`);
+  }
+  if(c) return c;
+  const uploaded=DOCS.find(d=>d.st==='ok'&&d.preview&&(d.keywords||[]).some(k=>txt.includes(k)));
+  if(uploaded){
+    const kid=kbIdByName(uploaded.kb);
+    if(!qaScope.includes(kid)) return noHitAnswer(txt,`相关文档位于未选中的「${uploaded.kb}」。`);
+    if(!uploaded.sourceId){ uploaded.sourceId=SRC.length; SRC.push({t:uploaded.n,kb:uploaded.kb,loc:'自动切片 #1',frag:uploaded.preview,hl:uploaded.preview.slice(0,18)}); }
+    return {a:`<p>已在「${uploaded.kb}」中找到新入库的《${uploaded.n}》，当前状态为<strong>已生效</strong>，可参与检索。</p><p>${uploaded.preview}<span class="sup" data-s="${uploaded.sourceId}">1</span></p>`,s:[uploaded.sourceId],fu:['查看这份文档的完整切片','基于这份文档起草通知']};
+  }
+  return noHitAnswer(txt);
+}
+ROUTES.qa={
+  crumb:()=>crumbOf('知识库问答', qaMsgs.length?'当前会话':'新建会话'),
+  html:()=>`<div class="chat">
+    <div class="chat-bar">
+      <span class="lb">${ic('db','ic ic-s')} 检索范围</span>
+      <div class="chips" id="scope">
+        ${KBS.map(k=>`<button class="chip ${qaScope.includes(k.id)?'on':''}" data-k="${k.id}">
+          <span class="chk">${ic('check')}</span>${k.t}<span style="color:var(--text-3);font-size:11px">${k.n}</span></button>`).join('')}
+      </div>
+      <button class="btn sm" style="margin-left:auto" onclick="qaNew()">${ic('plus','ic ic-s')}新建对话</button>
+    </div>
+    <div class="chat-body" id="qaBody">${qaMsgs.length?qaRender():qaStarter()}</div>
+    <div class="chat-ft"><div class="composer"><div class="cmp-box">
+      <textarea id="qaIn" placeholder="输入你的问题，例如：机关公文的成文日期该怎么标注？"></textarea>
+      <div class="cmp-bar">
+        <span class="tag">${ic('db','ic ic-s')}<span id="scopeN">${qaScope.length}</span> 个知识库</span>
+        <span class="kb">回车发送 · Shift+回车换行</span>
+        <button class="send" id="qaSend" onclick="qaSend()">${ic('send','ic ic-s')}</button>
+      </div>
+    </div></div></div>
+  </div>`,
+  init(){
+    $$('#scope .chip').forEach(c=>c.onclick=()=>{
+      const k=c.dataset.k;
+      if(qaScope.includes(k)){ if(qaScope.length===1) return toast('至少保留一个知识库','warn'); qaScope=qaScope.filter(x=>x!==k); }
+      else qaScope.push(k);
+      c.classList.toggle('on'); $('#scopeN').textContent=qaScope.length;
+    });
+    const ta=$('#qaIn');
+    ta.onkeydown=e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); qaSend(); } };
+    qaBind(); qaScrollEnd();
+  }
+};
+function qaStarter(){
+  return `<div class="starter">
+    <div class="wel"><span class="lg">${ic('chat','ic ic-xl')}</span>
+      <h2>你想了解什么？</h2>
+      <p>问答基于单位已入库的政策文件、制度和办事指南，答案会标注原文出处</p></div>
+    <div class="sec-t">试试这样问<span class="ln"></span></div>
+    <div class="ex-grid">
+      ${[['市级财政专项资金申报需要提交哪些材料？','政策法规库 · 高频问题'],
+         ['机关公文的成文日期应该怎么标注？','本单位制度库'],
+         ['政务服务中心窗口的设置标准是什么？','政务服务办事指南库'],
+         ['12345 热线工单的办理时限是多久？','政务服务办事指南库']]
+        .map(([q,s])=>`<button class="ex" onclick="qaAsk(this.dataset.q)" data-q="${esc(q)}">
+          <span class="exi">${ic('quote','ic ic-s')}</span>
+          <span><b>${q}</b><span>${s}</span></span></button>`).join('')}
+    </div></div>`;
+}
+function qaRender(){
+  return `<div class="chat-in">`+qaMsgs.map((m,i)=>{
+    if(m.r==='u') return `<div class="msg msg-u"><div class="bub">${esc(m.t)}</div></div>`;
+    if(m.r==='load') return `<div class="msg msg-a"><span class="ava-a">${ic('chat','ic ic-s')}</span>
+      <div class="bd"><div class="ans"><div style="display:flex;align-items:center;gap:9px;color:var(--text-3);font-size:13px;margin-bottom:12px">
+        <span class="spin"></span>正在检索 ${qaScope.length} 个知识库…</div>
+        <div class="skel" style="width:92%;margin-bottom:9px"></div>
+        <div class="skel" style="width:78%;margin-bottom:9px"></div>
+        <div class="skel" style="width:85%"></div></div></div></div>`;
+    const d=m.d;
+    return `<div class="msg msg-a"><span class="ava-a">${ic('chat','ic ic-s')}</span><div class="bd">
+      <div class="ans ${d.nohit?'nohit':''}">${d.a}
+        ${d.hint?`<div class="hint">${d.hint}</div>`:''}
+        ${d.s?`<div class="src"><div class="src-t">${ic('quote','ic ic-s')}引用来源 · ${d.s.length} 处，点击查看原文片段</div>
+          <div class="src-l">${d.s.map((n,si)=>{const s=SRC[n];return `<button class="src-i" onclick="showSrc(${n})">
+            <span class="n">${si+1}</span><span class="info"><b>${s.t}</b>
+            <span class="frag">${s.frag}</span>
+            <span class="meta"><span>${s.kb}</span><span>${s.loc}</span></span></span></button>`}).join('')}</div></div>`:''}
+      </div>
+      <div class="acts-row">
+        <button class="aicon" title="复制" onclick="toast('已复制到剪贴板','ok')">${ic('copy','ic ic-s')}</button>
+        <button class="aicon" title="重新生成" onclick="qaRegenerate(${i})">${ic('refresh','ic ic-s')}</button>
+        <button class="aicon fb" data-i="${i}" data-v="up" title="有帮助">${ic('up-th','ic ic-s')}</button>
+        <button class="aicon fb" data-i="${i}" data-v="down" title="没帮助">${ic('dn-th','ic ic-s')}</button>
+        ${d.nohit?'':`<button class="btn sm gho" style="margin-left:6px" onclick="qaToAssistant(${i})">${ic('pen','ic ic-s')}携带问答与引用继续写</button>`}
+      </div>
+      ${d.fu?`<div class="followup">${d.fu.map(f=>`<button class="fu" onclick="qaAsk(this.dataset.q)" data-q="${esc(f)}">${f}</button>`).join('')}</div>`:''}
+    </div></div>`;
+  }).join('')+`</div>`;
+}
+function qaBind(){
+  $$('#qaBody .sup').forEach(s=>s.onclick=()=>showSrc(+s.dataset.s));
+  $$('#qaBody .fb').forEach(b=>b.onclick=()=>{
+    const row=b.parentElement;
+    row.querySelectorAll('.fb').forEach(x=>x.classList.remove('on','on-r'));
+    b.classList.add(b.dataset.v==='up'?'on':'on-r');
+    if(b.dataset.v==='up') toast('感谢反馈，已记录','ok');
+    else openQaFeedback(+b.dataset.i);
+  });
+}
+function openQaFeedback(i){
+  openDlg(`<div class="pnl-h"><h3>这条回答哪里需要改进？</h3><button class="x" onclick="closeAll()">${ic('x')}</button></div>
+    <div class="pnl-b"><div class="fld" style="margin:0"><label>问题原因（选填）</label>
+      <textarea class="ta" id="qaFeedbackReason" style="min-height:110px" placeholder="例如：引用不准确、内容不完整、与问题无关……"></textarea></div></div>
+    <div class="pnl-f"><button class="btn" onclick="closeAll();toast('反馈已记录')">跳过</button>
+      <button class="btn pri" onclick="saveQaFeedback(${i})">提交反馈</button></div>`,480);
+}
+function saveQaFeedback(i){
+  const reason=($('#qaFeedbackReason')?.value||'').trim();
+  if(qaMsgs[i]?.d) qaMsgs[i].d.feedback={helpful:false,reason};
+  closeAll(); toast(reason?'反馈原因已提交，感谢帮助我们改进':'反馈已记录','ok');
+}
+function qaScrollEnd(){ const b=$('#qaBody'); if(b) b.scrollTop=b.scrollHeight; }
+function qaNew(){ qaMsgs=[]; render(); }
+function qaAsk(q){ const ta=$('#qaIn'); if(ta) ta.value=q; qaSend(); }
+async function qaSend(){
+  if(qaBusy) return;
+  const ta=$('#qaIn'); let txt=(ta.value||'').trim();
+  if(!txt) return toast('请输入问题','warn');
+  const sc=qaAnswerFor(txt);
+  qaBusy=true; ta.value=''; $('#qaSend').disabled=true;
+  qaMsgs.push({r:'u',t:txt}); qaMsgs.push({r:'load'});
+  $('#qaBody').innerHTML=qaRender(); qaScrollEnd();
+  await sleep(1100);
+  qaMsgs.pop();
+  qaMsgs.push({r:'a',d:sc}); APP.qaTotal++;
+  $('#qaBody').innerHTML=qaRender(); qaBind(); qaScrollEnd();
+  $('#qaSend').disabled=false; qaBusy=false;
+  $('#crumb').innerHTML=ROUTES.qa.crumb();
+}
+function qaToAssistant(i){
+  const a=qaMsgs[i], u=[...qaMsgs.slice(0,i)].reverse().find(m=>m.r==='u');
+  if(!a||!a.d||!u) return;
+  flowState.handoff={question:u.t,answer:stripHtml(a.d.a),sources:(a.d.s||[]).map(n=>SRC[n]).filter(Boolean)};
+  go('assist-form',{a:ASSIST.find(x=>x.id==='gw')});
+}
+async function qaRegenerate(i){
+  const u=[...qaMsgs.slice(0,i)].reverse().find(m=>m.r==='u'); if(!u||!qaMsgs[i]) return;
+  toast('正在使用当前检索范围重新生成…'); await sleep(650);
+  qaMsgs[i].d=qaAnswerFor(u.t); $('#qaBody').innerHTML=qaRender(); qaBind(); qaScrollEnd();
+  toast('已基于当前知识库范围重新生成','ok');
+}
+function showSrc(n){
+  const s=SRC[n]; if(!s) return;
+  const frag=s.frag.replace(s.hl,`<mark style="background:#FDF3E3;padding:1px 2px;border-radius:2px;border-bottom:2px solid var(--warn)">${s.hl}</mark>`);
+  openDrawer(`<div class="pnl-h"><h3>引用来源</h3>
+      <button class="x" onclick="closeAll()">${ic('x')}</button></div>
+    <div class="pnl-b">
+      <div class="file-i" style="margin-bottom:16px">
+        <span class="fic ${s.t.endsWith('.docx')?'w':''}">${ic('doc','ic ic-l')}</span>
+        <span class="fi"><b>${s.t}</b><span>${s.kb} · ${s.loc}</span></span>
+      </div>
+      <div class="sec-t">命中段落原文<span class="ln"></span></div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r);
+        padding:16px 18px;font-family:'STFangsong','FangSong',serif;font-size:15px;line-height:2.1">${frag}</div>
+      <div style="margin-top:14px;font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:6px">
+        ${ic('info','ic ic-s')}高亮部分为本次回答实际引用的内容</div>
+    </div>
+    <div class="pnl-f">
+      <button class="btn" onclick="closeAll()">关闭</button>
+      <button class="btn pri" onclick="closeAll();go('kb-doc',{d:DOCS.find(x=>x.n.startsWith('${s.t.slice(0,6)}'))||DOCS[0]})">查看完整文档</button>
+    </div>`);
+}
+</script>
+<script>
+/* =============== P03 AI 工具广场 =============== */
+let favs=['align','spell'];
+ROUTES.tools={
+  nav:'tools', crumb:()=>crumbOf('AI 工具'),
+  html:()=>{
+    const grp=[['文字加工','text'],['文档处理','file'],['音视频','av']];
+    const of=g=>TOOLS.filter(t=>(g==='text'?['align','spell','polish']:g==='file'?['read','ocr']:['asr']).includes(t.id))
+      .sort((a,b)=>Number(favs.includes(b.id))-Number(favs.includes(a.id)));
+    return `<div class="pad-lg">
+      <div class="sq-top">
+        <div><h2>AI 工具</h2><p>一次输入、一次产出，用完即走。适合处理单份文件或单段文字</p></div>
+        <div class="search">${ic('search','ic ic-s')}<input class="inp" id="tq" placeholder="搜索工具名称"></div>
+      </div>
+      ${grp.map(([n,g])=>`<div class="sec-t">${n}<span class="cnt">${of(g).length} 个</span><span class="ln"></span></div>
+        <div class="sq-grid">${of(g).map(t=>toolCard(t)).join('')}</div>`).join('')}
+      <div class="sec-t">即将上线<span class="cnt">${TOOLS_SOON.length} 个</span><span class="ln"></span></div>
+      <div class="sq-grid">${TOOLS_SOON.map(t=>`<div class="tool soon" onclick="toast('「${t.t}」即将上线','warn')">
+        <span class="tic">${ic(t.ic,'ic ic-l')}</span>
+        <span class="tb"><h4>${t.t}<span class="tag">即将上线</span></h4><p>${t.d}</p></span></div>`).join('')}</div>
+    </div>`;
+  },
+  init(){
+    $('#tq').oninput=e=>{
+      const q=e.target.value.trim();
+      $$('.tool:not(.soon)').forEach(el=>{
+        el.style.display=(!q||el.dataset.t.includes(q))?'':'none';
+      });
+    };
+  }
+};
+function toolCard(t){
+  return `<button class="tool" data-t="${t.t}" onclick="go('${t.mode==='file'?'tool-file':'tool-text'}',{tool:TOOLS.find(x=>x.id==='${t.id}')})">
+    <span class="fav ${favs.includes(t.id)?'on':''}" onclick="event.stopPropagation();toggleFav('${t.id}',this)">${ic('star','ic ic-s')}</span>
+    <span class="tic ${t.c}">${ic(t.ic,'ic ic-l')}</span>
+    <span class="tb"><h4>${t.t}${t.hot?'<span class="tag b">常用</span>':''}</h4><p>${t.d}</p></span></button>`;
+}
+function toggleFav(id,el){
+  if(favs.includes(id)){ favs=favs.filter(x=>x!==id); toast('已取消收藏'); }
+  else { favs.push(id); toast('已收藏，已在所在分组置顶','ok'); }
+  if(cur==='tools') render();
+}
+
+/* =============== 工具示例数据 =============== */
+const TDEMO={
+ align:{
+  ph:'粘贴需要排版的公文正文…',
+  input:`市政府办公室关于开展2026年安全生产大检查的通知\n各县（市、区）人民政府，市政府各部门：\n为深入贯彻落实上级关于安全生产工作的决策部署，切实防范化解重大安全风险，经市政府同意，决定自2026年8月下旬起在全市范围内开展安全生产大检查。现将有关事项通知如下。\n一、检查时间。2026年8月25日至9月30日。\n二、检查范围。危险化学品、建筑施工、消防、道路交通、燃气等重点行业领域。\n三、工作要求。各单位要落实主体责任，建立问题台账，实行闭环管理，确保整改到位。\n市政府办公室\n2026年8月19日`,
+  params:[['文种','通知|请示|报告|函|批复'],['排版标准','党政机关公文格式 GB/T 9704—2012|本单位内部行文规范'],['是否生成版头','生成红头版头|仅排正文']],
+  res:()=>`<div class="res">
+    <div class="doc-title">市政府办公室文件</div>
+    <div class="doc-no">市府办发〔2026〕47 号</div>
+    <div style="text-align:center;font-size:17.5px;font-weight:600;font-family:'STZhongsong','SimSun',serif;line-height:1.8;margin-bottom:20px">
+      市政府办公室关于开展 2026 年<br>安全生产大检查的通知</div>
+    <div class="doc-body" style="text-indent:0;margin-bottom:12px">各县（市、区）人民政府，市政府各部门：</div>
+    <div class="doc-body">为深入贯彻落实上级关于安全生产工作的决策部署，切实防范化解重大安全风险，经市政府同意，决定自 2026 年 8 月下旬起在全市范围内开展安全生产大检查。现将有关事项通知如下。</div>
+    <div class="doc-body">一、检查时间</div>
+    <div class="doc-body">2026 年 8 月 25 日至 9 月 30 日。</div>
+    <div class="doc-body">二、检查范围</div>
+    <div class="doc-body">危险化学品、建筑施工、消防、道路交通、燃气等重点行业领域。</div>
+    <div class="doc-body">三、工作要求</div>
+    <div class="doc-body">各单位要落实主体责任，建立问题台账，实行闭环管理，确保整改到位。</div>
+    <div class="doc-sign">市政府办公室<br>2026 年 8 月 19 日</div>
+  </div>
+  <div class="card" style="margin-top:14px"><div class="card-h"><h3>本次排版调整了 6 处</h3></div>
+  <div class="card-b" style="padding:0">
+    <table class="tbl"><tbody>
+    ${[['版头','未设置','按 GB/T 9704—2012 生成红头版头与发文字号'],
+       ['标题','单行居中','按发文机关＋事由＋文种回行，梯形排列'],
+       ['正文字体','宋体 小四','3 号仿宋体'],
+       ['行距','单倍行距','固定值 28 磅（每页 22 行）'],
+       ['层次序数','一、检查时间。','一、检查时间（删去句末标点，独立成行）'],
+       ['成文日期','二〇二六年八月十九日','2026年8月19日（阿拉伯数字将年、月、日标全）']]
+      .map(([k,a,b])=>`<tr><td style="width:88px;color:var(--text-3)">${k}</td>
+        <td style="width:190px"><span class="diff-del">${a}</span></td>
+        <td><span class="diff-add">${b}</span></td></tr>`).join('')}
+    </tbody></table></div></div>`
+ },
+ spell:{
+  ph:'粘贴需要检查的文稿…',
+  input:`为进一步加强机关做风建设，规范公文处理流程，经研究决定，自2026年9月1日起施行新的公文处理办法。各部门务必高度重视，安排专人负责，确保各项工作落到实处。相关材料截止8月28日前报送办公室，联系电话0571-8888 8888。会议共有参会人员35人，其中处级干部12名，会期2天。`,
+  params:[['检查强度','标准（错别字＋标点＋数字用法）|严格（增加用语规范与计量单位）'],['文本类型','公文|简报|新闻稿']],
+  res:()=>`<div class="card"><div class="card-h"><h3>共发现 4 处问题</h3>
+    <div style="margin-left:auto;display:flex;gap:6px">
+      <span class="tag r">错别字 1</span><span class="tag b">数字书写 1</span><span class="tag p">用语规范 2</span></div></div>
+    <div class="card-b" style="padding:0"><table class="tbl">
+    <thead><tr><th style="width:74px">类型</th><th style="width:150px">原文</th><th style="width:150px">建议</th><th>说明</th></tr></thead><tbody>
+    ${[['r','错别字','做风建设','作风建设','"作风"指思想工作和生活上表现出来的态度行为，此处应为"作风"'],
+       ['b','数字书写','0571-8888 8888','0571-88888888','联系电话中的意外空格可能导致复制或拨号错误，建议核对后统一书写'],
+       ['p','用语规范','相关材料截止8月28日前报送','相关材料请于8月28日前报送','“截止”与“前”重复，建议改为“请于……前”或“截至……”'],
+       ['p','用语规范','务必高度重视','请高度重视','平行文与下行文中"务必"语气偏硬，建议按机关行文习惯改为"请"']]
+      .map(([c,t,a,b,d])=>`<tr><td><span class="tag ${c}">${t}</span></td>
+        <td><span class="diff-del">${a}</span></td><td><span class="diff-add">${b}</span></td>
+        <td style="color:var(--text-2);font-size:12.5px">${d}</td></tr>`).join('')}
+    </tbody></table></div></div>`
+ },
+ polish:{
+  ph:'粘贴需要润色的文字…',
+  input:`我们这次的工作做得还是不错的，各个部门都很配合，问题解决得比较快，群众也比较满意。下一步我们打算继续做好这方面工作，把没做完的事情做完，争取做得更好一些。`,
+  params:[['润色模式','书面化（公文语体）|精简（压缩篇幅）|扩写（充实内容）'],['保留原意','严格保留|允许适度调整']],
+  res:()=>`<div class="res">
+    <h4>润色结果 · 书面化模式</h4>
+    <p style="font-family:'STFangsong','FangSong',serif;font-size:15.5px;line-height:2.1;text-indent:2em">
+    本阶段工作取得积极成效，各相关部门协同配合紧密，问题处置响应及时，群众满意度保持在较高水平。下一步，我们将持续巩固工作成果，对尚未办结的事项实行台账管理、逐项销号，推动各项工作提质增效。</p>
+    <h4>主要修改点</h4>
+    <ul>
+      <li><span class="diff-del">做得还是不错的</span> → <span class="diff-add">取得积极成效</span>　口语表述改为公文常用评价用语</li>
+      <li><span class="diff-del">都很配合</span> → <span class="diff-add">协同配合紧密</span>　补充程度状语，表述更具体</li>
+      <li><span class="diff-del">把没做完的事情做完</span> → <span class="diff-add">对尚未办结的事项实行台账管理、逐项销号</span>　抽象表述具体化为可执行的工作方法</li>
+      <li><span class="diff-del">争取做得更好一些</span> → <span class="diff-add">推动各项工作提质增效</span>　避免主观化表述</li>
+    </ul>
+    <p style="font-size:12.5px;color:var(--text-3);margin-top:14px">原文 78 字 → 润色后 112 字，语体已统一为公文书面语</p>
+  </div>`
+ },
+ read:{
+  file:{n:'关于进一步优化政务服务提升行政效能的实施意见.pdf', sz:'2.4 MB · 共 24 页', ic:'', c:''},
+  drop:'支持 PDF、Word、PPT、TXT，单个文件不超过 50 MB',
+  params:[['输出粒度','标准摘要|详细要点|一句话概括'],['是否保留原文页码','保留|不保留']],
+  tabs:['内容摘要','核心要点','结构大纲'],
+  res:i=>[
+   `<div class="res"><h4>内容摘要</h4>
+    <p>本文件是市政府为深化"放管服"改革、提升政务服务效能出台的综合性指导意见，共分四个部分、十八条。文件确立了"一件事一次办"的总体目标，要求到 2026 年底前实现市级政务服务事项网上可办率不低于 95%，企业开办、不动产登记等高频事项办理时限在现有基础上再压缩 30%。</p>
+    <p>文件同时对政务服务标准化、数据共享机制、窗口服务规范和监督评价体系作出具体安排，并明确自二〇二六年起在原集中申报窗口基础上增设补充申报窗口。</p>
+    <p style="font-size:12.5px;color:var(--text-3);margin-top:14px">原文 1.8 万字 → 摘要 268 字，压缩比 1.5%</p></div>`,
+   `<div class="res"><h4>核心要点</h4><ol>
+     <li><strong>总体目标</strong>（第 2 页）：2026 年底前网上可办率不低于 95%，全面推行"一件事一次办"</li>
+     <li><strong>时限压缩</strong>（第 5 页）：企业开办、不动产登记等 12 项高频事项办理时限再压缩 30%</li>
+     <li><strong>数据共享</strong>（第 9 页）：建立跨部门数据共享责任清单，原则上不得要求申请人重复提交</li>
+     <li><strong>窗口规范</strong>（第 12 页）：统一综合窗口设置标准，推行"前台综合受理、后台分类审批"</li>
+     <li><strong>申报窗口调整</strong>（第 14 页）：自 2026 年起增设补充申报窗口，每年 9 月 1 日至 15 日</li>
+     <li><strong>监督评价</strong>（第 20 页）：建立"好差评"制度，评价结果纳入年度绩效考核</li>
+   </ol></div>`,
+   `<div class="res"><h4>结构大纲</h4>
+    <ul style="line-height:2.2">
+      <li><strong>一、总体要求</strong>（第 1—3 页）<ul><li>指导思想</li><li>基本原则</li><li>工作目标</li></ul></li>
+      <li><strong>二、重点任务</strong>（第 4—15 页）<ul><li>（一）深化审批制度改革</li><li>（二）推进政务服务标准化</li><li>（三）强化数据共享应用</li><li>（四）优化申报受理机制</li></ul></li>
+      <li><strong>三、服务保障</strong>（第 16—19 页）<ul><li>窗口设置与人员配备</li><li>信息化支撑</li></ul></li>
+      <li><strong>四、组织实施</strong>（第 20—24 页）<ul><li>加强组织领导</li><li>建立监督评价机制</li><li>抓好宣传引导</li></ul></li>
+    </ul></div>`][i]
+ },
+ ocr:{
+  file:{n:'关于加强机关档案管理工作的通知（扫描件）.pdf', sz:'6.2 MB · 共 3 页', ic:'img', c:'y'},
+  drop:'支持 JPG、PNG、PDF 扫描件，单个文件不超过 30 MB',
+  params:[['识别模式','公文版式（保留段落层次）|纯文本'],['是否校正倾斜','自动校正|不处理']],
+  tabs:['识别结果','原图对照'],
+  res:i=>[
+   `<div class="res"><div class="doc-body" style="text-indent:0;font-weight:600;text-align:center;font-size:17px;margin-bottom:18px">
+      关于加强机关档案管理工作的通知</div>
+    <div class="doc-body" style="text-indent:0">机关各处室：</div>
+    <div class="doc-body">为进一步规范机关档案管理，确保档案资料完整、准确、系统、安全，根据《中华人民共和国档案法》及有关规定，结合本机关实际，现就加强档案管理工作通知如下：</div>
+    <div class="doc-body">一、明确归档范围。凡在本机关公务活动中形成的具有保存价值的文件材料，均应按规定归档。</div>
+    <div class="doc-body">二、规范归档时限。上年度形成的文件材料，应于本年度第一季度末前完成整理归档。</div>
+    <div class="doc-body">三、落实管理责任。各处室应确定一名兼职档案员，负责本处室文件材料的收集与移交。</div>
+    <div class="doc-sign">市政府办公室<br>2026 年 7 月 28 日</div>
+    <p style="font-size:12.5px;color:var(--text-3);margin-top:18px;padding-top:12px;border-top:1px solid var(--border-2)">
+      识别字数 386 字 · 平均置信度 98.2% · 有 1 处低置信度已用下划线标出，建议人工核对</p></div>`,
+   `<div class="empty"><span class="eic">${ic('img','ic ic-l')}</span>
+     <h4>原图对照</h4><p>正式环境中此处并排显示扫描原图与识别结果，支持逐段对照校验。<br>原型阶段不加载真实扫描件。</p></div>`][i]
+ },
+ asr:{
+  file:{n:'全市经济运行分析会（2026-08-18）.m4a', sz:'42.8 MB · 时长 58 分 12 秒', ic:'audio', c:'p'},
+  drop:'支持 MP3、WAV、M4A、MP4，单个文件不超过 500 MB',
+  params:[['是否区分发言人','自动区分|不区分'],['专业词表','政务通用词表|不启用']],
+  tabs:['转写文稿','发言统计'],
+  res:i=>[
+   `<div class="res">
+    ${[['00:00:12','发言人 1（主持）','各位同志，今天召开全市经济运行分析会，主要任务是分析上半年经济运行情况，研究部署下半年重点工作。首先请统计局通报上半年主要经济指标完成情况。'],
+       ['00:02:35','发言人 2（统计局）','上半年全市地区生产总值同比增长 5.8%，高于全省平均水平 0.6 个百分点。规模以上工业增加值增长 6.2%，固定资产投资增长 4.1%，社会消费品零售总额增长 5.3%。总体看，经济运行保持在合理区间。'],
+       ['00:08:47','发言人 3（发改局）','从我们掌握的情况看，主要问题集中在两个方面：一是部分重点项目推进偏慢，二是新增市场主体数量同比略有下降。建议下半年重点抓好项目开工率和营商环境优化。'],
+       ['00:15:20','发言人 1（主持）','刚才三个部门的通报都很实在。我强调三点：第一，要盯住全年目标不动摇；第二，重点项目要建立月调度机制；第三，各部门要在本月底前把下半年工作方案报上来。']]
+      .map(([t,s,c])=>`<div style="display:flex;gap:13px;padding:12px 0;border-bottom:1px solid var(--border-2)">
+        <span style="flex:none;width:100px"><span class="tag b">${s.split('（')[0]}</span>
+          <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-variant-numeric:tabular-nums">${t}</div></span>
+        <span style="flex:1;font-size:13.5px;line-height:1.85;color:var(--text-2)">${c}</span></div>`).join('')}
+    <p style="font-size:12.5px;color:var(--text-3);margin-top:14px">共识别 4 位发言人，转写 8,642 字 · 识别准确率 96.4%</p>
+    <div style="margin-top:14px;padding:12px 14px;background:var(--brand-l);border:1px solid var(--brand-l2);border-radius:var(--r);
+      display:flex;align-items:center;gap:10px;font-size:13px">
+      ${ic('info','ic ic-s')}<span style="flex:1">需要直接生成规范会议纪要？</span>
+      <button class="btn sm pri" onclick="goMinutesFromAsr()">携带转写结果生成会议纪要</button></div></div>`,
+   `<div class="res"><h4>发言统计</h4>
+    ${[['发言人 1（主持）',38,'22 分 10 秒'],['发言人 2（统计局）',24,'13 分 58 秒'],
+       ['发言人 3（发改局）',22,'12 分 46 秒'],['发言人 4（财政局）',16,'9 分 18 秒']]
+      .map(([n,p,t])=>`<div class="hbar"><div class="hh"><span class="nm">${n}</span>
+        <span class="vv">${p}% · ${t}</span></div>
+        <div class="tr"><div class="fl" style="width:${p}%"></div></div></div>`).join('')}</div>`][i]
+ }
+};
+
+/* =============== P04 文本型工作台 =============== */
+let wbState={run:0,done:0};
+ROUTES['tool-text']={
+  nav:'tools', crumb:c=>backCrumb('tools','AI 工具',c.tool.t),
+  html:c=>{
+    const d=TDEMO[c.tool.id];
+    return `<div class="wb">
+      <div class="wb-l">
+        <div class="wb-h">${ic(c.tool.ic)}<h3>${c.tool.t}</h3>
+          <div class="rt"><button class="btn sm gho" onclick="fillDemo()">填入示例文本</button></div></div>
+        <div class="wb-b">
+          <div class="fld"><label>待处理文本<span class="req">*</span></label>
+            <textarea class="ta" id="wbIn" rows="13" placeholder="${d.ph}"></textarea></div>
+          ${d.params.map(([n,o],i)=>`<div class="fld"><label>${n}</label>
+            <select class="sel" id="p${i}">${o.split('|').map(v=>`<option>${v}</option>`).join('')}</select></div>`).join('')}
+          <div class="fld"><label>或上传文件</label>
+            <div class="drop" onclick="toast('原型阶段不处理真实文件，请使用示例文本')" style="padding:20px">
+              <b style="font-size:13px">点击或拖拽文件到此处</b>
+              <p style="margin-top:3px">支持 Word、TXT，不超过 20 MB</p></div></div>
+        </div>
+        <div class="wb-f">
+          <button class="btn pri lg" id="wbRun" onclick="wbRun('${c.tool.id}')" style="flex:1">
+            ${ic('polish','ic ic-s')}开始处理</button>
+          <button class="btn lg" onclick="$('#wbIn').value='';wbReset()">清空</button>
+        </div>
+      </div>
+      <div class="wb-r">
+        <div class="wb-h" style="background:var(--surface)"><h3>处理结果</h3>
+          <div class="rt" id="wbActs"></div></div>
+        <div class="wb-b" id="wbOut">${wbEmpty()}</div>
+      </div>
+    </div>`;
+  }
+};
+function wbEmpty(){
+  return `<div class="empty"><span class="eic">${ic('doc','ic ic-l')}</span>
+    <h4>暂无结果</h4><p>在左侧填入文本并选择参数后，点击下方按钮开始处理</p></div>`;
+}
+function wbReset(){ $('#wbOut').innerHTML=wbEmpty(); $('#wbActs').innerHTML=''; }
+function fillDemo(){
+  const t=ctx.tool, d=TDEMO[t.id];
+  $('#wbIn').value=d.input; toast('已填入示例文本','ok');
+}
+async function wbRun(id){
+  const inp=$('#wbIn');
+  if(!inp.value.trim()) return toast('请先填入待处理文本，可点击右上角「填入示例文本」','warn');
+  const b=$('#wbRun'); b.disabled=true; b.innerHTML='<span class="spin"></span>正在处理…';
+  const running={align:'公文版式规则引擎正在校验…',spell:'规则词库与豆包模型正在协同检查…',polish:'豆包文本模型正在润色…'}[id];
+  $('#wbOut').innerHTML=`<div style="padding:8px 0">
+    <div style="display:flex;align-items:center;gap:9px;color:var(--text-3);font-size:13px;margin-bottom:18px">
+      <span class="spin"></span>${running}</div>
+    ${[96,88,92,74,84,90,66].map(w=>`<div class="skel" style="width:${w}%;margin-bottom:12px"></div>`).join('')}</div>`;
+  await sleep(1500);
+  $('#wbOut').innerHTML=TDEMO[id].res();
+  $('#wbActs').innerHTML=`<button class="btn sm" onclick="toast('已复制到剪贴板','ok')">${ic('copy','ic ic-s')}复制</button>
+    <button class="btn sm" onclick="toast('原型阶段不生成真实文件','warn')">${ic('dl','ic ic-s')}下载</button>
+    <button class="btn sm" onclick="wbRun('${id}')">${ic('refresh','ic ic-s')}重新生成</button>`;
+  b.disabled=false; b.innerHTML=ic('refresh','ic ic-s')+'重新处理';
+  toast('处理完成','ok');
+}
+
+/* =============== P05 文件型工作台 =============== */
+let ftTab=0, ftLoaded=false;
+ROUTES['tool-file']={
+  nav:'tools', crumb:c=>backCrumb('tools','AI 工具',c.tool.t),
+  html:c=>{
+    const d=TDEMO[c.tool.id];
+    return `<div class="wb">
+      <div class="wb-l" style="width:38%;min-width:340px">
+        <div class="wb-h">${ic(c.tool.ic)}<h3>${c.tool.t}</h3></div>
+        <div class="wb-b">
+          <div class="fld"><label>上传文件<span class="req">*</span></label>
+            <div id="ftDrop">${ftLoaded?ftFile(d):`<div class="drop" onclick="ftPick()">
+              <span class="dic">${ic('up','ic ic-l')}</span>
+              <b>点击选择文件，或拖拽到此处</b><p>${d.drop}</p></div>`}</div></div>
+          ${d.params.map(([n,o],i)=>`<div class="fld"><label>${n}</label>
+            <select class="sel">${o.split('|').map(v=>`<option>${v}</option>`).join('')}</select></div>`).join('')}
+        </div>
+        <div class="wb-f">
+          <button class="btn pri lg" id="ftRun" onclick="ftRun('${c.tool.id}')" style="flex:1">
+            ${ic('polish','ic ic-s')}开始处理</button>
+        </div>
+      </div>
+      <div class="wb-r">
+        <div class="tabs" id="ftTabs">${d.tabs.map((t,i)=>`<button class="tab ${i===ftTab?'on':''}" onclick="ftSwitch(${i},'${c.tool.id}')">${t}</button>`).join('')}</div>
+        <div class="wb-b" id="ftOut">${ftEmpty()}</div>
+      </div>
+    </div>`;
+  }
+};
+function ftEmpty(){
+  return `<div class="empty"><span class="eic">${ic('up','ic ic-l')}</span>
+    <h4>等待处理</h4><p>请先在左侧上传文件，处理完成后结果将显示在这里</p></div>`;
+}
+function ftFile(d){
+  const f=d.file;
+  return `<div class="file-i"><span class="fic ${f.c||'w'}">${ic(f.ic||'doc','ic ic-l')}</span>
+    <span class="fi"><b>${f.n}</b><span>${f.sz}</span></span>
+    <button class="aicon" onclick="ftLoaded=false;render()" title="移除">${ic('x','ic ic-s')}</button></div>`;
+}
+function ftPick(){ ftLoaded=true; render(); toast('已载入示例文件','ok'); }
+function ftSwitch(i,id){
+  if(!ftDone) return toast('请先处理文件','warn');
+  ftTab=i; $$('#ftTabs .tab').forEach((t,j)=>t.classList.toggle('on',j===i));
+  $('#ftOut').innerHTML=TDEMO[id].res(i);
+}
+let ftDone=false;
+async function ftRun(id){
+  if(!ftLoaded) return toast('请先上传文件，可点击上传区载入示例文件','warn');
+  const b=$('#ftRun'); b.disabled=true; b.innerHTML='<span class="spin"></span>处理中…';
+  const steps={
+    read:['文档解析服务正在提取内容…','正在识别标题与段落层级…','豆包文本模型正在生成摘要…'],
+    ocr:['正在完成图像预处理与倾斜校正…','OCR 识别服务正在提取文字…','正在还原段落层级并标注低置信度内容…'],
+    asr:['正在完成音频预处理…','豆包 ASR 服务正在转写…','正在区分发言人并生成时间轴…']
+  }[id];
+  for(let i=0;i<steps.length;i++){
+    $('#ftOut').innerHTML=`<div style="padding:8px 0">
+      <div style="display:flex;align-items:center;gap:9px;color:var(--text-3);font-size:13px;margin-bottom:18px">
+        <span class="spin"></span>${steps[i]}（${i+1}/3）</div>
+      ${[94,86,90,72,88].map(w=>`<div class="skel" style="width:${w}%;margin-bottom:12px"></div>`).join('')}</div>`;
+    await sleep(700);
+  }
+  ftDone=true; ftTab=0;
+  $$('#ftTabs .tab').forEach((t,j)=>t.classList.toggle('on',j===0));
+  $('#ftOut').innerHTML=TDEMO[id].res(0);
+  b.disabled=false; b.innerHTML=ic('polish','ic ic-s')+'重新处理';
+  toast('处理完成','ok');
+}
+function goMinutesFromAsr(){
+  flowState.transcript={file:TDEMO.asr.file.n,text:'已转写 8,642 字，并完成时间轴和发言人区分'};
+  mLoaded=true; mDone=false; mTab=0;
+  go('minutes',{from:'asr'}); toast('已携带转写结果，无需重复上传','ok');
+}
+</script>
+<script>
+/* =============== P06 AI 助手广场 =============== */
+ROUTES.assist={
+  nav:'assist', crumb:()=>crumbOf('AI 助手'),
+  html:()=>{
+    const grp=['写作类','审核类','事务类'];
+    return `<div class="pad-lg">
+      <div class="sq-top">
+        <div><h2>AI 助手</h2><p>带角色设定、可挂知识库、多轮对话，产出可继续编辑的成稿</p></div>
+        <div class="search">${ic('search','ic ic-s')}<input class="inp" id="aq" placeholder="搜索助手名称"></div>
+      </div>
+      ${grp.map(g=>{
+        const l=ASSIST.filter(a=>a.g===g), s=ASSIST_SOON.filter(a=>a.g===g);
+        return `<div class="sec-t">${g}<span class="cnt">${l.length} 个可用${s.length?` · ${s.length} 个即将上线`:''}</span><span class="ln"></span></div>
+        <div class="sq-grid">
+          ${l.map(a=>`<button class="tool" data-t="${a.t}" onclick="go('${a.v==='form'?'assist-form':a.v}',{a:ASSIST.find(x=>x.id==='${a.id}')})">
+            <span class="tic ${a.c}">${ic(a.ic,'ic ic-l')}</span>
+            <span class="tb"><h4>${a.t}</h4><p>${a.d}</p></span></button>`).join('')}
+          ${s.map(a=>`<div class="tool soon" onclick="toast('「${a.t}」即将上线','warn')">
+            <span class="tic">${ic(a.ic,'ic ic-l')}</span>
+            <span class="tb"><h4>${a.t}<span class="tag">即将上线</span></h4><p>${a.d}</p></span></div>`).join('')}
+        </div>`}).join('')}
+    </div>`;
+  },
+  init(){ $('#aq').oninput=e=>{const q=e.target.value.trim();
+    $$('.tool:not(.soon)').forEach(el=>el.style.display=(!q||el.dataset.t.includes(q))?'':'none');}; }
+};
+
+/* =============== P07 要素表单 =============== */
+const AFORM={
+ gw:{tip:'填写要素后生成初稿，也可以直接跳过进入对话',
+  f:[['文种','sel','通知|请示|报告|函|批复|意见'],['主送单位','inp','各县（市、区）人民政府，市政府各部门'],
+     ['事由 / 主题','ta','开展 2026 年安全生产大检查'],['篇幅','sel','中等（800—1200 字）|简短（500 字以内）|详细（1500 字以上）'],
+     ['行文语气','sel','规范平实（默认）|强调部署|通报批评']]},
+ zh:{tip:'先明确材料类型和汇报对象，生成的结构会更贴合',
+  f:[['材料类型','sel','工作总结|工作计划|情况汇报|经验做法'],['汇报对象','inp','市政府党组会'],
+     ['时间范围','sel','2026 年上半年|2026 年第三季度|2026 年全年'],
+     ['重点内容','ta','政务服务改革成效、存在问题、下半年安排'],['篇幅','sel','3000 字左右|1500 字左右|5000 字以上']]},
+ jh:{tip:'讲话稿的场合和时长直接决定结构，建议填写',
+  f:[['讲话场合','sel','全市工作部署会|专题座谈会|开工仪式|表彰大会'],['讲话人职务','inp','市政府分管副市长'],
+     ['讲话时长','sel','15 分钟（约 2500 字）|8 分钟（约 1300 字）|30 分钟（约 5000 字）'],
+     ['听众构成','inp','各县区政府分管负责同志、市直有关部门负责人'],
+     ['重点强调','ta','压实责任、建立台账、闭环整改']]},
+ xc:{tip:'不同发布渠道的语体差异较大',
+  f:[['稿件类型','sel','政务新闻稿|政策解读稿|新媒体推文'],['发布渠道','sel','政府门户网站|政务微信公众号|市级主流媒体'],
+     ['主题','ta','全市政务服务"一件事一次办"改革成效'],['字数','sel','800 字左右|500 字左右|1500 字左右']]},
+ ms:{tip:'粘贴原始工单内容，助手会自动匹配政策依据',
+  f:[['工单来源','sel','12345 政务服务便民热线|人民网领导留言板|信访件'],
+     ['诉求内容','ta','反映所在小区周边道路施工噪音扰民，多次拨打热线未得到解决，要求明确施工时间并加强监管。'],
+     ['承办单位','inp','市城管局、市住建局'],['答复口径','sel','已办结并说明处理结果|正在办理并告知时限|不属于本单位职责范围']]}
+};
+ROUTES['assist-form']={
+  nav:'assist', crumb:c=>backCrumb('assist','AI 助手',c.a.t),
+  html:c=>{
+    const d=AFORM[c.a.id]||AFORM.gw;
+    return `<div class="pad-lg" style="max-width:720px">
+      <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:22px">
+        <span class="tic ${c.a.c}" style="width:46px;height:46px;border-radius:10px;display:grid;place-items:center;
+          background:var(--brand-l);color:var(--brand);flex:none">${ic(c.a.ic,'ic ic-xl')}</span>
+        <div><h2 style="font-size:19px;font-weight:600">${c.a.t}</h2>
+          <p style="font-size:13px;color:var(--text-3);margin-top:3px">${c.a.d}</p></div>
+      </div>
+      ${flowState.handoff?`<div class="card" style="margin-bottom:14px;border-color:var(--brand-l2)">
+        <div class="card-h">${ic('quote')}<h3>已携带知识库问答上下文</h3><span class="tag b" style="margin-left:auto">${flowState.handoff.sources.length} 个引用</span></div>
+        <div class="card-b" style="font-size:12.5px;line-height:1.8"><b>用户问题：</b>${esc(flowState.handoff.question)}
+          <p style="color:var(--text-3);margin-top:5px">生成初稿时将把该答案和引用文件作为参考素材，不会丢失来源信息。</p></div></div>`:''}
+      <div class="card"><div class="card-h">${ic('align')}<h3>写作要素</h3>
+        <span class="tag" style="margin-left:auto">${d.tip}</span></div>
+        <div class="card-b">
+          ${d.f.map(([n,t,v],i)=>{
+            if(t==='sel') return `<div class="fld"><label>${n}</label>
+              <select class="sel" id="af${i}" data-label="${n}">${v.split('|').map(o=>`<option>${o}</option>`).join('')}</select></div>`;
+            if(t==='ta') return `<div class="fld"><label>${n}<span class="req">*</span></label>
+              <textarea class="ta" id="af${i}" data-label="${n}" rows="3">${flowState.handoff&&/(事由|主题|重点内容)/.test(n)?flowState.handoff.question:v}</textarea></div>`;
+            return `<div class="fld"><label>${n}<span class="req">*</span></label>
+              <input class="inp" id="af${i}" data-label="${n}" value="${v}"></div>`;
+          }).join('')}
+          <div class="fld" style="margin-bottom:0">
+            <label>知识库素材</label>
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--border);
+              border-radius:var(--r);background:var(--surface-2)">
+              <button class="swt on" id="kbSwitch" onclick="this.classList.toggle('on');
+                toast(this.classList.contains('on')?'已开启知识库素材':'已关闭，将仅依据模型自身知识生成')"></button>
+              <span style="flex:1;font-size:13px">生成时参考单位知识库中的政策文件与历史材料
+                <span style="display:block;font-size:11.5px;color:var(--text-3);margin-top:2px">
+                  当前挂载：政策法规库、本单位制度库、会议纪要与文件库</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:18px">
+        <button class="btn pri lg" style="flex:1" onclick="startAssistant(false)">${ic('pen','ic ic-s')}生成初稿</button>
+        <button class="btn lg" onclick="startAssistant(true)">跳过，直接对话</button>
+      </div>
+    </div>`;
+  }
+};
+
+/* =============== P08 写作工作台 =============== */
+const DRAFT=`<div class="ti">市政府办公室关于开展 2026 年<br>安全生产大检查的通知</div>
+<div class="sub">市府办发〔2026〕47 号</div>
+<p style="text-indent:0">各县（市、区）人民政府，市政府各部门：</p>
+<p>为深入贯彻落实上级关于安全生产工作的决策部署，切实防范化解重大安全风险，坚决遏制各类事故发生，经市政府同意，决定自 2026 年 8 月下旬起在全市范围内组织开展安全生产大检查。现将有关事项通知如下。</p>
+<h5>一、检查时间</h5>
+<p>2026 年 8 月 25 日至 9 月 30 日，分动员部署、自查自纠、集中检查、整改提升四个阶段推进。</p>
+<h5>二、检查范围</h5>
+<p>危险化学品、建筑施工、消防、道路交通、燃气、特种设备、人员密集场所等重点行业领域，重点检查安全生产责任制落实、隐患排查治理、应急预案演练和从业人员培训等情况。</p>
+<h5>三、工作要求</h5>
+<p>（一）压实工作责任。各县（市、区）人民政府对本行政区域内安全生产大检查工作负总责，各行业主管部门按照"三管三必须"要求，抓好本行业领域检查工作。</p>
+<p>（二）建立问题台账。对检查发现的隐患问题，实行清单化管理、闭环式整改，做到问题不查清不放过、整改不到位不放过、责任不落实不放过。</p>
+<p>（三）强化结果运用。检查情况纳入年度安全生产目标管理考核，对工作推进不力、隐患整改敷衍的，严肃追究相关责任。</p>
+<p style="text-indent:0">请各单位于 2026 年 9 月 30 日前将检查工作总结报送市政府办公室。</p>
+<p style="text-indent:0">特此通知。</p>
+<div class="sign">市政府办公室<br>2026 年 8 月 19 日</div>`;
+let wMsgs=[];
+function buildDraft(a,payload,handoff){
+  if(a.id==='gw'&&handoff){
+    const subject=(handoff.question||'相关工作').replace(/[？?]/g,'');
+    const sources=handoff.sources.map(s=>`《${s.t}》`).join('、');
+    return {title:`市政府办公室关于${subject}的通知`,html:`<div class="ti">市政府办公室关于${esc(subject)}的通知</div>
+      <p style="text-indent:0">各县（市、区）人民政府，市政府各部门：</p>
+      <p>为做好${esc(subject)}相关工作，根据${esc(sources||'单位知识库文件')}，现将有关事项通知如下。</p>
+      <h5>一、主要依据</h5><p>${esc(handoff.answer)}</p>
+      <h5>二、工作要求</h5><p>各单位要结合实际认真抓好落实，对涉及时限、材料和办理程序的内容再次与原文核对。</p>
+      <p style="text-indent:0">特此通知。</p><div class="sign">市政府办公室<br>2026 年 8 月 19 日</div>`};
+  }
+  if(a.id==='zh') return {title:'2026 年上半年政务服务改革工作情况汇报',html:`<div class="ti">2026 年上半年政务服务改革<br>工作情况汇报</div><p>今年以来，我市紧扣企业和群众办事需求，持续推进“一件事一次办”改革，政务服务标准化、规范化、便利化水平稳步提升。</p><h5>一、主要成效</h5><p>高频事项网上办理流程进一步压减，综合窗口受理机制逐步完善，部门间数据共享协同不断加强。</p><h5>二、存在问题</h5><p>部分事项办事指南更新不够及时，跨部门业务协同仍需加强。</p><h5>三、下一步安排</h5><p>建立问题台账和销号机制，持续优化办事流程，推动改革任务落地见效。</p>`};
+  if(a.id==='jh') return {title:'在全市安全生产工作部署会上的讲话',html:`<div class="ti">在全市安全生产工作部署会上的讲话</div><p style="text-indent:0">同志们：</p><p>今天召开这次会议，主要任务是深入分析当前安全生产形势，对下一阶段重点工作再安排、再部署。</p><h5>一、提高政治站位，压紧压实责任</h5><p>各地各部门要严格落实“三管三必须”要求，做到守土有责、守土负责。</p><h5>二、聚焦重点领域，全面排查隐患</h5><p>对发现的问题建立清单，明确责任单位、整改措施和完成时限。</p><p>我就讲这些，谢谢大家。</p>`};
+  if(a.id==='xc') return {title:'我市持续深化“一件事一次办”改革',html:`<div class="ti">我市持续深化“一件事一次办”改革</div><p>近日，我市围绕企业和群众全生命周期办事需求，持续深化“一件事一次办”改革，通过流程再造、数据共享和服务前移，推动政务服务提质增效。</p><p>目前，高频事项已逐步实现一表申请、一套材料、一次提交，办事环节和时限进一步压减。</p><p>下一步，我市将继续完善跨部门协同机制，让改革成果更好惠及企业群众。</p>`};
+  return {title:'市政府办公室关于开展 2026 年安全生产大检查的通知',html:DRAFT};
+}
+function startAssistant(skip){
+  const a=ctx.a||ASSIST[0], payload={};
+  $$('[id^="af"]').forEach(el=>payload[el.dataset.label]=el.value.trim());
+  if(!skip&&Object.values(payload).some(v=>!v)) return toast('请先补全必填的写作要素','warn');
+  const useKb=$('#kbSwitch')?$('#kbSwitch').classList.contains('on'):true;
+  const built=skip?{title:'未命名文稿',html:'<div class="empty"><h4>尚未生成初稿</h4><p>在左侧说明写作需求后，文稿将在这里生成。</p></div>'}:buildDraft(a,payload,flowState.handoff);
+  flowState.draft={assistantId:a.id,payload,useKb,handoff:flowState.handoff,title:built.title,html:built.html,version:skip?0:1};
+  flowState.review=null; flowState.handoff=null;
+  wMsgs=skip?[{r:'a',t:`你好，我是<b>${a.t}</b>。请直接说明要写什么，我会生成初稿并持续修改。`}]:[
+    {r:'a',t:`已根据「${a.t}」的要素生成第 1 版初稿。${useKb?'已带入所选知识库素材。':'本次未使用知识库素材。'}`},
+    {r:'a',t:'右侧文稿可直接编辑；也可在这里提出修改意见，每次修改都会生成新版本。'}];
+  if(!skip) APP.generated++;
+  go('write',{a});
+}
+function ensureDraft(a){
+  if(flowState.draft) return flowState.draft;
+  const built=buildDraft(a,{},null); flowState.draft={assistantId:a.id,payload:{},useKb:true,handoff:null,title:built.title,html:built.html,version:1};
+  wMsgs=[{r:'a',t:'已恢复该会话的最新文稿。'}]; return flowState.draft;
+}
+ROUTES.write={
+  nav:'assist', crumb:c=>backCrumb('assist','AI 助手',(c.a?c.a.t:'公文起草助手')+' · 写作工作台'),
+  html:c=>{
+    const a=c.a||ASSIST[0];
+    const d=ensureDraft(a);
+    return `<div class="wb">
+      <div class="chat-side">
+        <div class="wb-h">${ic(a.ic)}<h3>${a.t}</h3>
+          <div class="rt"><span class="tag ${d.useKb?'g':''}"><span class="dot"></span>${d.useKb?'已挂载知识库':'未使用知识库'}</span></div></div>
+        <div class="cs-body" id="wBody">${wMsgs.map(m=>m.r==='u'
+          ?`<div class="cs-msg u"><div class="b">${m.t}</div></div>`
+          :`<div class="cs-msg a"><div class="b">${m.t}</div></div>`).join('')}</div>
+        <div style="padding:12px 14px;border-top:1px solid var(--border-2)">
+          <div class="cmp-box"><textarea id="wIn" rows="2" style="height:44px" placeholder="告诉我要调整哪一部分…"></textarea>
+            <div class="cmp-bar"><span class="kb">回车发送</span>
+              <button class="send" onclick="wSend()">${ic('send','ic ic-s')}</button></div></div>
+        </div>
+      </div>
+      <div class="wb-r" style="background:var(--surface-2)">
+        <div class="ed-bar">
+          <button class="btn sm" onclick="toast('已切换为可编辑状态，直接点击正文修改','ok')">${ic('pen','ic ic-s')}编辑</button>
+          <button class="btn sm" onclick="rewriteDraftParagraph()">${ic('refresh','ic ic-s')}整段重写</button>
+          <button class="btn sm" onclick="sendToReview()">${ic('shield','ic ic-s')}送校核助手</button>
+          <span class="wc" id="wc">正文 512 字</span>
+          <button class="btn sm" onclick="toast('已复制全文','ok')">${ic('copy','ic ic-s')}复制</button>
+          <button class="btn sm pri" onclick="toast('原型阶段不生成真实文件','warn')">${ic('dl','ic ic-s')}导出 Word</button>
+        </div>
+        <div class="editor"><div class="paper" id="paper" contenteditable="true" spellcheck="false">${d.html}</div></div>
+      </div>
+    </div>`;
+  },
+  init(){
+    const p=$('#paper');
+    const upd=()=>{ $('#wc').textContent='正文 '+(p.innerText.replace(/\s/g,'').length)+' 字'; };
+    p.oninput=()=>{ flowState.draft.html=p.innerHTML; upd(); }; upd();
+    $('#wIn').onkeydown=e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); wSend(); } };
+  }
+};
+async function wSend(){
+  const ta=$('#wIn'); const t=(ta.value||'').trim();
+  if(!t) return toast('请输入修改意见','warn');
+  ta.value='';
+  wMsgs.push({r:'u',t:esc(t)});
+  const b=$('#wBody');
+  b.innerHTML+=`<div class="cs-msg u"><div class="b">${esc(t)}</div></div>
+    <div class="cs-msg a" id="wLoad"><div class="b"><span class="spin" style="display:inline-block;vertical-align:-2px"></span> 正在修改…</div></div>`;
+  b.scrollTop=b.scrollHeight;
+  await sleep(1200);
+  const p=$('#paper');
+  if(flowState.draft.version===0){
+    const built=buildDraft(ASSIST.find(a=>a.id===flowState.draft.assistantId)||ASSIST[0],flowState.draft.payload||{},flowState.draft.handoff);
+    p.innerHTML=built.html; flowState.draft.title=built.title;
+  }else if(/(10 月 10 日|10月10日|报送时限)/.test(t)&&p.innerHTML.includes('9 月 30 日')){
+    p.innerHTML=p.innerHTML.replaceAll('9 月 30 日','10 月 10 日');
+  }else if(/(三管三必须|工作要求|更具体)/.test(t)&&!p.innerText.includes('分类建立台账')){
+    const ps=$$('p',p), target=ps.find(x=>x.innerText.includes('工作责任'))||ps.at(-2)||ps.at(-1);
+    if(target) target.innerHTML+=' 同时，要分类建立问题台账，明确责任单位、整改措施和完成时限，实行销号管理。';
+  }else{
+    const ps=$$('p',p), target=ps.find(x=>x.innerText.length>45)||ps[0];
+    if(target) target.innerHTML+=` <span style="background:var(--brand-l)">已根据修改意见补充完善相关表述。</span>`;
+  }
+  flowState.draft.html=p.innerHTML; flowState.draft.version++;
+  $('#wc').textContent='正文 '+p.innerText.replace(/\s/g,'').length+' 字 · V'+flowState.draft.version;
+  const rep=`已完成修改，右侧文稿已同步更新为 <b>V${flowState.draft.version}</b>。你可继续修改，或将当前版本送去校核。`;
+  wMsgs.push({r:'a',t:rep});
+  $('#wLoad').outerHTML=`<div class="cs-msg a"><div class="b">${rep}</div></div>`;
+  b.scrollTop=b.scrollHeight;
+}
+function rewriteDraftParagraph(){
+  const p=$('#paper'), ps=$$('p',p), target=ps.find(x=>x.innerText.length>55)||ps[0];
+  if(!target) return toast('当前没有可重写的正文段落','warn');
+  target.innerHTML='围绕工作目标，各单位要进一步细化任务、明确责任、完善机制，以清单化、项目化方式推动各项措施落地见效。';
+  flowState.draft.html=p.innerHTML; flowState.draft.version++;
+  $('#wc').textContent='正文 '+p.innerText.replace(/\s/g,'').length+' 字 · V'+flowState.draft.version;
+  toast('已重写一个正文段落并生成新版本','ok');
+}
+</script>
+<script>
+/* =============== P09 公文校核工作台 =============== */
+const DEFAULT_ISS=[
+ {c:'pol', t:'政治表述', tc:'p', loc:'正文第一段',
+  old:'认真落实中央、省、市各项决策部署', new:'认真落实党中央、国务院和省委、省政府、市委、市政府各项决策部署',
+  risk:'"中央"系简称，正式公文中提及党中央、国务院应使用全称；省、市两级也应区分党委与政府，不得笼统合并表述。',
+  basis:'《党政机关公文处理工作条例》第十九条 · 中央有关规范性表述要求'},
+ {c:'typo', t:'文字差错', tc:'r', loc:'正文第一段',
+  old:'做风建设', new:'作风建设',
+  risk:'"做"与"作"混用。"作风"指思想、工作和生活上表现出来的态度与行为，此处应用"作"。',
+  basis:'《现代汉语词典》（第 7 版）· 常见易混字词表'},
+ {c:'word', t:'用语规范', tc:'y', loc:'正文第二段',
+  old:'务必高度重视', new:'请高度重视',
+  risk:'"务必"语气过硬，多用于紧急指令性文件。本件为印发类通知，按机关行文惯例宜用"请"。',
+  basis:'本单位《机关公文处理工作办法》第二十二条'},
+ {c:'typo', t:'文字差错', tc:'r', loc:'正文第二段',
+  old:'截止 8 月 28 日', new:'截至 8 月 28 日',
+  risk:'"截止"是动词，表示到某期限停止；"截至"是介词，表示到某时间为止，后接时间点。此处后接日期，应用"截至"。',
+  basis:'《党政机关公文格式》GB/T 9704—2012 · 语言文字规范'},
+ {c:'word', t:'用语规范', tc:'y', loc:'正文第二段',
+  old:'希望各单位', new:'各单位要',
+  risk:'本件为下行文，"希望"属商洽语气，用于上行文或平行文更为妥当，下行文中应使用要求性表述。',
+  basis:'本单位《机关公文处理工作办法》第二十二条'},
+ {c:'fmt', t:'格式规范', tc:'b', loc:'附件说明',
+  old:'附：2026 年全市政务公开工作要点', new:'附件：2026 年全市政务公开工作要点',
+  risk:'附件说明应使用"附件："，且需在正文下空一行、左空二字标注，附件名称后不加标点符号。',
+  basis:'《党政机关公文格式》GB/T 9704—2012 第 7.3.4 条'}
+];
+let ISS=DEFAULT_ISS.map(x=>({...x}));
+let reviewState=null;
+const DEFAULT_REVIEW_HTML=`<div class="ti">市政府办公室关于印发《2026 年全市<br>政务公开工作要点》的通知</div>
+  <p style="text-indent:0">各县（市、区）人民政府，市政府各部门：</p>
+  <p>《2026 年全市政务公开工作要点》已经市政府同意，现印发给你们，请结合实际认真贯彻落实。为进一步加强机关做风建设，提高政务公开工作水平，各级各部门要认真落实中央、省、市各项决策部署，切实增强做好政务公开工作的责任感和紧迫感。</p>
+  <p>各单位务必高度重视，安排专人负责，明确工作任务和完成时限，确保各项任务落到实处。有关工作落实情况请于截止 8 月 28 日前报送市政府办公室。希望各单位在工作中加强沟通协调，及时反映推进过程中遇到的困难和问题。</p>
+  <p style="text-indent:0">　附：2026 年全市政务公开工作要点</p>
+  <div class="sign" style="text-align:right;margin-top:30px;font-family:'STFangsong','FangSong',serif;line-height:2.1">市政府办公室<br>2026 年 8 月 19 日</div>`;
+let iState=ISS.map(()=>0); // 0未处理 1已采纳 2已忽略
+function draftIssues(html){
+  const candidates=[
+    {c:'pol',t:'政治表述风险',tc:'p',loc:'正文第一部分',old:'上级关于安全生产工作的决策部署',new:'党中央、国务院关于安全生产工作的决策部署',risk:'“上级”指代范围不明确。建议根据实际政策依据补充准确主体，不得仅凭模型建议定稿。',basis:'政治表述规范词库 · 需人工对照原文'},
+    {c:'word',t:'内部逻辑',tc:'y',loc:'结尾报送时限',old:'请各单位于 2026 年 9 月 30 日前',new:'请各单位于 2026 年 10 月 10 日前',risk:'报送时限与检查结束时间同日，可能无法完成汇总。新日期仍需业务人员确认。',basis:'文稿内部时间逻辑检查'},
+    {c:'word',t:'用语规范',tc:'y',loc:'工作要求',old:'做到问题不查清不放过、整改不到位不放过、责任不落实不放过',new:'做到问题查清、整改到位、责任落实',risk:'连续否定式表述较长，可在不改变原意的前提下精简。',basis:'本单位公文语言风格规则'},
+    {c:'word',t:'可执行性',tc:'y',loc:'工作要求',old:'各单位要结合实际认真抓好落实',new:'各单位要明确责任人、完成时限和反馈方式，逐项抓好落实',risk:'原表述较为概括，缺少可执行要素。',basis:'本单位公文可操作性检查规则'},
+    {c:'word',t:'表述精简',tc:'y',loc:'正文',old:'持续深化“一件事一次办”改革，通过流程再造、数据共享和服务前移',new:'深化“一件事一次办”改革，推进流程再造、数据共享和服务前移',risk:'连续使用“持续”类程度词时应注意精简。',basis:'公文语言简洁性检查规则'}
+  ];
+  const found=candidates.filter(x=>html.includes(x.old));
+  if(found.length) return found;
+  const d=document.createElement('div'); d.innerHTML=html; const p=d.querySelector('p');
+  if(!p||p.textContent.trim().length<12) return [];
+  const old=p.textContent.trim().slice(0,28);
+  return [{c:'word',t:'人工复核',tc:'y',loc:'正文第一段',old,new:old,risk:'本稿暂未命中确定性规则，仍需人工复核事实、数据、称谓与政策依据。',basis:'人工复核必检项'}];
+}
+function sendToReview(){
+  const p=$('#paper'); if(!p) return;
+  flowState.draft.html=p.innerHTML;
+  reviewState={title:flowState.draft.title,html:flowState.draft.html,version:flowState.draft.version};
+  flowState.review=reviewState; ISS=draftIssues(reviewState.html); iState=ISS.map(()=>0);
+  go('review');
+}
+function mkSpan(i){
+  const s=iState[i], d=ISS[i];
+  if(s===1) return `<span class="mk done" data-i="${i}">${d.new}</span>`;
+  if(s===2) return `<span data-i="${i}">${d.old}</span>`;
+  return `<span class="mk ${d.c}" data-i="${i}" onclick="focusIss(${i})">${d.old}</span>`;
+}
+function rvDoc(){
+  let html=(reviewState&&reviewState.html)||DEFAULT_REVIEW_HTML;
+  ISS.forEach((d,i)=>{ html=html.replace(d.old,mkSpan(i)); });
+  return `<div class="rv-paper">${html}</div>`;
+}
+function rvStats(){
+  const left=iState.filter(s=>s===0).length;
+  const cnt=c=>ISS.filter((d,i)=>d.c===c&&iState[i]===0).length;
+  const accepted=iState.filter(s=>s===1).length, ignored=iState.filter(s=>s===2).length, done=accepted+ignored;
+  const v=left===0&&ignored===0
+    ?`<div class="verdict" style="background:var(--ok-l);border-color:#CDE7D7;color:var(--ok)">
+        ${ic('check','ic ic-l')}<b>建议已全部采纳</b><span style="font-size:12.5px">仍需办文人员完成最终复核</span></div>`
+    :left===0
+    ?`<div class="verdict" style="background:var(--warn-l);border-color:#F3E0BE;color:var(--warn)">
+        ${ic('warn','ic ic-l')}<b>已处理，仍有 ${ignored} 项风险</b><span style="font-size:12.5px">已忽略项不等于校核通过，需人工确认</span></div>`
+    :`<div class="verdict">${ic('warn','ic ic-l')}<b>有风险待修改</b>
+        <span style="font-size:12.5px">发现 ${ISS.length} 项问题，待处理 ${left} 项</span></div>`;
+  return v+`<div class="rv-stats">
+    <span class="tag b">格式规范 ${cnt('fmt')}</span>
+    <span class="tag r">文字差错 ${cnt('typo')}</span>
+    <span class="tag y">用语规范 ${cnt('word')}</span>
+    <span class="tag p">政治表述 ${cnt('pol')}</span>
+    ${accepted?`<span class="tag g">${ic('check','ic ic-s')}已采纳 ${accepted}</span>`:''}
+    ${ignored?`<span class="tag y">已忽略 ${ignored}</span>`:''}</div>`;
+}
+function rvList(){
+  return ISS.map((d,i)=>`<div class="iss ${iState[i]?'done':''}" id="iss${i}">
+    <div class="iss-h"><span class="tag ${d.tc}">${d.t}</span>
+      <span class="idx">${d.loc}</span>
+      ${iState[i]===1?'<span class="tag g" style="margin-left:auto">已采纳</span>':
+        iState[i]===2?'<span class="tag" style="margin-left:auto">已忽略</span>':''}</div>
+    <div class="iss-b">
+      <div class="iss-row"><span class="k">原文</span><span class="v"><span class="old">${d.old}</span></span></div>
+      <div class="iss-row"><span class="k">建议</span><span class="v"><span class="new">${d.new}</span></span></div>
+      <div class="iss-row"><span class="k">风险说明</span><span class="v">${d.risk}</span></div>
+      <div class="iss-row"><span class="k">依据来源</span><span class="v" style="color:var(--text-3);font-size:12px">${d.basis}</span></div>
+    </div>
+    ${iState[i]===0?`<div class="iss-f">
+      <button class="btn sm pri" onclick="issAct(${i},1)">${ic('check','ic ic-s')}采纳修改</button>
+      <button class="btn sm" onclick="issAct(${i},2)">忽略</button>
+      <button class="btn sm gho" style="margin-left:auto" onclick="focusIss(${i})">定位原文</button>
+    </div>`:`<div class="iss-f"><button class="btn sm gho" onclick="issAct(${i},0)">${ic('refresh','ic ic-s')}撤销</button></div>`}
+  </div>`).join('');
+}
+ROUTES.review={
+  nav:'assist', crumb:()=>backCrumb('assist','AI 助手','公文校核助手'),
+  html:()=>`<div style="display:flex;flex-direction:column;height:100%">
+    <div style="padding:8px 16px;background:var(--warn-l);border-bottom:1px solid #F3E0BE;font-size:12px;color:#8A5A09">
+      ${ic('warn','ic ic-s')} AI 校核仅提供风险线索和修改建议，不替代政策、政治表述和正式发文的人工审核。</div>
+    <div class="rv-top" id="rvTop">${rvStats()}
+      <div style="margin-left:auto;display:flex;gap:8px">
+        ${reviewState?`<button class="btn sm" onclick="returnToDraft()">${ic('back','ic ic-s')}同步修改并返回文稿</button>`:''}
+        <button class="btn sm" onclick="iState=ISS.map(()=>0);render();toast('已重置全部问题')">${ic('refresh','ic ic-s')}重新校核</button>
+        <button class="btn sm pri" onclick="toast('原型阶段不生成真实文件','warn')">${ic('dl','ic ic-s')}导出修订稿</button>
+      </div></div>
+    <div style="flex:1;min-height:0;display:flex">
+      <div class="rv-doc" id="rvDoc">
+        <div style="max-width:730px;margin:0 auto 14px;display:flex;align-items:center;gap:10px;
+          padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);font-size:12.5px">
+          ${ic('doc','ic ic-s')}<b style="font-weight:500">${reviewState?reviewState.title:'市政府办公室关于印发《2026年全市政务公开工作要点》的通知'}.docx</b>
+          <span style="color:var(--text-3);margin-left:auto">共 486 字 · 已标注 ${ISS.length} 处</span>
+        </div>
+        ${rvDoc()}
+        <div style="max-width:730px;margin:14px auto 0;display:flex;gap:14px;font-size:11.5px;color:var(--text-3)">
+          <span style="display:flex;align-items:center;gap:5px"><i style="width:11px;height:11px;background:#EAF1FA;border-bottom:2px solid #1856A7;display:block"></i>格式规范</span>
+          <span style="display:flex;align-items:center;gap:5px"><i style="width:11px;height:11px;background:#FBECEA;border-bottom:2px solid #C0392B;display:block"></i>文字差错</span>
+          <span style="display:flex;align-items:center;gap:5px"><i style="width:11px;height:11px;background:#FDF3E3;border-bottom:2px solid #C77A0A;display:block"></i>用语规范</span>
+          <span style="display:flex;align-items:center;gap:5px"><i style="width:11px;height:11px;background:#F0EBF9;border-bottom:2px solid #6B4FA8;display:block"></i>政治表述</span>
+          <span style="display:flex;align-items:center;gap:5px"><i style="width:11px;height:11px;background:#E9F5ED;border-bottom:2px solid #2E7D4F;display:block"></i>已采纳</span>
+        </div>
+      </div>
+      <div class="rv-side">
+        <div class="wb-h"><h3>问题清单</h3>
+          <span class="tag" style="margin-left:auto">点击卡片可定位原文</span></div>
+        <div class="wb-b" id="rvList">${rvList()}</div>
+      </div>
+    </div>
+  </div>`
+};
+function issAct(i,s){
+  iState[i]=s;
+  $('#rvDoc').querySelector('.rv-paper').outerHTML=rvDoc();
+  $('#rvList').innerHTML=rvList();
+  $('#rvTop').innerHTML=rvStats()+`<div style="margin-left:auto;display:flex;gap:8px">
+    ${reviewState?`<button class="btn sm" onclick="returnToDraft()">${ic('back','ic ic-s')}同步修改并返回文稿</button>`:''}
+    <button class="btn sm" onclick="iState=ISS.map(()=>0);render();toast('已重置全部问题')">${ic('refresh','ic ic-s')}重新校核</button>
+    <button class="btn sm pri" onclick="toast('原型阶段不生成真实文件','warn')">${ic('dl','ic ic-s')}导出修订稿</button></div>`;
+  if(s===1) toast('已采纳，原文已同步修改','ok');
+  else if(s===2) toast('已忽略该问题');
+  else toast('已撤销');
+  if(iState.every(x=>x!==0)&&s!==0) setTimeout(()=>{
+    const ignored=iState.filter(x=>x===2).length;
+    toast(ignored?`已处理全部建议，仍有 ${ignored} 项已忽略风险需人工确认`:'建议已全部采纳，请完成人工终审',ignored?'warn':'ok');
+  },700);
+}
+function focusIss(i){
+  const el=$(`#rvDoc [data-i="${i}"]`);
+  $$('#rvDoc .mk').forEach(m=>m.classList.remove('act'));
+  if(el){ el.classList.add('act'); el.scrollIntoView({block:'center',behavior:'smooth'}); }
+  const c=$('#iss'+i); if(c) c.scrollIntoView({block:'center',behavior:'smooth'});
+}
+function resolvedReviewHtml(){
+  let html=(reviewState&&reviewState.html)||DEFAULT_REVIEW_HTML;
+  ISS.forEach((d,i)=>{ if(iState[i]===1) html=html.replace(d.old,d.new); });
+  return html;
+}
+function returnToDraft(){
+  if(!reviewState||!flowState.draft) return;
+  flowState.draft.html=resolvedReviewHtml(); flowState.draft.version++;
+  const a=ASSIST.find(x=>x.id===flowState.draft.assistantId)||ASSIST[0];
+  wMsgs.push({r:'a',t:`已将校核中采纳的修改同步回文稿，当前为 <b>V${flowState.draft.version}</b>。已忽略的风险保持原文。`});
+  go('write',{a});
+}
+
+/* =============== P10 会议纪要工作台 =============== */
+let mLoaded=false, mDone=false, mTab=0;
+const MRES=[
+`<div class="res">
+  <div style="text-align:center;font-size:18px;font-weight:600;font-family:'STZhongsong','SimSun',serif;margin-bottom:6px">
+    全市经济运行分析会会议纪要</div>
+  <div style="text-align:center;font-size:12.5px;color:var(--text-3);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border-2)">
+    2026 年 8 月 18 日　市政府第二会议室</div>
+  <p style="font-family:'STFangsong','FangSong',serif;font-size:15px;line-height:2.1;text-indent:0;margin-bottom:14px">
+    <b>出席人员：</b>市政府分管副市长，市统计局、市发改局、市财政局主要负责同志，市政府办公室相关人员。</p>
+  <p style="font-family:'STFangsong','FangSong',serif;font-size:15px;line-height:2.1;text-indent:2em">
+    会议听取了市统计局关于 2026 年上半年全市主要经济指标完成情况的通报。上半年全市地区生产总值同比增长 5.8%，高于全省平均水平 0.6 个百分点；规模以上工业增加值增长 6.2%，固定资产投资增长 4.1%，社会消费品零售总额增长 5.3%。会议认为，上半年全市经济运行总体保持在合理区间。</p>
+  <p style="font-family:'STFangsong','FangSong',serif;font-size:15px;line-height:2.1;text-indent:2em">
+    会议听取了市发改局关于当前经济运行中存在问题的分析。主要问题集中在两方面：一是部分重点项目推进偏慢，二是新增市场主体数量同比略有下降。</p>
+  <p style="font-family:'STFangsong','FangSong',serif;font-size:15px;line-height:2.1;text-indent:2em">
+    会议就下半年重点工作进行了研究，形成议定事项如下。</p>
+</div>`,
+`<div class="card"><div class="card-h">${ic('flag')}<h3>议定事项</h3>
+  <span class="tag" style="margin-left:auto">共 4 项</span></div>
+  <div class="card-b" style="padding:0"><table class="tbl">
+  <thead><tr><th style="width:46px">序号</th><th>议定内容</th><th style="width:132px">责任单位</th></tr></thead><tbody>
+  ${[['1','紧盯全年经济增长目标不动摇，各相关部门按季度分解任务并跟踪落实','市发改局'],
+     ['2','对重点项目建立月度调度机制，每月末通报项目开工率与投资完成进度','市发改局、市住建局'],
+     ['3','研究出台促进市场主体增长的支持措施，重点优化开办环节办事流程','市市场监管局、市政务服务局'],
+     ['4','各部门于本月底前将下半年重点工作方案报市政府办公室汇总','市直各部门']]
+    .map(([i,c,d])=>`<tr><td class="num">${i}</td><td style="line-height:1.75">${c}</td>
+      <td><span class="tag b">${d}</span></td></tr>`).join('')}
+  </tbody></table></div></div>`,
+`<div class="card"><div class="card-h">${ic('clock')}<h3>待办清单</h3>
+  <span class="tag y" style="margin-left:auto">2 项临近时限</span></div>
+  <div class="card-b" style="padding:0"><table class="tbl">
+  <thead><tr><th>待办事项</th><th style="width:150px">责任单位</th><th style="width:112px">完成时限</th><th style="width:88px">状态</th></tr></thead><tbody>
+  ${[['报送下半年重点工作方案','市直各部门','2026-08-31','urgent','剩 12 天'],
+     ['建立重点项目月度调度机制并明确调度口径','市发改局、市住建局','2026-08-31','urgent','剩 12 天'],
+     ['形成促进市场主体增长支持措施初稿','市市场监管局','2026-09-15','normal','剩 27 天'],
+     ['按季度分解全年经济增长目标任务','市发改局','2026-09-30','normal','剩 42 天']]
+    .map(([t,d,dl,s,r])=>`<tr><td style="font-weight:500">${t}</td><td style="color:var(--text-2)">${d}</td>
+      <td class="num">${dl}</td><td><span class="tag ${s==='urgent'?'y':''}">${r}</span></td></tr>`).join('')}
+  </tbody></table></div></div>
+  <div style="margin-top:14px;padding:12px 14px;background:var(--brand-l);border:1px solid var(--brand-l2);
+    border-radius:var(--r);display:flex;align-items:center;gap:10px;font-size:13px">
+    ${ic('info','ic ic-s')}<span style="flex:1">正式环境中待办可一键推送至责任单位并进入督办系统跟踪</span>
+    <button class="btn sm" onclick="toast('原型阶段不推送真实待办','warn')">推送待办</button></div>`];
+ROUTES.minutes={
+  nav:'assist', crumb:()=>backCrumb('assist','AI 助手','会议纪要助手'),
+  html:()=>`<div class="wb">
+    <div class="wb-l" style="width:36%;min-width:330px">
+      <div class="wb-h">${ic('mic')}<h3>会议纪要助手</h3></div>
+      <div class="wb-b">
+        <div class="fld"><label>会议录音 / 速记稿<span class="req">*</span></label>
+          <div id="mDrop">${mLoaded?`<div class="file-i">
+            <span class="fic a">${ic('audio','ic ic-l')}</span>
+            <span class="fi"><b>全市经济运行分析会（2026-08-18）.m4a</b><span>42.8 MB · 时长 58 分 12 秒</span></span>
+            ${flowState.transcript?'<span class="tag g">已携带转写稿</span>':''}
+            <button class="aicon" onclick="mLoaded=false;mDone=false;flowState.transcript=null;render()">${ic('x','ic ic-s')}</button></div>`
+            :`<div class="drop" onclick="mLoaded=true;render();toast('已载入示例录音','ok')">
+              <span class="dic">${ic('audio','ic ic-l')}</span>
+              <b>点击选择录音，或拖拽到此处</b><p>支持 MP3、WAV、M4A，也可直接粘贴速记稿文本</p></div>`}</div></div>
+        <div class="fld"><label>会议名称</label><input class="inp" value="全市经济运行分析会"></div>
+        <div class="fld"><label>会议时间</label><input class="inp" value="2026 年 8 月 18 日"></div>
+        <div class="fld"><label>会议地点</label><input class="inp" value="市政府第二会议室"></div>
+        <div class="fld"><label>纪要体例</label>
+          <select class="sel"><option>标准会议纪要（含议定事项）</option><option>简要纪要（仅结论）</option><option>速记全文整理</option></select></div>
+        <div class="fld" style="margin-bottom:0"><label>附加产出</label>
+          <div style="display:flex;flex-direction:column;gap:9px;padding:11px 13px;border:1px solid var(--border);
+            border-radius:var(--r);background:var(--surface-2)">
+            ${['提取议定事项并标注责任单位','生成待办清单并推算完成时限','标注发言人及发言占比'].map((t,i)=>
+              `<label style="display:flex;align-items:center;gap:9px;font-size:12.5px;cursor:pointer">
+                <span class="chk ${i<2?'on':''}" onclick="this.classList.toggle('on')">${ic('check')}</span>${t}</label>`).join('')}
+          </div></div>
+      </div>
+      <div class="wb-f"><button class="btn pri lg" id="mRun" onclick="mRun()" style="flex:1">
+        ${ic('mic','ic ic-s')}生成会议纪要</button></div>
+    </div>
+    <div class="wb-r">
+      <div class="tabs" id="mTabs">${['纪要正文','议定事项','待办清单'].map((t,i)=>
+        `<button class="tab ${i===mTab?'on':''}" onclick="mSwitch(${i})">${t}</button>`).join('')}</div>
+      <div class="wb-b" id="mOut">${mDone?MRES[mTab]:`<div class="empty">
+        <span class="eic">${ic('mic','ic ic-l')}</span><h4>等待生成</h4>
+        <p>上传会议录音或粘贴速记稿后，将自动产出规范纪要、议定事项与待办清单</p></div>`}</div>
+    </div>
+  </div>`
+};
+function mSwitch(i){
+  if(!mDone) return toast('请先生成会议纪要','warn');
+  mTab=i; $$('#mTabs .tab').forEach((t,j)=>t.classList.toggle('on',j===i));
+  $('#mOut').innerHTML=MRES[i];
+}
+async function mRun(){
+  if(!mLoaded) return toast('请先上传录音，可点击上传区载入示例文件','warn');
+  const b=$('#mRun'); b.disabled=true;
+  const steps=[flowState.transcript?'正在校验已携带的转写稿…':'正在转写录音（58 分 12 秒）…','正在识别发言人…','正在提炼议定事项…','正在推算待办时限…'];
+  for(let i=0;i<steps.length;i++){
+    b.innerHTML='<span class="spin"></span>'+steps[i].slice(0,6)+'…';
+    $('#mOut').innerHTML=`<div style="padding:8px 0">
+      <div style="display:flex;align-items:center;gap:9px;color:var(--text-3);font-size:13px;margin-bottom:18px">
+        <span class="spin"></span>${steps[i]}（${i+1}/4）</div>
+      ${[95,88,92,70,86,90].map(w=>`<div class="skel" style="width:${w}%;margin-bottom:12px"></div>`).join('')}</div>`;
+    await sleep(750);
+  }
+  mDone=true; mTab=0;
+  $$('#mTabs .tab').forEach((t,j)=>t.classList.toggle('on',j===0));
+  $('#mOut').innerHTML=MRES[0];
+  b.disabled=false; b.innerHTML=ic('refresh','ic ic-s')+'重新生成';
+  APP.generated++;
+  toast('会议纪要已生成','ok');
+}
+</script>
+<script>
+/* =============== P11 知识库管控 · 总览看板 =============== */
+const TREND=[[ '8-06',6],['8-07',9],['8-08',4],['8-09',11],['8-10',2],['8-11',14],['8-12',17],
+  ['8-13',12],['8-14',19],['8-15',3],['8-16',1],['8-17',8],['8-18',16],['8-19',6]];
+const TYPES=[['PDF',512,'#1856A7'],['Word',486,'#3A78C4'],['Excel',168,'#2E7D4F'],
+  ['PPT',78,'#C77A0A'],['图片扫描件',42,'#6B4FA8']];
+const TOP10=[
+  ['市级财政专项资金管理办法（2026 年修订）.docx','政策法规库',126],
+  ['关于进一步优化政务服务提升行政效能的实施意见.pdf','政策法规库',98],
+  ['政务服务中心窗口服务规范.pdf','政务服务办事指南库',87],
+  ['机关公文处理工作办法.docx','本单位制度库',71],
+  ['行政审批事项目录清单（2026 版）.xlsx','政务服务办事指南库',64],
+  ['12345 政务服务便民热线办理规程.pdf','政务服务办事指南库',52],
+  ['党政机关公文格式国家标准摘要.pdf','本单位制度库',47],
+  ['市政府常务会议议事规则.docx','会议纪要与文件库',39],
+  ['政府信息公开条例实施细则.pdf','政策法规库',33],
+  ['机关差旅费管理实施办法.docx','本单位制度库',28]];
+function openTopDoc(i){
+  const [n,k,c]=TOP10[i];
+  let d=DOCS.find(x=>x.n===n);
+  if(!d){
+    const ext=(n.split('.').pop()||'').toLowerCase();
+    d={n,kb:k,tag:ext==='xlsx'?'目录清单':'参考文件',f:ext==='xlsx'?'Excel':ext==='pdf'?'PDF':'Word',
+      sz:'—',ck:36,up:'系统迁移',dt:'2026-07-01 09:00',st:'ok',cite:c,counted:false,
+      preview:`《${n.replace(/\.[^.]+$/,'')}》是当前知识库中的高频引用文档。正式环境将展示原始文件及其真实知识切片。`};
+    DOCS.push(d);
+  }
+  go('kb-doc',{d});
+}
+ROUTES.kb={
+  nav:'kb', crumb:()=>crumbOf('知识库管控','总览'),
+  html:()=>{
+    const mx=Math.max(...TREND.map(t=>t[1])), tot=TYPES.reduce((a,b)=>a+b[1],0);
+    return `<div class="pad">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div><h2 style="font-size:19px;font-weight:600">知识库总览</h2>
+          <p style="font-size:12.5px;color:var(--text-3);margin-top:2px">
+            统一入库管理 · 基于豆包 VikingDB · 数据截至 2026-08-19 09:00</p></div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <select class="sel" style="width:auto;height:32px">
+            <option>近 30 天</option><option>近 7 天</option><option>近 90 天</option></select>
+          <button class="btn" onclick="go('kb-docs')">${ic('doc','ic ic-s')}文档列表</button>
+          <button class="btn pri" onclick="go('kb-upload')">${ic('up','ic ic-s')}上传文档</button>
+        </div>
+      </div>
+      <div class="kpi-grid">
+        ${[['db','知识库','4','个','按业务主题划分',''],
+           ['doc','文档总数',totalDocs().toLocaleString(),'份',`近 30 天新增 ${APP.monthNew} 份`,'up'],
+           ['layers','知识切片','42,860','段','平均每份 33 段',''],
+           ['hdd','存储占用','18.6','GB','配额 100 GB，已用 18.6%',''],
+           ['warn','解析失败',String(statusCount('fail')),'份','需重新上传或转换格式','al'],
+           ['clock','解析中',String(statusCount('parsing')),'份','预计 3 分钟内完成','']]
+          .map(([i,l,v,u,d,c])=>`<div class="kpi ${c==='al'?'alert':''}">
+            <div class="lb">${ic(i,'ic ic-s')}${l}</div>
+            <b${c==='al'?' style="color:var(--warn)"':''}>${v}<span class="un">${u}</span></b>
+            <div class="dt ${c}">${c==='up'?ic('arw','ic ic-s'):''}${d}</div></div>`).join('')}
+      </div>
+      <div class="dash-2">
+        <div class="card"><div class="card-h">${ic('chart')}<h3>近 14 天文档新增趋势</h3>
+          <span class="tag" style="margin-left:auto">合计 128 份</span></div>
+          <div class="card-b"><div class="bars">
+            ${TREND.map(([d,v])=>`<div class="bar-w" title="${d} 新增 ${v} 份">
+              <span class="bv">${v}</span>
+              <span class="bar" style="height:${Math.max(4,v/mx*100)}%"></span>
+              <span class="bl">${d}</span></div>`).join('')}</div></div></div>
+        <div class="card"><div class="card-h">${ic('layers')}<h3>文档类型分布</h3></div>
+          <div class="card-b"><div class="legend">
+            ${TYPES.map(([n,v,c])=>`<div class="li"><span class="sw" style="background:${c}"></span>
+              <span class="nm">${n}</span><span class="vv">${v} 份 · ${(v/tot*100).toFixed(1)}%</span></div>
+              <div class="tr" style="height:6px;border-radius:4px;background:var(--border-2);overflow:hidden;margin:-3px 0 4px">
+                <div style="height:100%;width:${v/tot*100}%;background:${c};border-radius:4px"></div></div>`).join('')}
+          </div></div></div>
+      </div>
+      <div class="dash-3">
+        <div class="card"><div class="card-h">${ic('db')}<h3>各知识库文档数</h3></div>
+          <div class="card-b">${KBS.map(k=>`<div class="hbar">
+            <div class="hh"><span class="nm">${k.t}</span><span class="vv">${k.n}</span></div>
+            <div class="tr"><div class="fl" style="width:${k.n/412*100}%"></div></div></div>`).join('')}</div></div>
+        <div class="card"><div class="card-h">${ic('chat')}<h3>问答使用情况</h3>
+          <span class="tag" style="margin-left:auto">近 30 天</span></div>
+          <div class="card-b">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px">
+              <span style="font-size:12.5px;color:var(--text-2)">问答调用量</span>
+              <b style="font-size:21px;font-weight:600;font-variant-numeric:tabular-nums">${APP.qaTotal.toLocaleString()}<span style="font-size:12px;color:var(--text-3);font-weight:400"> 次</span></b></div>
+            ${[['知识命中率','87.4',87.4,'var(--ok)','较上月 +2.1 个百分点'],
+               ['无答案率','6.2',6.2,'var(--warn)','较上月 -1.4 个百分点'],
+               ['答案有帮助率','91.8',91.8,'var(--brand)','基于 862 条用户反馈']]
+              .map(([n,v,p,c,d])=>`<div class="hbar">
+                <div class="hh"><span class="nm">${n}</span><span class="vv" style="color:${c}">${v}%</span></div>
+                <div class="tr"><div class="fl" style="width:${p}%;background:${c}"></div></div>
+                <div style="font-size:11px;color:var(--text-3);margin-top:3px">${d}</div></div>`).join('')}
+          </div></div>
+        <div class="card"><div class="card-h">${ic('flag')}<h3>治理待办</h3></div>
+          <div class="card-b" style="padding:14px">
+            <button class="todo" onclick="go('kb-docs',{f:'fail'})">
+              <span class="tdi" style="background:var(--err-l);color:var(--err)">${ic('warn')}</span>
+              <span class="tt"><b>解析失败</b><span>需重新上传或转换格式后重试</span></span>
+              <span class="cnt" style="color:var(--err)">${statusCount('fail')}</span></button>
+            <button class="todo" onclick="go('kb-docs',{f:'cold'})">
+              <span class="tdi" style="background:var(--warn-l);color:var(--warn)">${ic('clock')}</span>
+              <span class="tt"><b>30 天内无人引用</b><span>可考虑停用或归档，释放检索噪音</span></span>
+              <span class="cnt" style="color:var(--warn)">37</span></button>
+            <button class="todo" onclick="go('kb-docs',{f:'dup'})">
+              <span class="tdi" style="background:var(--purple-l);color:var(--purple)">${ic('copy')}</span>
+              <span class="tt"><b>疑似重复文档</b><span>内容相似度超过 90%，建议保留最新版本</span></span>
+              <span class="cnt" style="color:var(--purple)">6</span></button>
+          </div></div>
+      </div>
+      <div class="card"><div class="card-h">${ic('star')}<h3>被引用最多的文档 Top 10</h3>
+        <span class="tag" style="margin-left:auto">近 30 天问答引用次数</span></div>
+        <div class="card-b" style="padding:0"><table class="tbl">
+        <thead><tr><th style="width:52px">排名</th><th>文档名称</th><th style="width:190px">所属知识库</th>
+          <th style="width:120px">被引用次数</th><th style="width:70px"></th></tr></thead><tbody>
+        ${TOP10.map(([n,k,c],i)=>`<tr>
+          <td><span class="tag ${i<3?'b':''}">${i+1}</span></td>
+          <td class="fname">${ic(n.endsWith('.xlsx')?'table':'doc','ic ic-s')}<span>${n}</span></td>
+          <td style="color:var(--text-2)">${k}</td>
+          <td><div style="display:flex;align-items:center;gap:8px">
+            <div class="tr" style="flex:1;height:6px;border-radius:3px;background:var(--border-2);overflow:hidden">
+              <div style="height:100%;width:${c/126*100}%;background:var(--brand);border-radius:3px"></div></div>
+            <span class="num" style="width:30px;text-align:right">${c}</span></div></td>
+          <td><button class="btn sm gho" onclick="openTopDoc(${i})">查看</button></td>
+        </tr>`).join('')}
+        </tbody></table></div></div>
+    </div>`;
+  }
+};
+
+/* =============== P12 文档列表 =============== */
+let selRows=[];
+let docView=[];
+const FILTER_LABEL={fail:'解析失败',parsing:'解析中',cold:'30 天内无人引用',dup:'疑似重复文档'};
+function baseDocsFor(c={}){
+  if(c.f==='fail') return DOCS.filter(d=>d.st==='fail');
+  if(c.f==='parsing') return DOCS.filter(d=>d.st==='parsing');
+  if(c.f==='cold') return DOCS.filter(d=>d.cite===0);
+  if(c.f==='dup') return DOCS.slice(0,3);
+  return DOCS;
+}
+function governanceTotal(f,shown){
+  if(f==='cold') return 37;
+  if(f==='dup') return 6;
+  return shown;
+}
+ROUTES['kb-docs']={
+  nav:'kb', crumb:c=>backCrumb('kb','知识库管控','文档列表'+(c.f?' · '+FILTER_LABEL[c.f]:'')),
+  html:c=>{
+    const list=baseDocsFor(c), total=governanceTotal(c.f,list.length), shown=c.f?list:list.slice(0,10);
+    docView=shown;
+    return `<div class="pad">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div><h2 style="font-size:19px;font-weight:600">文档列表</h2>
+          <p style="font-size:12.5px;color:var(--text-3);margin-top:2px">统一入库管理，一期不设可见范围与部门隔离</p></div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button class="btn" onclick="toast('原型阶段不导出真实文件','warn')">${ic('dl','ic ic-s')}导出清单</button>
+          <button class="btn pri" onclick="go('kb-upload')">${ic('up','ic ic-s')}上传文档</button></div>
+      </div>
+      ${c.f?`<div class="bulk" style="margin-top:14px;background:var(--warn-l);border-color:#F3E0BE">
+        ${ic('filter','ic ic-s')}<span>已按「<b style="color:var(--warn)">${FILTER_LABEL[c.f]}</b>」筛选，共 ${total} 份${total!==list.length?`，当前展示 ${list.length} 份示例`:''}</span>
+        <button class="btn sm" style="margin-left:auto" onclick="go('kb-docs')">清除筛选</button></div>`:''}
+      <div class="filters">
+        <div class="search" style="margin-left:0;width:230px">${ic('search','ic ic-s')}
+          <input class="inp" id="dq" placeholder="搜索文档名称"></div>
+        <select class="sel" id="fKb"><option>全部知识库</option>${KBS.map(k=>`<option>${k.t}</option>`).join('')}</select>
+        <select class="sel" id="fSt"><option>全部状态</option><option>已生效</option><option>解析中</option><option>解析失败</option><option>已停用</option></select>
+        <select class="sel" id="fTag"><option>全部标签</option><option>政策文件</option><option>管理办法</option><option>会议纪要</option><option>服务规范</option><option>工作台账</option><option>模板</option></select>
+        <select class="sel" id="fTime"><option>全部时间</option><option>近 7 天</option><option>近 30 天</option></select>
+        <button class="btn sm" onclick="resetDocFilters()">重置</button>
+      </div>
+      <div id="bulkBar"></div>
+      <div class="card"><div class="table-scroll"><table class="tbl doc-table">
+        <thead><tr>
+          <th style="width:38px"><span class="chk" id="selAll" onclick="toggleAll()">${ic('check')}</span></th>
+          <th>文档名称</th><th style="width:150px">所属知识库</th><th style="width:94px">标签</th>
+          <th style="width:62px">格式</th><th style="width:78px">大小</th><th style="width:66px">切片</th>
+          <th style="width:66px">上传人</th><th style="width:136px">上传时间</th>
+          <th style="width:98px">状态</th><th style="width:78px">被引用</th><th style="width:112px">操作</th>
+        </tr></thead><tbody id="docBody">${docRows(shown)}</tbody></table></div>
+        <div class="pager" style="padding:12px 16px">
+          <span id="docCount">共 ${c.f?total:totalDocs().toLocaleString()} 条${c.f?(total!==shown.length?`，当前展示 ${shown.length} 条示例`:''):'，当前显示第 1—10 条'}</span>
+          <select class="sel" style="width:auto;height:28px;font-size:12.5px;margin-left:10px">
+            <option>每页 10 条</option><option>每页 20 条</option><option>每页 50 条</option></select>
+          <div class="pg">
+            <button class="pg-b">${ic('back','ic ic-s')}</button>
+            ${[1,2,3].map(n=>`<button class="pg-b ${n===1?'on':''}" onclick="toast('原型仅提供第 1 页示例数据')">${n}</button>`).join('')}
+            <span style="padding:0 4px;color:var(--text-3)">…</span>
+            <button class="pg-b" onclick="toast('原型仅提供第 1 页示例数据')">129</button>
+            <button class="pg-b">${ic('arw','ic ic-s')}</button>
+          </div></div>
+      </div>
+    </div>`;
+  },
+  init(c){
+    selRows=[];
+    ['dq','fKb','fSt','fTag','fTime'].forEach(id=>$('#'+id).addEventListener(id==='dq'?'input':'change',()=>applyDocFilters(c)));
+  }
+};
+function applyDocFilters(c=ctx){
+  let list=baseDocsFor(c);
+  const q=$('#dq').value.trim(), kb=$('#fKb').value, st=$('#fSt').value, tag=$('#fTag').value, tm=$('#fTime').value;
+  if(q) list=list.filter(d=>d.n.includes(q));
+  if(kb!=='全部知识库') list=list.filter(d=>d.kb===kb);
+  if(st!=='全部状态') list=list.filter(d=>ST[d.st].t===st);
+  if(tag!=='全部标签') list=list.filter(d=>d.tag===tag);
+  if(tm!=='全部时间'){
+    const days=tm.includes('7')?7:30, end=new Date('2026-08-19T23:59:59');
+    list=list.filter(d=>(end-new Date(d.dt.replace(' ','T')))/86400000<=days);
+  }
+  docView=list.slice(0,c.f?50:10); selRows=[];
+  $('#docBody').innerHTML=docRows(docView); drawBulk();
+  $('#docCount').textContent=`筛选结果 ${list.length} 条${list.length>docView.length?`，当前展示 ${docView.length} 条`:''}`;
+}
+function resetDocFilters(){
+  $('#dq').value=''; ['fKb','fSt','fTag','fTime'].forEach(id=>$('#'+id).selectedIndex=0);
+  applyDocFilters(ctx); toast('筛选条件已重置','ok');
+}
+function docRows(list){
+  if(!list.length) return `<tr><td colspan="12"><div class="empty">
+    <span class="eic">${ic('doc','ic ic-l')}</span><h4>没有符合条件的文档</h4>
+    <p>试试调整筛选条件，或清除筛选查看全部文档</p></div></td></tr>`;
+  return list.map(d=>{
+    const s=ST[d.st];
+    return `<tr data-n="${esc(d.n)}">
+      <td><span class="chk" onclick="toggleRow('${esc(d.n)}',this)">${ic('check')}</span></td>
+      <td><div class="fname">${ic(d.f==='Excel'?'table':d.f==='PDF'?'doc':'doc','ic ic-s')}
+        <span class="lnk" onclick="go('kb-doc',{d:DOCS.find(x=>x.n==='${d.n}')})" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:290px;display:block">${d.n}</span></div></td>
+      <td style="color:var(--text-2)">${d.kb}</td>
+      <td><span class="tag">${d.tag}</span></td>
+      <td style="color:var(--text-2)">${d.f}</td>
+      <td class="num">${d.sz}</td>
+      <td class="num">${d.ck||'—'}</td>
+      <td style="color:var(--text-2)">${d.up}</td>
+      <td class="num">${d.dt}</td>
+      <td><span class="tag ${s.c}">${d.st==='parsing'?'<span class="spin" style="width:9px;height:9px;border-width:1.5px"></span>':`<span class="dot"></span>`}${s.t}</span></td>
+      <td class="num">${d.cite||'—'}</td>
+      <td><div class="acts">
+        <button class="aicon" title="查看详情" onclick="go('kb-doc',{d:DOCS.find(x=>x.n==='${d.n}')})">${ic('eye','ic ic-s')}</button>
+        ${d.st==='fail'?`<button class="aicon" title="重新解析" onclick="retryDoc('${esc(d.n)}')">${ic('refresh','ic ic-s')}</button>`
+          :`<button class="aicon" title="${d.st==='off'?'启用':'停用'}" onclick="toggleDoc('${esc(d.n)}')">${ic(d.st==='off'?'check':'ban','ic ic-s')}</button>`}
+        <button class="aicon" title="删除" onclick="delDoc('${esc(d.n)}')">${ic('trash','ic ic-s')}</button>
+      </div></td></tr>`;
+  }).join('');
+}
+function toggleRow(name,el){
+  el.classList.toggle('on');
+  if(selRows.includes(name)) selRows=selRows.filter(x=>x!==name); else selRows.push(name);
+  drawBulk();
+}
+function toggleAll(){
+  const a=$('#selAll'), on=!a.classList.contains('on');
+  a.classList.toggle('on',on);
+  $$('#docBody .chk').forEach(c=>c.classList.toggle('on',on));
+  selRows= on? $$('#docBody tr').map(r=>r.dataset.n) : [];
+  drawBulk();
+}
+function drawBulk(){
+  const b=$('#bulkBar');
+  b.innerHTML= selRows.length?`<div class="bulk">${ic('check','ic ic-s')}
+    <span>已选择 <b>${selRows.length}</b> 份文档</span>
+    <button class="btn sm" onclick="bulkDisable()">批量停用</button>
+    <button class="btn sm" onclick="toast('已批量修改标签')">批量改标签</button>
+    <button class="btn sm dgr" onclick="delDoc(null,${selRows.length})">批量删除</button>
+    <button class="btn sm gho" style="margin-left:auto" onclick="selRows=[];$$('#docBody .chk').forEach(c=>c.classList.remove('on'));$('#selAll').classList.remove('on');drawBulk()">取消选择</button></div>`:'';
+}
+function refreshDocRoute(msg,type='ok'){
+  render(); if(msg) toast(msg,type);
+}
+function toggleDoc(name){
+  const d=DOCS.find(x=>x.n===name); if(!d) return;
+  d.st=d.st==='off'?'ok':'off';
+  refreshDocRoute(d.st==='off'?'文档已停用，将不再参与检索':'文档已启用，重新参与检索',d.st==='off'?'':'ok');
+}
+function retryDoc(name){
+  const d=DOCS.find(x=>x.n===name); if(!d) return;
+  if((d.err||'').includes('加密')) return toast('文件仍处于加密状态，请解除加密后再重试','warn');
+  d.st='parsing'; d.err=''; refreshDocRoute('已重新加入解析队列');
+  setTimeout(()=>{ d.st='ok'; d.ck=d.ck||36; if(cur==='kb-docs'||cur==='kb-doc') render(); toast('重新解析完成，文档已生效','ok'); },1600);
+}
+function bulkDisable(){
+  selRows.forEach(n=>{ const d=DOCS.find(x=>x.n===n); if(d) d.st='off'; });
+  const n=selRows.length; selRows=[]; refreshDocRoute(`已批量停用 ${n} 份文档`,'ok');
+}
+let pendingDelete=[];
+function delDoc(n,cnt){
+  pendingDelete=cnt?[...selRows]:[n];
+  openDlg(`<div class="pnl-h"><h3>确认删除</h3><button class="x" onclick="closeAll()">${ic('x')}</button></div>
+    <div class="pnl-b">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span style="width:36px;height:36px;border-radius:50%;background:var(--err-l);color:var(--err);
+          display:grid;place-items:center;flex:none">${ic('warn','ic ic-l')}</span>
+        <div><p style="font-size:14px;font-weight:500;margin-bottom:6px">
+          ${cnt?`确认删除选中的 ${cnt} 份文档？`:'确认删除该文档？'}</p>
+        ${n?`<p style="font-size:13px;color:var(--text-2);margin-bottom:10px">${n}</p>`:''}
+        <p style="font-size:12.5px;color:var(--text-3);line-height:1.8">
+          删除后该文档及其全部知识切片将从 VikingDB 中移除，问答将不再检索到相关内容，且<b style="color:var(--err)">操作不可恢复</b>。</p></div>
+      </div></div>
+    <div class="pnl-f"><button class="btn" onclick="closeAll()">取消</button>
+      <button class="btn pri" style="background:var(--err);border-color:var(--err)"
+        onclick="confirmDelete()">确认删除</button></div>`,480);
+}
+function confirmDelete(){
+  const names=[...pendingDelete];
+  names.forEach(name=>{
+    const i=DOCS.findIndex(d=>d.n===name); if(i<0) return;
+    const d=DOCS[i];
+    if(d.counted!==false){ const k=KBS.find(x=>x.t===d.kb); if(k&&k.n>0) k.n--; }
+    DOCS.splice(i,1);
+  });
+  pendingDelete=[]; selRows=[]; closeAll();
+  go('kb-docs'); toast(names.length>1?`已删除 ${names.length} 份文档`:'文档已删除','ok');
+}
+</script>
+<script>
+/* =============== P13 文档详情与切片治理 =============== */
+const CHUNKS=[
+ {id:1,loc:'第 1 页 · 第一章',cite:8,t:'第一条　为规范市级财政专项资金管理，提高资金使用效益，根据《中华人民共和国预算法》及有关规定，结合本市实际，制定本办法。'},
+ {id:2,loc:'第 2 页 · 第一章',cite:14,t:'第三条　本办法所称市级财政专项资金，是指市级财政预算安排的、具有专门用途的资金，包括产业发展类、民生保障类、基础设施类和其他专项资金四大类。'},
+ {id:3,loc:'第 6 页 · 第三章',cite:126,t:'第十二条　申报单位应当提交专项资金申报书、项目实施方案与绩效目标表、上年度专项资金使用情况说明及审计报告等材料，并对所提交材料的真实性、完整性负责。'},
+ {id:4,loc:'第 6 页 · 第三章',cite:64,t:'第十三条　专项资金集中申报期为每年三月一日至三月三十一日，逾期不再受理。主管部门应当在申报期结束后十个工作日内完成初审并汇总上报。'},
+ {id:5,loc:'第 9 页 · 第四章',cite:31,t:'第十九条　专项资金实行专款专用，任何单位和个人不得截留、挪用。确需调整用途的，应当按原申报程序重新报批。'},
+ {id:6,loc:'第 11 页 · 第五章',cite:0,t:'第二十四条　本办法由市财政局负责解释，自二〇二六年一月一日起施行。原《市级财政专项资金管理暂行办法》同时废止。',off:true},
+ {id:7,loc:'第 12 页 · 附则',cite:0,t:'附表一：市级财政专项资金申报书（式样）。本表一式三份，申报单位、主管部门、市财政局各执一份。'}
+];
+let DETAIL_CHUNKS=CHUNKS, detailDoc=DOCS[1], chOff=CHUNKS.map(c=>!!c.off), dTab=0;
+function chunksForDoc(d){
+  if(d.n.startsWith('市级财政专项资金管理办法')) return CHUNKS;
+  const base=d.preview||`《${d.n}》已完成文档解析。本原型展示与该文档关联的示例切片，正式环境将返回 VikingDB 中的真实切片内容。`;
+  return [
+    {id:1,loc:'文档摘要',cite:d.cite||0,t:base},
+    {id:2,loc:`${d.tag} · 主要内容`,cite:0,t:`文档所属知识库为「${d.kb}」，分类标签为「${d.tag}」，当前共生成 ${d.ck||0} 段知识切片。`}
+  ];
+}
+ROUTES['kb-doc']={
+  nav:'kb', crumb:c=>backCrumb('kb-docs','知识库管控','文档详情'),
+  html:c=>{
+    const d=c.d||DOCS[1];
+    const s=ST[d.st];
+    detailDoc=d; DETAIL_CHUNKS=chunksForDoc(d); d.chunkOff=d.chunkOff||DETAIL_CHUNKS.map(c=>!!c.off); chOff=d.chunkOff;
+    return `<div class="pad">
+      <div class="card" style="margin-bottom:14px"><div class="card-b" style="display:flex;gap:16px;align-items:flex-start">
+        <span style="width:52px;height:52px;border-radius:10px;flex:none;display:grid;place-items:center;
+          background:${d.f==='Excel'?'var(--ok-l)':d.f==='PDF'?'var(--err-l)':'var(--brand-l)'};
+          color:${d.f==='Excel'?'var(--ok)':d.f==='PDF'?'var(--err)':'var(--brand)'}">${ic(d.f==='Excel'?'table':'doc','ic ic-xl')}</span>
+        <div style="flex:1;min-width:0">
+          <h2 style="font-size:17px;font-weight:600;line-height:1.5;margin-bottom:8px">${d.n}</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+            <span class="tag b">${d.kb}</span><span class="tag">${d.tag}</span>
+            <span class="tag ${s.c}"><span class="dot"></span>${s.t}</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:22px;font-size:12.5px;color:var(--text-3)">
+            <span>格式：<b style="color:var(--text-2);font-weight:500">${d.f}</b></span>
+            <span>大小：<b style="color:var(--text-2);font-weight:500">${d.sz}</b></span>
+            <span>知识切片：<b style="color:var(--text-2);font-weight:500">${d.ck||0} 段</b></span>
+            <span>上传人：<b style="color:var(--text-2);font-weight:500">${d.up}</b></span>
+            <span>上传时间：<b style="color:var(--text-2);font-weight:500">${d.dt}</b></span>
+            <span>近 30 天被引用：<b style="color:var(--brand);font-weight:600">${d.cite} 次</b></span>
+          </div>
+          ${d.st==='fail'?`<div style="margin-top:12px;padding:10px 13px;background:var(--err-l);
+            border:1px solid #F2CFCA;border-radius:var(--r);font-size:12.5px;color:#A63325;
+            display:flex;align-items:center;gap:8px">${ic('warn','ic ic-s')}
+            <span style="flex:1"><b>解析失败：</b>${d.err}</span>
+            <button class="btn sm" onclick="retryDoc('${esc(d.n)}')">重新解析</button></div>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;flex:none">
+          <button class="btn" onclick="toast('原型阶段不下载真实文件','warn')">${ic('dl','ic ic-s')}下载原文</button>
+          <button class="btn" onclick="retryDoc('${esc(d.n)}')">${ic('refresh','ic ic-s')}重新解析</button>
+          <button class="btn dgr" onclick="delDoc('${esc(d.n)}')">${ic('trash','ic ic-s')}删除文档</button>
+        </div>
+      </div></div>
+      <div class="card">
+        <div class="tabs" style="border-radius:var(--r-l) var(--r-l) 0 0">
+          ${['知识切片','原文预览','引用记录'].map((t,i)=>
+            `<button class="tab ${i===dTab?'on':''}" onclick="dSwitch(${i})">${t}${i===0?` <span class="tag" style="margin-left:4px">${DETAIL_CHUNKS.length}</span>`:''}</button>`).join('')}
+        </div>
+        <div class="card-b" id="dOut">${dPane(0)}</div>
+      </div>
+    </div>`;
+  }
+};
+function dSwitch(i){ dTab=i; $$('.tabs .tab').forEach((t,j)=>t.classList.toggle('on',j===i)); $('#dOut').innerHTML=dPane(i); }
+function dPane(i){
+  if(i===0) return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span style="font-size:12.5px;color:var(--text-3)">
+        切片是问答检索的最小单位。发现内容有误时可<b style="color:var(--text-2)">单条停用</b>，无需删除整篇文档。</span>
+      <span class="tag y" style="margin-left:auto">已停用 <b id="offN">${chOff.filter(Boolean).length}</b> 段</span></div>
+    <div id="chList">${DETAIL_CHUNKS.map((c,j)=>chunkRow(c,j)).join('')}</div>`;
+  if(i===1) return `<div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r);
+      padding:36px 44px;max-width:760px;margin:0 auto">
+      <div style="text-align:center;font-size:18px;font-weight:600;font-family:'STZhongsong','SimSun',serif;margin-bottom:24px">
+        ${detailDoc.n.replace(/\.[^.]+$/,'')}<br><span style="font-size:14px;font-weight:400;color:var(--text-3)">原文预览·示例</span></div>
+      ${DETAIL_CHUNKS.slice(0,5).map(c=>`<p style="font-family:'STFangsong','FangSong',serif;font-size:15px;
+        line-height:2.15;text-indent:2em;margin-bottom:12px">${c.t}</p>`).join('')}
+      <p style="text-align:center;color:var(--text-3);font-size:12.5px;margin-top:24px;padding-top:16px;
+        border-top:1px solid var(--border)">—— 原型仅展示前 5 段，正式环境加载完整原文 ——</p></div>`;
+  if(!detailDoc.n.startsWith('市级财政专项资金管理办法')) return `<div class="empty"><span class="eic">${ic('chat','ic ic-l')}</span><h4>暂无详细引用记录</h4><p>当该文档被知识库问答命中后，将在此记录问题、切片和用户反馈。</p></div>`;
+  return `<table class="tbl"><thead><tr><th>提问内容</th><th style="width:120px">引用切片</th>
+      <th style="width:80px">提问人</th><th style="width:140px">时间</th><th style="width:88px">反馈</th></tr></thead><tbody>
+    ${[['市级财政专项资金申报需要提交哪些材料？','切片 #3','陈静','2026-08-19 09:41','有帮助'],
+       ['专项资金申报截止时间是什么时候？','切片 #4','陈静','2026-08-19 09:43','有帮助'],
+       ['专项资金可以调整用途吗？','切片 #5','王磊','2026-08-18 15:22','有帮助'],
+       ['专项资金分为哪几类？','切片 #2','刘敏','2026-08-18 11:07','未评价'],
+       ['申报材料需要盖什么章？','切片 #3','王磊','2026-08-17 16:50','没帮助']]
+      .map(([q,c,p,t,f])=>`<tr><td>${q}</td><td><span class="tag b">${c}</span></td>
+        <td style="color:var(--text-2)">${p}</td><td class="num">${t}</td>
+        <td><span class="tag ${f==='有帮助'?'g':f==='没帮助'?'r':''}">${f}</span></td></tr>`).join('')}
+    </tbody></table>`;
+}
+function chunkRow(c,j){
+  return `<div class="chunk ${chOff[j]?'off':''}" id="ch${j}">
+    <div class="chunk-h">
+      <span class="tag ${chOff[j]?'':'b'}">切片 #${c.id}</span>
+      <span class="cid">${c.loc}</span>
+      ${c.cite?`<span class="cid">· 被引用 ${c.cite} 次</span>`:'<span class="cid">· 30 天内未被引用</span>'}
+      ${chOff[j]?'<span class="tag y">已停用</span>':''}
+      <span class="ca">
+        <button class="aicon" title="${chOff[j]?'启用':'停用'}" onclick="chToggle(${j})">${ic(chOff[j]?'check':'ban','ic ic-s')}</button>
+        <button class="aicon" title="复制" onclick="toast('已复制切片内容','ok')">${ic('copy','ic ic-s')}</button>
+      </span></div>
+    <p>${c.t}</p></div>`;
+}
+function chToggle(j){
+  chOff[j]=!chOff[j];
+  $('#ch'+j).outerHTML=chunkRow(DETAIL_CHUNKS[j],j);
+  $('#offN').textContent=chOff.filter(Boolean).length;
+  toast(chOff[j]?'切片已停用，问答将不再检索该段内容':'切片已启用，重新参与检索',chOff[j]?'':'ok');
+}
+
+/* =============== P14 上传与解析队列 =============== */
+let queue=[];
+ROUTES['kb-upload']={
+  nav:'kb', crumb:()=>backCrumb('kb-docs','知识库管控','上传文档'),
+  html:()=>`<div class="pad" style="max-width:920px">
+    <h2 style="font-size:19px;font-weight:600;margin-bottom:3px">上传文档</h2>
+    <p style="font-size:12.5px;color:var(--text-3);margin-bottom:18px">
+      统一入库到豆包 VikingDB，解析完成后即参与问答检索。一期不设可见范围，全平台统一使用</p>
+    <div class="card" style="margin-bottom:14px"><div class="card-b">
+      <div class="drop" onclick="qAdd()" id="upDrop">
+        <span class="dic">${ic('up','ic ic-xl')}</span>
+        <b>点击选择文件，或将文件拖拽到此处</b>
+        <p>支持 PDF、Word、Excel、PPT、TXT、图片扫描件　·　单个文件不超过 100 MB　·　可批量上传</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px">
+        <div class="fld" style="margin-bottom:0"><label>归属知识库<span class="req">*</span></label>
+          <select class="sel" id="upKb">${KBS.map(k=>`<option>${k.t}</option>`).join('')}</select></div>
+        <div class="fld" style="margin-bottom:0"><label>文档分类标签<span class="req">*</span></label>
+          <select class="sel" id="upTag"><option>政策文件</option><option>管理办法</option><option>会议纪要</option>
+            <option>服务规范</option><option>工作台账</option><option>模板</option></select></div>
+      </div>
+      <div class="fld" style="margin:14px 0 0">
+        <label>解析设置</label>
+        <div style="display:flex;flex-direction:column;gap:10px;padding:12px 14px;border:1px solid var(--border);
+          border-radius:var(--r);background:var(--surface-2)">
+          ${[['按标题层级自动切片（推荐用于公文、制度类文档）',1],
+             ['对扫描件自动执行 OCR 文字识别',1],
+             ['同名文档自动覆盖为新版本（关闭则提示另存）',0]].map(([t,on])=>
+            `<label style="display:flex;align-items:center;gap:9px;font-size:12.5px;cursor:pointer">
+              <span class="chk ${on?'on':''}" onclick="this.classList.toggle('on')">${ic('check')}</span>${t}</label>`).join('')}
+        </div></div>
+    </div></div>
+    <div class="card"><div class="card-h">${ic('layers')}<h3>解析队列</h3>
+      <span class="tag" style="margin-left:auto" id="qStat">${queue.length?`共 ${queue.length} 个任务`:'暂无任务'}</span>
+      <button class="btn sm" onclick="go('kb-docs')">查看文档列表</button></div>
+      <div class="card-b" id="qList">${qRender()}</div></div>
+  </div>`
+};
+function qRender(){
+  if(!queue.length) return `<div class="empty" style="padding:36px 20px">
+    <span class="eic">${ic('layers','ic ic-l')}</span><h4>队列为空</h4>
+    <p>上传文件后，解析进度会实时显示在这里</p></div>`;
+  return queue.map((q,i)=>`<div class="q-item ${q.st==='fail'?'fail':q.st==='ok'?'done':''}">
+    <span class="fic" style="width:34px;height:34px;border-radius:7px;display:grid;place-items:center;flex:none;
+      background:${q.st==='fail'?'var(--err-l)':q.st==='ok'?'var(--ok-l)':'var(--brand-l)'};
+      color:${q.st==='fail'?'var(--err)':q.st==='ok'?'var(--ok)':'var(--brand)'}">${ic(q.ic||'doc','ic ic-l')}</span>
+    <span class="qp">
+      <b style="font-size:13px;font-weight:500;display:block">${q.n}</b>
+      <span style="font-size:11.5px;color:var(--text-3)">${q.sz} · ${q.kb}</span>
+      ${q.st==='fail'?`<div style="font-size:12px;color:var(--err);margin-top:5px;display:flex;align-items:center;gap:5px">
+          ${ic('warn','ic ic-s')}${q.err}</div>`
+        :q.st==='ok'?`<div style="font-size:12px;color:var(--ok);margin-top:5px;display:flex;align-items:center;gap:5px">
+          ${ic('check','ic ic-s')}已生效，切分为 ${q.ck} 段知识切片</div>`
+        :`<span class="prog"><i style="width:${q.p}%"></i></span>`}
+    </span>
+    <span style="flex:none;display:flex;align-items:center;gap:9px">
+      ${q.st==='queue'?'<span class="tag">排队中</span>'
+       :q.st==='parsing'?`<span class="tag b"><span class="spin" style="width:9px;height:9px;border-width:1.5px"></span>解析中 ${q.p}%</span>`
+       :q.st==='ok'?'<span class="tag g"><span class="dot"></span>已生效</span>'
+       :'<span class="tag r"><span class="dot"></span>解析失败</span>'}
+      ${q.st==='fail'?`<button class="btn sm" onclick="qRetry(${i})">${ic('refresh','ic ic-s')}重试</button>`:''}
+      <button class="aicon" onclick="queue.splice(${i},1);$('#qList').innerHTML=qRender();$('#qStat').textContent=queue.length?'共 '+queue.length+' 个任务':'暂无任务'">${ic('x','ic ic-s')}</button>
+    </span></div>`).join('');
+}
+const UPSAMPLE=[
+  {n:'2026 年全市政务公开工作要点.docx', sz:'742 KB', ic:'doc', ck:64, fail:0,keywords:['政务公开工作要点','2026 年全市政务公开'],preview:'文件明确了 2026 年全市政务公开的总体要求、重点任务和保障措施，要求各单位完善主动公开目录并提升政策解读质量。'},
+  {n:'市政府常务会议议事规则（修订稿）.pdf', sz:'1.3 MB', ic:'doc', ck:41, fail:0,keywords:['常务会议议事规则'],preview:'文件对市政府常务会议的议题申报、审核、审议和纪要办理流程作出规定。'},
+  {n:'安全生产检查台账（扫描件）.pdf', sz:'26.4 MB', ic:'img', ck:0, fail:1, err:'文件已加密，无法提取文本内容。请解除加密后重新上传'},
+  {n:'重点项目进度表（8 月）.xlsx', sz:'560 KB', ic:'table', ck:28, fail:0,keywords:['重点项目进度'],preview:'该表汇总了 8 月重点项目的投资完成率、形象进度和待协调事项。'}
+];
+let upIdx=0;
+async function qAdd(){
+  if(upIdx>=UPSAMPLE.length){ return toast('示例文件已全部上传完毕，可点击队列中的 × 移除后重试','warn'); }
+  const s=UPSAMPLE[upIdx++], kb=$('#upKb').value;
+  // 同名冲突演示
+  if(s.n.startsWith('2026 年全市政务公开')&&!window._dupShown){
+    window._dupShown=1;
+    return openDlg(`<div class="pnl-h"><h3>已存在同名文档</h3><button class="x" onclick="closeAll()">${ic('x')}</button></div>
+      <div class="pnl-b"><div style="display:flex;gap:12px;align-items:flex-start">
+        <span style="width:36px;height:36px;border-radius:50%;background:var(--warn-l);color:var(--warn);
+          display:grid;place-items:center;flex:none">${ic('warn','ic ic-l')}</span>
+        <div><p style="font-size:14px;font-weight:500;margin-bottom:6px">${s.n}</p>
+        <p style="font-size:12.5px;color:var(--text-3);line-height:1.8">
+          该知识库中已存在同名文档（上传于 2026-07-30，共 58 段切片）。请选择处理方式：</p></div></div></div>
+      <div class="pnl-f"><button class="btn" onclick="closeAll()">取消上传</button>
+        <button class="btn" onclick="closeAll();qPush(${upIdx-1},'另存为新文档')">另存为新文档</button>
+        <button class="btn pri" onclick="closeAll();qPush(${upIdx-1},'覆盖为新版本')">覆盖为新版本</button></div>`,520);
+  }
+  qPush(upIdx-1);
+}
+async function qPush(i,mode){
+  const s=UPSAMPLE[i], kb=$('#upKb')?$('#upKb').value:KBS[0].t;
+  const tag=$('#upTag')?$('#upTag').value:'政策文件';
+  const q={...s, kb, tag, st:'queue', p:0};
+  queue.unshift(q);
+  $('#qList').innerHTML=qRender(); $('#qStat').textContent='共 '+queue.length+' 个任务';
+  if(mode) toast(mode==='覆盖为新版本'?'将覆盖原文档，旧版本切片会被替换':'已作为新文档加入队列','ok');
+  await sleep(500);
+  q.st='parsing';
+  for(let p=0;p<=100;p+=20){
+    q.p=p; $('#qList').innerHTML=qRender(); await sleep(300);
+  }
+  if(s.fail){ q.st='fail'; q.err=s.err; toast('《'+s.n.slice(0,12)+'…》解析失败','err'); }
+  else { q.st='ok'; commitQueueDoc(q,mode); toast('《'+s.n.slice(0,12)+'…》已生效，共 '+s.ck+' 段切片','ok'); }
+  $('#qList').innerHTML=qRender();
+}
+function commitQueueDoc(q,mode){
+  let name=q.n;
+  if(mode==='另存为新文档') name=q.n.replace(/(\.[^.]+)$/,`（副本）$1`);
+  const ext=(name.split('.').pop()||'').toLowerCase();
+  const f=ext==='xlsx'||ext==='xls'?'Excel':ext==='pdf'?'PDF':ext==='pptx'?'PPT':'Word';
+  const data={n:name,kb:q.kb,tag:q.tag,f,sz:q.sz,ck:q.ck,up:'陈静',dt:formatNow(),st:'ok',cite:0,preview:q.preview,keywords:q.keywords};
+  const old=DOCS.find(d=>d.n===name);
+  if(old) Object.assign(old,data);
+  else{
+    data.counted=mode==='覆盖为新版本'?false:true;
+    DOCS.unshift(data);
+    if(data.counted){ const k=KBS.find(x=>x.t===data.kb); if(k) k.n++; APP.monthNew++; }
+  }
+}
+function qRetry(i){
+  const q=queue[i];
+  toast('该文件为加密扫描件，重试仍会失败。请先解除加密','warn');
+}
+
+/* =============== 启动 =============== */
+render();
+</script>
+</body>
+</html>
