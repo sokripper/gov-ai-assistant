@@ -1,216 +1,150 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" role="img" aria-labelledby="title desc">
-  <title id="title">政府侧 AI 助手一期产品总流程</title>
-  <desc id="desc">从统一入口进入四条用户任务路径，所有任务由平台共用执行链处理，知识库管控持续向问答、写作和校核提供资料。</desc>
-
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">政府侧 AI 助手一期产品流程</title>
+  <desc id="desc">用户从统一工作台选择六个一期场景，公众号排版以已审定正文和实拍图为输入，活动与宣传策划先选择创意玩法再形成正式方案，所有任务由统一任务平台和 Codex Worker 池处理，最终经人工确认后输出。</desc>
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5E7691"/>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#16375B" flood-opacity=".10"/>
+    </filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#67809A"/>
     </marker>
-    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2F75B5"/>
+    <marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#1D63B7"/>
     </marker>
     <style>
-      text { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #243746; }
-      .title { font-size: 28px; font-weight: 700; fill: #173A5E; }
-      .subtitle { font-size: 15px; fill: #5E6F80; }
-      .section-label { font-size: 17px; font-weight: 700; fill: #FFFFFF; }
-      .node-title { font-size: 16px; font-weight: 700; }
-      .node-text { font-size: 14px; }
-      .small { font-size: 13px; fill: #5E6F80; }
-      .band-title { font-size: 15px; font-weight: 700; fill: #173A5E; }
-      .node { fill: #FFFFFF; stroke: #C9D8E8; stroke-width: 1.5; rx: 10; }
-      .node-blue { fill: #EAF3F8; stroke: #9DBDD8; stroke-width: 1.5; rx: 10; }
-      .node-green { fill: #EAF4E4; stroke: #AAC89A; stroke-width: 1.5; rx: 10; }
-      .arrow { stroke: #5E7691; stroke-width: 2; fill: none; marker-end: url(#arrow); }
-      .support { stroke: #2F75B5; stroke-width: 2; stroke-dasharray: 7 6; fill: none; marker-end: url(#arrow-blue); }
+      text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;fill:#20364A}
+      .title{font-size:30px;font-weight:750;fill:#153A61}
+      .sub{font-size:15px;fill:#62778B}
+      .stage{font-size:14px;font-weight:700;letter-spacing:1px;fill:#1D63B7}
+      .h{font-size:17px;font-weight:700}
+      .b{font-size:13px;fill:#607386}
+      .w{fill:#fff}
+      .step{font-size:14px;font-weight:700;fill:#fff}
+      .arrow{stroke:#67809A;stroke-width:2;fill:none;marker-end:url(#arrow)}
+      .blue-arrow{stroke:#1D63B7;stroke-width:2.5;fill:none;marker-end:url(#arrowBlue)}
+      .dash{stroke:#7A90A5;stroke-width:1.8;stroke-dasharray:6 6;fill:none;marker-end:url(#arrow)}
     </style>
   </defs>
 
-  <rect width="1600" height="1050" fill="#FFFFFF"/>
+  <rect width="1600" height="1000" fill="#F5F8FC"/>
+  <circle cx="1480" cy="55" r="120" fill="#E7F0FB"/>
+  <circle cx="80" cy="930" r="150" fill="#E9F5EE"/>
 
-  <text x="60" y="48" class="title">政府侧 AI 助手 · 一期产品总流程</text>
-  <text x="60" y="76" class="subtitle">会议讲解顺序：统一入口 → 四条用户任务路径 → 平台共用执行链 → 知识库资料供给</text>
+  <text x="64" y="52" class="title">政府侧 AI 助手 · 一期产品流程</text>
+  <text x="64" y="81" class="sub">一张图讲清：用户选什么 → 重点场景怎么走 → 平台怎么执行 → 结果如何交付</text>
 
-  <!-- 统一入口 -->
-  <rect x="60" y="98" width="1480" height="92" rx="14" fill="#F3F7FB"/>
-  <text x="82" y="124" class="band-title">统一入口</text>
+  <!-- Stage 1 -->
+  <text x="64" y="123" class="stage">01 统一入口与场景选择</text>
+  <rect x="64" y="140" width="1472" height="222" rx="20" fill="#FFFFFF" filter="url(#shadow)"/>
 
-  <rect x="250" y="118" width="240" height="54" class="node-blue"/>
-  <text x="370" y="141" class="node-title" text-anchor="middle">用户进入平台</text>
-  <text x="370" y="161" class="small" text-anchor="middle">进入所属单位使用空间</text>
+  <rect x="88" y="168" width="220" height="166" rx="16" fill="#153F6D"/>
+  <circle cx="128" cy="204" r="21" fill="#2D6EAE"/>
+  <text x="128" y="210" text-anchor="middle" class="step">1</text>
+  <text x="112" y="251" class="h w">首页工作台</text>
+  <text x="112" y="278" class="b" fill="#D8E7F5">快捷入口 · 最近会话</text>
+  <text x="112" y="301" class="b" fill="#D8E7F5">知识库问答 · 任务恢复</text>
 
-  <path d="M 490 145 L 620 145" class="arrow"/>
+  <path d="M308 251 H356" class="blue-arrow"/>
 
-  <rect x="620" y="118" width="320" height="54" class="node-blue"/>
-  <text x="780" y="141" class="node-title" text-anchor="middle">首页工作台</text>
-  <text x="780" y="161" class="small" text-anchor="middle">快捷入口 · 最近会话 · 任务状态</text>
+  <g transform="translate(376 166)">
+    <rect width="344" height="72" rx="13" fill="#E9F2FE" stroke="#B9D2F0"/>
+    <circle cx="38" cy="36" r="20" fill="#1D63B7"/><text x="38" y="42" text-anchor="middle" class="step">写</text>
+    <text x="72" y="31" class="h">政务材料写作</text><text x="72" y="53" class="b">通知、报告、总结、讲话稿</text>
+  </g>
+  <g transform="translate(736 166)">
+    <rect width="344" height="72" rx="13" fill="#F0EBFB" stroke="#D5C5F0"/>
+    <circle cx="38" cy="36" r="20" fill="#704DB4"/><text x="38" y="42" text-anchor="middle" class="step">宣</text>
+    <text x="72" y="31" class="h">公众号图文排版</text><text x="72" y="53" class="b">审定稿、实拍图、标题、专属基调</text>
+  </g>
+  <g transform="translate(1096 166)">
+    <rect width="344" height="72" rx="13" fill="#EAF6EF" stroke="#BFDCCA"/>
+    <circle cx="38" cy="36" r="20" fill="#2E7D54"/><text x="38" y="42" text-anchor="middle" class="step">研</text>
+    <text x="72" y="31" class="h">产业与政策研究</text><text x="72" y="53" class="b">专题分析、区域对比、建议</text>
+  </g>
+  <g transform="translate(376 252)">
+    <rect width="344" height="72" rx="13" fill="#E9F5FA" stroke="#B7DCE9"/>
+    <circle cx="38" cy="36" r="20" fill="#247F9F"/><text x="38" y="42" text-anchor="middle" class="step">数</text>
+    <text x="72" y="31" class="h">运营数据分析</text><text x="72" y="53" class="b">Excel 指标、趋势、选题建议</text>
+  </g>
+  <g transform="translate(736 252)">
+    <rect width="344" height="72" rx="13" fill="#FFF3E3" stroke="#F1D4AA"/>
+    <circle cx="38" cy="36" r="20" fill="#C27618"/><text x="38" y="42" text-anchor="middle" class="step">策</text>
+    <text x="72" y="31" class="h">活动与宣传策划</text><text x="72" y="53" class="b">创意玩法、正式方案、传播节奏</text>
+  </g>
+  <g transform="translate(1096 252)">
+    <rect width="344" height="72" rx="13" fill="#FCEDEF" stroke="#ECC6CB"/>
+    <circle cx="38" cy="36" r="20" fill="#B74F5D"/><text x="38" y="42" text-anchor="middle" class="step">会</text>
+    <text x="72" y="31" class="h">会议纪要</text><text x="72" y="53" class="b">转写、议定事项、待办确认</text>
+  </g>
 
-  <path d="M 940 145 L 1070 145" class="arrow"/>
+  <!-- Stage 2 -->
+  <text x="64" y="404" class="stage">02 重点场景：公众号图文排版闭环</text>
+  <rect x="64" y="421" width="1472" height="168" rx="20" fill="#FFFFFF" filter="url(#shadow)"/>
 
-  <rect x="1070" y="118" width="280" height="54" class="node-blue"/>
-  <text x="1210" y="150" class="node-title" text-anchor="middle">选择任务场景</text>
+  <g transform="translate(96 461)">
+    <rect width="340" height="86" rx="14" fill="#F5F0FF" stroke="#D8C8F2"/>
+    <circle cx="28" cy="27" r="16" fill="#704DB4"/><text x="28" y="32" text-anchor="middle" class="step">1</text>
+    <text x="55" y="31" class="h">导入已审定素材</text><text x="20" y="61" class="b">三审三校正文 · 已确认实拍图片</text>
+  </g>
+  <path d="M436 504 H480" class="arrow"/>
+  <g transform="translate(480 451)">
+    <rect width="520" height="106" rx="14" fill="#704DB4" stroke="#5E3EA0"/>
+    <circle cx="28" cy="27" r="16" fill="#9271CB"/><text x="28" y="32" text-anchor="middle" class="step">2</text>
+    <text x="55" y="33" class="h w">生成标题与文章专属基调</text>
+    <text x="28" y="66" class="b" fill="#EDE5FB">标题候选 + 原文依据 + 视觉简报 + 设计方向候选</text>
+    <text x="28" y="88" class="b" fill="#EDE5FB">非固定模板：可微调当前方向，或全部不满意后整批换方向</text>
+  </g>
+  <path d="M1000 504 H1044" class="arrow"/>
+  <g transform="translate(1044 461)">
+    <rect width="460" height="86" rx="14" fill="#EAF6EF" stroke="#BFDCCA"/>
+    <circle cx="28" cy="27" r="16" fill="#2E7D54"/><text x="28" y="32" text-anchor="middle" class="step">3</text>
+    <text x="55" y="31" class="h">选择成稿形态并确认</text><text x="20" y="61" class="b">常规图文：两类首图 · 故事长图：审分镜后逐镜生成</text>
+  </g>
 
-  <!-- 四条用户路径 -->
-  <text x="60" y="222" class="band-title">前台：用户可见的四条任务路径</text>
+  <!-- Stage 3 -->
+  <text x="64" y="631" class="stage">03 全部场景共用的平台执行链</text>
+  <rect x="64" y="648" width="1472" height="162" rx="20" fill="#EAF2FC" stroke="#C7DAEF"/>
+  <g transform="translate(92 688)">
+    <rect width="200" height="78" rx="13" fill="#FFFFFF"/><text x="100" y="32" text-anchor="middle" class="h">接收任务</text><text x="100" y="55" text-anchor="middle" class="b">身份 · 参数 · 文件</text>
+  </g>
+  <path d="M292 727 H336" class="blue-arrow"/>
+  <g transform="translate(336 688)">
+    <rect width="200" height="78" rx="13" fill="#FFFFFF"/><text x="100" y="32" text-anchor="middle" class="h">任务排队</text><text x="100" y="55" text-anchor="middle" class="b">并发 · 超时 · 重试</text>
+  </g>
+  <path d="M536 727 H580" class="blue-arrow"/>
+  <g transform="translate(580 688)">
+    <rect width="220" height="78" rx="13" fill="#1D63B7"/><text x="110" y="32" text-anchor="middle" class="h w">Codex Worker 池</text><text x="110" y="55" text-anchor="middle" class="b" fill="#DCEBFA">理解 · 编排 · 工具调用</text>
+  </g>
+  <path d="M800 727 H844" class="blue-arrow"/>
+  <g transform="translate(844 688)">
+    <rect width="240" height="78" rx="13" fill="#FFFFFF"/><text x="120" y="32" text-anchor="middle" class="h">模型与专用能力</text><text x="120" y="55" text-anchor="middle" class="b">VikingDB · OCR · ASR · 图片</text>
+  </g>
+  <path d="M1084 727 H1128" class="blue-arrow"/>
+  <g transform="translate(1128 688)">
+    <rect width="200" height="78" rx="13" fill="#FFFFFF"/><text x="100" y="32" text-anchor="middle" class="h">整理结果</text><text x="100" y="55" text-anchor="middle" class="b">结构化 · 版本 · 回写</text>
+  </g>
+  <path d="M1328 727 H1372" class="blue-arrow"/>
+  <g transform="translate(1372 688)">
+    <rect width="136" height="78" rx="13" fill="#2E7D54"/><text x="68" y="32" text-anchor="middle" class="h w">返回页面</text><text x="68" y="55" text-anchor="middle" class="b" fill="#E0F2E7">可继续编辑</text>
+  </g>
 
-  <rect x="60" y="240" width="1480" height="96" rx="12" fill="#F8FBFE"/>
-  <rect x="78" y="258" width="160" height="60" rx="10" fill="#245780"/>
-  <text x="158" y="283" class="section-label" text-anchor="middle">A · 查资料</text>
-  <text x="158" y="305" font-size="13" fill="#DDEAF5" text-anchor="middle">知识库问答</text>
+  <!-- Stage 4 -->
+  <text x="64" y="852" class="stage">04 资料支撑、结果出口与本期边界</text>
+  <rect x="64" y="869" width="460" height="94" rx="16" fill="#EAF6EF" stroke="#BFDCCA"/>
+  <text x="92" y="902" class="h">知识库持续供给</text>
+  <text x="92" y="929" class="b">公共知识源 + 单位知识源 → 合并检索 → 引用溯源</text>
+  <text x="92" y="950" class="b">文档上传、解析、启停与切片治理由平台负责</text>
 
-  <rect x="280" y="258" width="240" height="60" class="node"/>
-  <text x="400" y="283" class="node-title" text-anchor="middle">1. 选择知识范围</text>
-  <text x="400" y="304" class="small" text-anchor="middle">按任务选择可检索资料</text>
-  <path d="M 520 288 L 600 288" class="arrow"/>
-  <rect x="600" y="258" width="240" height="60" class="node"/>
-  <text x="720" y="293" class="node-title" text-anchor="middle">2. 输入问题</text>
-  <path d="M 840 288 L 920 288" class="arrow"/>
-  <rect x="920" y="258" width="240" height="60" class="node"/>
-  <text x="1040" y="283" class="node-title" text-anchor="middle">3. 获得答案</text>
-  <text x="1040" y="304" class="small" text-anchor="middle">正文 + 引用依据</text>
-  <path d="M 1160 288 L 1240 288" class="arrow"/>
-  <rect x="1240" y="258" width="240" height="60" class="node-green"/>
-  <text x="1360" y="283" class="node-title" text-anchor="middle">4. 决定下一步</text>
-  <text x="1360" y="304" class="small" text-anchor="middle">追问 / 调整范围 / 进入写作</text>
+  <rect x="550" y="869" width="460" height="94" rx="16" fill="#FFF3E3" stroke="#F1D4AA"/>
+  <text x="578" y="902" class="h">人工确认后交付</text>
+  <text x="578" y="929" class="b">文稿 / 图文 / 报告 / 图表 / 纪要 / 待办</text>
+  <text x="578" y="950" class="b">AI 提供辅助结果，不替代审批、审核与正式发布</text>
 
-  <rect x="60" y="348" width="1480" height="96" rx="12" fill="#F3F7FB"/>
-  <rect x="78" y="366" width="160" height="60" rx="10" fill="#245780"/>
-  <text x="158" y="391" class="section-label" text-anchor="middle">B · 写材料</text>
-  <text x="158" y="413" font-size="13" fill="#DDEAF5" text-anchor="middle">生成 + 修改 + 校核</text>
+  <rect x="1036" y="869" width="500" height="94" rx="16" fill="#FCEDEF" stroke="#ECC6CB"/>
+  <text x="1064" y="902" class="h">明确后置</text>
+  <text x="1064" y="929" class="b">外部公众号持续监控 · 全网实时监控 · Seedance 视频</text>
+  <text x="1064" y="950" class="b">政策一致性 / 保密审核 · 民生诉求自动答复</text>
 
-  <rect x="260" y="366" width="180" height="60" class="node"/>
-  <text x="350" y="391" class="node-title" text-anchor="middle">1. 选助手 / 文种</text>
-  <text x="350" y="412" class="small" text-anchor="middle">通知、报告、讲话稿等</text>
-  <path d="M 440 396 L 470 396" class="arrow"/>
-  <rect x="470" y="366" width="180" height="60" class="node"/>
-  <text x="560" y="391" class="node-title" text-anchor="middle">2. 填写要素</text>
-  <text x="560" y="412" class="small" text-anchor="middle">挂载引用与材料</text>
-  <path d="M 650 396 L 680 396" class="arrow"/>
-  <rect x="680" y="366" width="180" height="60" class="node"/>
-  <text x="770" y="391" class="node-title" text-anchor="middle">3. 生成初稿</text>
-  <text x="770" y="412" class="small" text-anchor="middle">多轮对话修改</text>
-  <path d="M 860 396 L 890 396" class="arrow"/>
-  <rect x="890" y="366" width="180" height="60" class="node"/>
-  <text x="980" y="401" class="node-title" text-anchor="middle">4. 送公文校核</text>
-  <path d="M 1070 396 L 1100 396" class="arrow"/>
-  <rect x="1100" y="366" width="180" height="60" class="node"/>
-  <text x="1190" y="391" class="node-title" text-anchor="middle">5. 处理问题</text>
-  <text x="1190" y="412" class="small" text-anchor="middle">采纳或保留风险</text>
-  <path d="M 1280 396 L 1310 396" class="arrow"/>
-  <rect x="1310" y="366" width="180" height="60" class="node-green"/>
-  <text x="1400" y="391" class="node-title" text-anchor="middle">6. 形成修改稿</text>
-  <text x="1400" y="412" class="small" text-anchor="middle">回写 / 导出</text>
-
-  <rect x="60" y="456" width="1480" height="96" rx="12" fill="#F8FBFE"/>
-  <rect x="78" y="474" width="160" height="60" rx="10" fill="#245780"/>
-  <text x="158" y="499" class="section-label" text-anchor="middle">C · 做纪要</text>
-  <text x="158" y="521" font-size="13" fill="#DDEAF5" text-anchor="middle">录音 / 速记稿</text>
-
-  <rect x="260" y="474" width="220" height="60" class="node"/>
-  <text x="370" y="499" class="node-title" text-anchor="middle">1. 上传录音 / 速记稿</text>
-  <text x="370" y="520" class="small" text-anchor="middle">支持两种输入方式</text>
-  <path d="M 480 504 L 500 504" class="arrow"/>
-  <rect x="500" y="474" width="220" height="60" class="node"/>
-  <text x="610" y="509" class="node-title" text-anchor="middle">2. 确认转写稿</text>
-  <path d="M 720 504 L 740 504" class="arrow"/>
-  <rect x="740" y="474" width="220" height="60" class="node"/>
-  <text x="850" y="509" class="node-title" text-anchor="middle">3. 生成会议纪要</text>
-  <path d="M 960 504 L 980 504" class="arrow"/>
-  <rect x="980" y="474" width="220" height="60" class="node"/>
-  <text x="1090" y="499" class="node-title" text-anchor="middle">4. 人工确认</text>
-  <text x="1090" y="520" class="small" text-anchor="middle">议定事项 · 责任单位 · 时限</text>
-  <path d="M 1200 504 L 1220 504" class="arrow"/>
-  <rect x="1220" y="474" width="220" height="60" class="node-green"/>
-  <text x="1330" y="499" class="node-title" text-anchor="middle">5. 导出结果</text>
-  <text x="1330" y="520" class="small" text-anchor="middle">纪要 + 待办</text>
-
-  <rect x="60" y="564" width="1480" height="96" rx="12" fill="#F3F7FB"/>
-  <rect x="78" y="582" width="160" height="60" rx="10" fill="#245780"/>
-  <text x="158" y="607" class="section-label" text-anchor="middle">D · 用工具</text>
-  <text x="158" y="629" font-size="13" fill="#DDEAF5" text-anchor="middle">一次输入 · 一次产出</text>
-
-  <rect x="280" y="582" width="240" height="60" class="node"/>
-  <text x="400" y="617" class="node-title" text-anchor="middle">1. 选择单项工具</text>
-  <path d="M 520 612 L 600 612" class="arrow"/>
-  <rect x="600" y="582" width="240" height="60" class="node"/>
-  <text x="720" y="607" class="node-title" text-anchor="middle">2. 提供输入</text>
-  <text x="720" y="628" class="small" text-anchor="middle">上传文件或粘贴文本</text>
-  <path d="M 840 612 L 920 612" class="arrow"/>
-  <rect x="920" y="582" width="240" height="60" class="node"/>
-  <text x="1040" y="607" class="node-title" text-anchor="middle">3. 执行单次处理</text>
-  <text x="1040" y="628" class="small" text-anchor="middle">排版 / OCR / ASR / 润色等</text>
-  <path d="M 1160 612 L 1240 612" class="arrow"/>
-  <rect x="1240" y="582" width="240" height="60" class="node-green"/>
-  <text x="1360" y="607" class="node-title" text-anchor="middle">4. 使用结果</text>
-  <text x="1360" y="628" class="small" text-anchor="middle">复制 / 下载 / 继续流转</text>
-
-  <!-- 关键跨模块移交 -->
-  <rect x="60" y="680" width="1480" height="54" rx="10" fill="#FFF4DF"/>
-  <text x="82" y="713" class="band-title">关键跨模块移交</text>
-  <text x="330" y="713" class="node-text">问答结果 + 引用依据</text>
-  <path d="M 510 708 L 590 708" class="arrow"/>
-  <text x="610" y="713" class="node-text">写作要素页</text>
-  <text x="900" y="713" class="node-text">录音转写稿</text>
-  <path d="M 1010 708 L 1090 708" class="arrow"/>
-  <text x="1110" y="713" class="node-text">会议纪要助手</text>
-
-  <!-- 共用执行链 -->
-  <rect x="60" y="756" width="1480" height="128" rx="12" fill="#EAF3F8"/>
-  <rect x="78" y="790" width="160" height="60" rx="10" fill="#2F75B5"/>
-  <text x="158" y="815" class="section-label" text-anchor="middle">平台共用链路</text>
-  <text x="158" y="837" font-size="13" fill="#E9F4FC" text-anchor="middle">每次提交均进入</text>
-
-  <rect x="260" y="790" width="180" height="60" class="node-blue"/>
-  <text x="350" y="815" class="node-title" text-anchor="middle">1. 接收任务</text>
-  <text x="350" y="836" class="small" text-anchor="middle">生成任务 ID</text>
-  <path d="M 440 820 L 470 820" class="arrow"/>
-  <rect x="470" y="790" width="180" height="60" class="node-blue"/>
-  <text x="560" y="815" class="node-title" text-anchor="middle">2. 范围校验</text>
-  <text x="560" y="836" class="small" text-anchor="middle">知识范围与参数</text>
-  <path d="M 650 820 L 680 820" class="arrow"/>
-  <rect x="680" y="790" width="180" height="60" class="node-blue"/>
-  <text x="770" y="815" class="node-title" text-anchor="middle">3. 任务排队</text>
-  <text x="770" y="836" class="small" text-anchor="middle">状态与超时管理</text>
-  <path d="M 860 820 L 890 820" class="arrow"/>
-  <rect x="890" y="790" width="180" height="60" class="node-blue"/>
-  <text x="980" y="815" class="node-title" text-anchor="middle">4. CLI Worker 池</text>
-  <text x="980" y="836" class="small" text-anchor="middle">Codex 执行任务</text>
-  <path d="M 1070 820 L 1100 820" class="arrow"/>
-  <rect x="1100" y="790" width="180" height="60" class="node-blue"/>
-  <text x="1190" y="815" class="node-title" text-anchor="middle">5. 调用能力</text>
-  <text x="1190" y="836" class="small" text-anchor="middle">知识库 / OCR / ASR / 规则</text>
-  <path d="M 1280 820 L 1310 820" class="arrow"/>
-  <rect x="1310" y="790" width="180" height="60" class="node-green"/>
-  <text x="1400" y="815" class="node-title" text-anchor="middle">6. 整理输出</text>
-  <text x="1400" y="836" class="small" text-anchor="middle">平台模型结构化并回写</text>
-
-  <!-- 知识库治理 -->
-  <rect x="60" y="906" width="1480" height="112" rx="12" fill="#F7F9FC"/>
-  <rect x="78" y="932" width="160" height="60" rx="10" fill="#5D7D43"/>
-  <text x="158" y="957" class="section-label" text-anchor="middle">知识库管控</text>
-  <text x="158" y="979" font-size="13" fill="#EDF5E8" text-anchor="middle">持续资料供给</text>
-
-  <rect x="260" y="932" width="210" height="60" class="node"/>
-  <text x="365" y="967" class="node-title" text-anchor="middle">1. 上传 / 批量上传</text>
-  <path d="M 470 962 L 500 962" class="arrow"/>
-  <rect x="500" y="932" width="210" height="60" class="node"/>
-  <text x="605" y="957" class="node-title" text-anchor="middle">2. 解析与切片</text>
-  <text x="605" y="978" class="small" text-anchor="middle">进入处理队列</text>
-  <path d="M 710 962 L 740 962" class="arrow"/>
-  <rect x="740" y="932" width="210" height="60" class="node"/>
-  <text x="845" y="957" class="node-title" text-anchor="middle">3. 异常处理</text>
-  <text x="845" y="978" class="small" text-anchor="middle">失败重试 / 重复文件</text>
-  <path d="M 950 962 L 980 962" class="arrow"/>
-  <rect x="980" y="932" width="210" height="60" class="node"/>
-  <text x="1085" y="957" class="node-title" text-anchor="middle">4. 内容治理</text>
-  <text x="1085" y="978" class="small" text-anchor="middle">文档与切片启停</text>
-  <path d="M 1190 962 L 1220 962" class="arrow"/>
-  <rect x="1220" y="932" width="220" height="60" class="node-green"/>
-  <text x="1330" y="957" class="node-title" text-anchor="middle">5. 发布为可检索知识</text>
-  <text x="1330" y="978" class="small" text-anchor="middle">供问答、写作和校核使用</text>
-
-  <path d="M 1330 932 C 1330 900, 1190 904, 1190 852" class="support"/>
-  <text x="1240" y="897" class="small" text-anchor="middle">资料供给</text>
-
-  <text x="60" y="1040" class="small">口径：Codex CLI 采用 Worker 池承接并发任务，不按用户单独部署；关键结果必须保留人工确认。</text>
+  <path d="M294 869 C294 838 690 842 690 810" class="dash"/>
+  <path d="M1250 810 C1250 842 780 838 780 869" class="dash"/>
 </svg>
