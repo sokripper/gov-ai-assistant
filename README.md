@@ -16,6 +16,8 @@
 
 ## 查看静态 Demo
 
+在线预览：[https://sokripper.github.io/gov-ai-assistant/](https://sokripper.github.io/gov-ai-assistant/)
+
 无需安装依赖或启动服务端：
 
 1. 下载或克隆仓库。
