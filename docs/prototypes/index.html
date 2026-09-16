@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>政府侧AI助手平台 · 交互原型</title>
+<title>AI办公助手平台 · 交互原型</title>
 <link rel="icon" type="image/svg+xml" href="./logo-梵行.svg">
 <style>
-/* ============ 设计 Token：政务蓝融合方案 ============ */
+/* ============ 设计 Token：专业蓝融合方案 ============ */
 :root{
   --brand:#1856A7; --brand-d:#123F7B; --brand-l:#EAF1FA; --brand-l2:#D3E2F4;
   --bg:#F4F6F9; --surface:#FFFFFF; --surface-2:#FAFBFD;
@@ -754,6 +754,24 @@ svg.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;
 .story-baked:after{content:"图字一体生成效果稿"}
 .cover-thumb.tone-ai-visit.solid{background:linear-gradient(135deg,#F7F3EA 0 68%,#153652 68%);color:#153652;border-left:5px solid #E9782D}.cover-thumb.tone-ai-visit.solid:before{border-radius:0;border-color:rgba(255,255,255,.42);box-shadow:-15px 0 0 -13px #E9782D}.cover-thumb.tone-ai-visit.solid strong{font-family:"STSong","Songti SC",serif}.cover-thumb.tone-coordinates.solid{background:linear-gradient(135deg,#102A43,#155EEF 68%,#61D9BC)}.cover-thumb.tone-blocks.solid{background:linear-gradient(145deg,#FCF5E9 0 36%,#FF6545 36% 48%,#20375E 48%)}.cover-thumb.tone-blocks.solid small,.cover-thumb.tone-blocks.solid strong{max-width:66%;color:#20375E}.cover-thumb.tone-blocks.solid:before{border-radius:0;transform:rotate(18deg);box-shadow:15px 15px 0 rgba(32,55,94,.1)}.cover-thumb.tone-editorial.solid,.cover-thumb.tone-gallery.solid{background:linear-gradient(90deg,#EEE9DD 0 72%,#20262D 72%);color:#20262D;border-top:1px solid #20262D;border-bottom:1px solid #20262D}.cover-thumb.tone-editorial.solid strong,.cover-thumb.tone-gallery.solid strong{font-family:"STSong","Songti SC",serif}.cover-thumb.tone-editorial.solid:before,.cover-thumb.tone-gallery.solid:before{border-radius:0;border:0;border-left:4px solid #2E5BFF;box-shadow:none}.cover-thumb.tone-flow.solid{background:radial-gradient(circle at 86% 18%,#7FF1D2 0 10%,transparent 11%),linear-gradient(145deg,#252052,#6849EE 64%,#1DB9A5)}.cover-thumb.tone-type.solid{background:linear-gradient(100deg,#15191F 0 72%,#D7FF45 72%);color:#F8FFE0}.cover-thumb.tone-type.solid:before{display:none}.cover-thumb.tone-type.solid strong{font-size:16px;line-height:1.25;text-decoration:underline;text-decoration-color:#D7FF45;text-decoration-thickness:5px;text-underline-offset:-2px}.cover-thumb.photo.tone-ai-visit:after{background:linear-gradient(90deg,rgba(21,54,82,.92),rgba(233,120,45,.08))}.cover-thumb.photo.tone-coordinates:after{background:linear-gradient(90deg,rgba(16,42,67,.94),rgba(21,94,239,.1))}.cover-thumb.photo.tone-blocks:after{background:linear-gradient(90deg,rgba(32,55,94,.92) 0 56%,rgba(255,101,69,.18))}.cover-thumb.photo.tone-editorial:after,.cover-thumb.photo.tone-gallery:after{background:linear-gradient(90deg,rgba(247,243,234,.94) 0 60%,rgba(32,38,45,.1))}.cover-thumb.photo.tone-editorial strong,.cover-thumb.photo.tone-gallery strong{color:#20262D;text-shadow:none;font-family:"STSong","Songti SC",serif}.cover-thumb.photo.tone-flow:after{background:linear-gradient(90deg,rgba(37,32,82,.94),rgba(29,185,165,.08))}.cover-thumb.photo.tone-type:after{background:linear-gradient(90deg,rgba(21,25,31,.94) 0 72%,rgba(215,255,69,.18))}.cover-thumb.photo.tone-type strong{text-decoration:underline;text-decoration-color:#D7FF45;text-decoration-thickness:5px;text-underline-offset:-2px}
 .wx-tone-ai-visit .wx-cover-art.photo{border-left:5px solid #E9782D}.wx-tone-ai-visit .wx-cover-art.photo:after{background:linear-gradient(90deg,rgba(21,54,82,.92),rgba(233,120,45,.06))}.wx-tone-coordinates .wx-cover-art.photo:after{background:linear-gradient(90deg,rgba(16,42,67,.94),rgba(21,94,239,.1))}.wx-tone-blocks .wx-cover-art.photo{border-top:5px solid #FF6545;border-radius:0}.wx-tone-blocks .wx-cover-art.photo:after{background:linear-gradient(90deg,rgba(32,55,94,.92) 0 58%,rgba(255,101,69,.18))}.wx-tone-editorial .wx-cover-art.photo,.wx-tone-gallery .wx-cover-art.photo{border:6px solid #fff;box-shadow:8px 8px 0 #E5E0D6}.wx-tone-editorial .wx-cover-art.photo:after,.wx-tone-gallery .wx-cover-art.photo:after{background:linear-gradient(90deg,rgba(24,29,35,.86),rgba(46,91,255,.05))}.wx-tone-flow .wx-cover-art.photo{border-radius:14px 2px}.wx-tone-flow .wx-cover-art.photo:after{background:linear-gradient(90deg,rgba(37,32,82,.94),rgba(29,185,165,.08))}.wx-tone-type .wx-cover-art.photo{border-bottom:8px solid #D7FF45;border-radius:0}.wx-tone-type .wx-cover-art.photo:after{background:linear-gradient(90deg,rgba(21,25,31,.94) 0 72%,rgba(215,255,69,.18))}.wx-tone-type .wx-cover-art.photo b{text-decoration:underline;text-decoration-color:#D7FF45;text-decoration-thickness:6px;text-underline-offset:-2px}
+/* Interaction refinements: visible controls, keyboard access and bounded small-screen overflow. */
+button:focus-visible,summary:focus-visible{outline:3px solid #7CA5ED;outline-offset:2px}
+button:disabled{cursor:not-allowed;opacity:.45}
+.compact-image-strip{gap:10px;padding:4px 2px 10px}
+.compact-image{width:140px;padding:6px;border:1px solid var(--border);border-radius:8px;background:#fff}
+.compact-image img{width:126px;height:76px}
+.compact-image.selected-cover{border-color:var(--brand)}
+.compact-image .image-delete{position:absolute;right:8px;top:8px;width:26px;height:26px;background:rgba(20,30,48,.82);color:#fff;border:0;border-radius:50%;font-size:20px;line-height:24px}
+.compact-image-actions{display:flex;gap:4px;margin-top:6px}
+.compact-image-actions button{min-height:28px;border:1px solid var(--border);border-radius:4px;background:#fff;color:var(--text-2);padding:2px 6px;font-size:11px}
+.compact-image-actions .cover-pick{flex:1;padding:2px}
+.compact-image-actions [aria-pressed="true"]{background:var(--brand-l);color:var(--brand)}
+.image-undo{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:7px 0;font-size:11px;color:var(--text-2)}
+.image-empty{border:1px dashed var(--border);padding:12px;color:var(--text-3);font-size:12px;border-radius:7px}
+.dlg{max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);overflow:auto}
+@media(max-width:1100px){.wb{overflow:auto}.wb-l{min-width:280px!important}.wb-r{min-width:0}.pnl-f{flex-wrap:wrap}.compact-upload{grid-template-columns:1fr}.source-action{flex-wrap:wrap}}
+@media(max-width:760px){.wb{display:block;height:auto}.wb-l,.wb-r{width:100%!important;min-width:0!important}.wb-b{overflow:visible}.intent-grid,.section-editor,.story-draft-grid{grid-template-columns:1fr}.story-draft-card:first-child{grid-column:auto}}
+@media(prefers-reduced-motion:reduce){.motion,.motion *{animation:none!important}}
 </style>
 </head>
 <body>
@@ -812,7 +830,7 @@ svg.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;
   <aside class="side">
     <div class="side-brand">
       <span class="mark"><img src="./logo-梵行.svg" alt="梵行"></span>
-      <b>政务AI助手平台</b>
+      <b>AI办公助手平台</b>
     </div>
     <nav class="nav" id="nav"></nav>
     <div class="side-sp">
@@ -829,7 +847,7 @@ svg.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;
       <div class="top-r">
         <button class="user">
           <span class="avatar">陈</span>
-          <span><span class="nm">陈静</span><span class="dp">市政府办公室 · 综合科</span></span>
+          <span><span class="nm">陈静</span><span class="dp">办公室 · 综合事务组</span></span>
         </button>
       </div>
     </header>
@@ -857,7 +875,7 @@ function toast(msg,type=''){
 }
 function closeAll(){ $('#mask').classList.remove('on'); $('#drawer').classList.remove('on'); $('#dlg').classList.remove('on'); }
 function openDrawer(html){ $('#drawer').innerHTML=html; $('#mask').classList.add('on'); $('#drawer').classList.add('on'); }
-function openDlg(html,w){ const d=$('#dlg'); d.innerHTML=html; if(w) d.style.width=w+'px'; $('#mask').classList.add('on'); d.classList.add('on'); }
+function openDlg(html,w){ const d=$('#dlg'); d.innerHTML=html; d.style.width=w?w+'px':''; $('#mask').classList.add('on'); d.classList.add('on'); }
 $('#mask').onclick=closeAll;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 </script>
@@ -871,13 +889,13 @@ const NAV=[
   {id:'kb',    ic:'db',   t:'知识库管控'}
 ];
 let RECENT=[
-  {t:'政务服务改革微信推文', ic:'news', v:'wechat'},
+  {t:'综合服务改革微信推文', ic:'news', v:'wechat'},
   {t:'东西湖“十五五”产业发展研究', ic:'search', v:'write',aid:'research'},
   {t:'8 月公众号运营数据分析', ic:'chart', v:'data-analysis'},
   {t:'市级财政专项资金申报材料', ic:'chat', v:'qa',q:'市级财政专项资金申报需要提交哪些材料？'},
   {t:'关于开展安全生产大检查的通知', ic:'pen', v:'write',aid:'zw'},
   {t:'全市经济运行分析会纪要', ic:'mic', v:'minutes'},
-  {t:'政务服务中心窗口设置标准', ic:'chat', v:'qa',q:'政务服务中心窗口的设置标准是什么？'},
+  {t:'综合服务中心窗口设置标准', ic:'chat', v:'qa',q:'综合服务中心窗口的设置标准是什么？'},
   {t:'重点会议宣传工作方案',ic:'star',v:'write',aid:'plan'},
   {t:'12345 热线工单办理时限',ic:'chat',v:'qa',q:'12345 热线工单的办理时限是多久？'},
   {t:'机关档案管理通知速读',ic:'read',v:'tools',tool:'read'}
@@ -885,11 +903,11 @@ let RECENT=[
 const KBS=[
   {id:'law',  t:'政策法规库', n:412},
   {id:'rule', t:'本单位制度库', n:286},
-  {id:'guide',t:'政务服务办事指南库', n:358},
+  {id:'guide',t:'综合服务办事指南库', n:358},
   {id:'meet', t:'会议纪要与文件库', n:230}
 ];
 const TOOLS=[
-  {id:'text', t:'文本优化与检查', d:'一次完成错别字、用语规范、表述精简和政务语体优化', ic:'spell', c:'r', mode:'text', hot:1},
+  {id:'text', t:'文本优化与检查', d:'一次完成错别字、用语规范、表述精简和办公语体优化', ic:'spell', c:'r', mode:'text', hot:1},
   {id:'read',  t:'文档速读', d:'上传长文档，输出内容摘要、核心要点与结构大纲，快速掌握上级文件精神', ic:'read', c:'g', mode:'file'},
   {id:'data',  t:'Excel 统计与图表', d:'上传运营数据表，自动清洗、汇总并生成可读的统计图表', ic:'chart', c:'', mode:'file', hot:1},
   {id:'ocr',   t:'图文识别（OCR）', d:'扫描件、照片、纸质红头文件转为可编辑文本，保留段落结构', ic:'img', c:'y', mode:'file'},
@@ -902,7 +920,7 @@ const TOOLS_SOON=[
   {t:'全网实时监控', d:'依赖外部数据源、持续采集和合规评估，本期不做', ic:'eye'}
 ];
 const ASSIST=[
-  {id:'zw', t:'政务材料写作助手', d:'统一支持通知、报告、工作总结、汇报和讲话稿，输出前自动检查', ic:'doc', c:'', g:'内容创作', v:'form'},
+  {id:'zw', t:'办公材料写作助手', d:'统一支持通知、报告、工作总结、汇报和讲话稿，输出前自动检查', ic:'doc', c:'', g:'内容创作', v:'form'},
   {id:'wx', t:'公众号图文排版助手', d:'导入已审定正文和实拍图片，基于文章生成可溯源标题、整体视觉基调与图文混排方案', ic:'news', c:'p', g:'内容创作', v:'wechat'},
   {id:'research', t:'产业与政策研究助手', d:'输入研究命题与方向，自动检索权威公开资料，形成有来源、有判断的产业政策研究初稿', ic:'search', c:'g', g:'研究分析', v:'form'},
   {id:'data', t:'运营数据分析助手', d:'导入公众号运营 Excel，生成趋势、文章表现对比和可执行的优化建议', ic:'chart', c:'', g:'研究分析', v:'data-analysis'},
@@ -918,16 +936,16 @@ const ASSIST_SOON=[
 ];
 /* 知识库管控 · 文档 */
 const DOCS=[
-  {n:'关于进一步优化政务服务提升行政效能的实施意见.pdf', kb:'政策法规库', tag:'政策文件', f:'PDF', sz:'2.4 MB', ck:186, up:'陈静', dt:'2026-08-14 09:22', st:'ok', cite:98},
+  {n:'关于进一步优化综合服务提升行政效能的实施意见.pdf', kb:'政策法规库', tag:'政策文件', f:'PDF', sz:'2.4 MB', ck:186, up:'陈静', dt:'2026-08-14 09:22', st:'ok', cite:98},
   {n:'市级财政专项资金管理办法（2026 年修订）.docx', kb:'政策法规库', tag:'管理办法', f:'Word', sz:'860 KB', ck:94, up:'陈静', dt:'2026-08-13 16:40', st:'ok', cite:126},
-  {n:'政务服务中心窗口服务规范.pdf', kb:'政务服务办事指南库', tag:'服务规范', f:'PDF', sz:'1.1 MB', ck:72, up:'王磊', dt:'2026-08-12 11:05', st:'ok', cite:87},
+  {n:'综合服务中心窗口服务规范.pdf', kb:'综合服务办事指南库', tag:'服务规范', f:'PDF', sz:'1.1 MB', ck:72, up:'王磊', dt:'2026-08-12 11:05', st:'ok', cite:87},
   {n:'2026 年第三季度全市经济运行分析会纪要.docx', kb:'会议纪要与文件库', tag:'会议纪要', f:'Word', sz:'420 KB', ck:38, up:'刘敏', dt:'2026-08-18 14:31', st:'parsing', cite:0},
   {n:'安全生产大检查工作台账（扫描件）.pdf', kb:'本单位制度库', tag:'工作台账', f:'PDF', sz:'18.6 MB', ck:0, up:'王磊', dt:'2026-08-18 10:12', st:'fail', cite:0, err:'文件为扫描件且已加密，无法提取文本'},
   {n:'机关公文处理工作办法.docx', kb:'本单位制度库', tag:'管理办法', f:'Word', sz:'640 KB', ck:76, up:'陈静', dt:'2026-08-09 08:55', st:'ok', cite:71},
-  {n:'行政审批事项目录清单（2026 版）.xlsx', kb:'政务服务办事指南库', tag:'目录清单', f:'Excel', sz:'1.8 MB', ck:214, up:'刘敏', dt:'2026-08-07 15:18', st:'ok', cite:64},
+  {n:'行政审批事项目录清单（2026 版）.xlsx', kb:'综合服务办事指南库', tag:'目录清单', f:'Excel', sz:'1.8 MB', ck:214, up:'刘敏', dt:'2026-08-07 15:18', st:'ok', cite:64},
   {n:'关于加强机关档案管理工作的通知.pdf', kb:'本单位制度库', tag:'通知', f:'PDF', sz:'520 KB', ck:31, up:'王磊', dt:'2026-07-28 09:40', st:'ok', cite:3},
-  {n:'政务公开工作年度报告模板.docx', kb:'本单位制度库', tag:'模板', f:'Word', sz:'310 KB', ck:22, up:'陈静', dt:'2026-07-21 17:02', st:'off', cite:0},
-  {n:'12345 政务服务便民热线办理规程.pdf', kb:'政务服务办事指南库', tag:'办理规程', f:'PDF', sz:'980 KB', ck:58, up:'刘敏', dt:'2026-07-15 10:26', st:'ok', cite:52},
+  {n:'信息公开工作年度报告模板.docx', kb:'本单位制度库', tag:'模板', f:'Word', sz:'310 KB', ck:22, up:'陈静', dt:'2026-07-21 17:02', st:'off', cite:0},
+  {n:'12345 综合服务便民热线办理规程.pdf', kb:'综合服务办事指南库', tag:'办理规程', f:'PDF', sz:'980 KB', ck:58, up:'刘敏', dt:'2026-07-15 10:26', st:'ok', cite:52},
   {n:'市政府公报历史文件索引.pdf', kb:'政策法规库', tag:'政策文件', f:'PDF', sz:'3.6 MB', ck:0, up:'王磊', dt:'2026-08-17 18:06', st:'fail', cite:0, err:'文档下载超时，可重试后继续解析'}
 ];
 const ST={ok:{t:'已生效',c:'g'}, parsing:{t:'解析中',c:'b'}, queue:{t:'排队中',c:''}, fail:{t:'解析失败',c:'r'}, off:{t:'已停用',c:''}};
@@ -941,14 +959,50 @@ function formatNow(){ return '2026-08-19 '+new Date().toTimeString().slice(0,5);
 
 /* =============== 路由 =============== */
 const ROUTES={};
+let wBusy=false;
 let cur='home', ctx={};
-function go(v,c={}){ cur=v; ctx=c; render(); $('#view').scrollTop=0; closeAll(); }
+let viewRevision=0, renderedKey='', formMemory={};
+const FORM_ROUTES=new Set(['tool-text','tool-file','minutes','data-analysis','assist-form','write']);
+function routeKey(){return cur+':'+(ctx.tool?.id||ctx.a?.id||'');}
+function saveForm(){
+  if(!renderedKey||!FORM_ROUTES.has(renderedKey.split(':')[0]))return;
+  const fields=$$('input:not([type="file"]),textarea,select', $('#view'));
+  formMemory[renderedKey]=fields.filter(e=>!e.hasAttribute('oninput')&&!e.hasAttribute('onchange')).map((e,i)=>({key:e.id||e.getAttribute('data-field')||'field-'+i,value:e.value}));
+}
+function restoreForm(){
+  if(!FORM_ROUTES.has(cur))return;
+  const fields=$$('input:not([type="file"]),textarea,select', $('#view')).filter(e=>!e.hasAttribute('oninput')&&!e.hasAttribute('onchange'));
+  for(const [i,e] of fields.entries()){const saved=formMemory[routeKey()]?.find(x=>x.key===(e.id||e.getAttribute('data-field')||'field-'+i));if(saved)e.value=saved.value;}
+}
+function go(v,c={}){
+  saveForm();
+  if(cur==='tool-file'&&ctx.tool)fileTools[ctx.tool.id]={loaded:ftLoaded,done:ftDone,tab:ftTab};
+  cur=v;ctx=c;
+  if(v==='tool-file'){const state=fileTools[c.tool.id]||{};ftLoaded=!!state.loaded;ftDone=!!state.done;ftTab=state.tab||0;}
+  renderedKey='';render();$('#view').scrollTop=0;closeAll();
+}
+function beginAction(){const revision=viewRevision;return ()=>revision===viewRevision;}
+async function copyText(text){
+  if(!text.trim())return toast('暂无可复制内容','warn');
+  try{await navigator.clipboard.writeText(text);toast('已复制到剪贴板','ok');}
+  catch{openDlg('<div class="pnl-h"><h3>请手动复制</h3><button class="x" onclick="closeAll()">×</button></div><div class="pnl-b"><p>浏览器未允许自动复制，请选中下方内容复制。</p><textarea class="ta" rows="10" readonly>'+esc(text)+'</textarea></div>',560);}
+}
+function copyFrom(selector){const e=$(selector);if(e)copyText(e.innerText||e.textContent);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll();});
 function render(){
+  const same=renderedKey===routeKey(), view=$('#view'), top=same?view.scrollTop:0;
+  const folds=same?$$('details',view).map(e=>e.open):[];
+  const scrolls=same?$$('.wb-b,.phone-body,.compact-image-strip,.editor,.cs-body',view).map(e=>[e.scrollTop,e.scrollLeft]):[];
+  if(same)saveForm();
+  viewRevision++;wBusy=false;
+  if(typeof qaBusy!=='undefined'&&qaBusy){qaBusy=false;qaMsgs=qaMsgs.filter(m=>m.r!=='load');}
   const r=ROUTES[cur]||ROUTES.home;
   $('#view').innerHTML=r.html(ctx);
   $('#crumb').innerHTML=r.crumb(ctx);
   $$('#nav .nav-i').forEach(b=>b.classList.toggle('on', b.dataset.v===(r.nav||cur)));
   if(r.init) r.init(ctx);
+  restoreForm(); renderedKey=routeKey(); view.scrollTop=top;
+  if(same){$$('details',view).forEach((e,i)=>{e.open=folds[i]||false;});$$('.wb-b,.phone-body,.compact-image-strip,.editor,.cs-body',view).forEach((e,i)=>{if(scrolls[i]){e.scrollTop=scrolls[i][0];e.scrollLeft=scrolls[i][1];}});}
 }
 function crumbOf(root,sub){
   return `<b>${root}</b>`+(sub?`<span class="sep">/</span><span>${sub}</span>`:'');
@@ -1007,7 +1061,7 @@ ROUTES.home={
     <div class="hero">
       <div>
         <h1>陈静，上午好</h1>
-        <p>市政府办公室 · 综合科　｜　今天是 2026 年 8 月 19 日，星期三</p>
+        <p>办公室 · 综合事务组　｜　今天是 2026 年 8 月 19 日，星期三</p>
       </div>
       <div class="stats">
         <div><b>${APP.generated.toLocaleString()}</b><span>本月生成材料（篇）</span></div>
@@ -1018,7 +1072,7 @@ ROUTES.home={
     <div class="ent-grid">
       ${[['qa','chat','知识库问答','问政策、问制度、问办事流程，答案带原文出处'],
          ['tools','grid','AI 工具','文本检查、文档速读、表格图表、OCR 与转写'],
-         ['assist','pen','AI 助手','公众号图文排版、政务写作、政策研究、运营分析'],
+         ['assist','pen','AI 助手','公众号图文排版、办公写作、政策研究、运营分析'],
          ['kb','db','知识库管控','文档入库、解析状态、切片治理与使用情况通览']]
         .map(([v,i,t,d])=>`<button class="ent" onclick="go('${v}')">
           <span class="arw">${ic('arw','ic ic-s')}</span>
@@ -1032,7 +1086,7 @@ ROUTES.home={
         <div class="quick">
           ${[['news','公众号图文排版','本月用了 28 次','assist','wx'],
              ['chart','运营数据分析','本月用了 21 次','assist','data'],
-             ['doc','政务材料写作','本月用了 18 次','assist','zw'],
+             ['doc','办公材料写作','本月用了 18 次','assist','zw'],
              ['search','产业与政策研究','本月用了 14 次','assist','research'],
              ['star','活动与宣传策划','本月用了 9 次','assist','plan'],
              ['mic','会议纪要助手','本月用了 7 次','assist','jy']]
@@ -1055,11 +1109,11 @@ ROUTES.home={
       <div>
         <div class="sec-t">最近会话<span class="ln"></span></div>
         <div class="card"><div class="card-b" style="padding:8px 14px">
-          ${[['news','政务服务改革微信推文','今天 09:41','wechat','var(--purple-l)','var(--purple)'],
+          ${[['news','综合服务改革微信推文','今天 09:41','wechat','var(--purple-l)','var(--purple)'],
              ['chart','8 月公众号运营数据分析','今天 08:55','data-analysis','var(--brand-l)','var(--brand)'],
              ['mic','全市经济运行分析会纪要','昨天 16:20','minutes','var(--warn-l)','var(--warn)'],
              ['search','东西湖“十五五”产业发展研究','昨天 14:07','assist','var(--ok-l)','var(--ok)'],
-             ['chat','政务服务中心窗口设置标准','8 月 17 日','qa','var(--brand-l)','var(--brand)']]
+             ['chat','综合服务中心窗口设置标准','8 月 17 日','qa','var(--brand-l)','var(--brand)']]
             .map(([i,t,s,v,bg,cl])=>`<div class="rc">
               <span class="ric" style="background:${bg};color:${cl}">${ic(i,'ic ic-s')}</span>
               <span class="txt"><b>${t}</b><span>${s}</span></span>
@@ -1100,8 +1154,8 @@ const QA_CASES=[
   a:`<p>成文日期应使用阿拉伯数字将年、月、日标全，年份标全称，月、日不编虚位<span class="sup" data-s="5">1</span>。</p>
      <p>成文日期以负责人签发日期为准；联合行文时，以最后签发机关负责人的签发日期为准<span class="sup" data-s="5">1</span>。</p>`,
   s:[5], fu:['公文的发文字号怎么写？','附件说明如何编排？']},
- {id:'window-standard', kb:'guide', match:t=>/(政务服务中心|综合窗口|窗口)/.test(t)&&/(设置|标准|规范)/.test(t), q:'政务服务中心窗口的设置标准是什么？',
-  a:`<p>政务服务中心应按“前台综合受理、后台分类审批、统一窗口出件”设置综合窗口，并统一标识、服务用语和办事流程<span class="sup" data-s="6">1</span>。</p>`,
+ {id:'window-standard', kb:'guide', match:t=>/(综合服务中心|综合窗口|窗口)/.test(t)&&/(设置|标准|规范)/.test(t), q:'综合服务中心窗口的设置标准是什么？',
+  a:`<p>综合服务中心应按“前台综合受理、后台分类审批、统一窗口出件”设置综合窗口，并统一标识、服务用语和办事流程<span class="sup" data-s="6">1</span>。</p>`,
   s:[6], fu:['窗口工作人员有哪些服务规范？','综合窗口如何分类审批？']},
  {id:'hotline-time', kb:'guide', match:t=>/(12345|热线工单|便民热线)/.test(t)&&/(时限|多久|办理)/.test(t), q:'12345 热线工单的办理时限是多久？',
   a:`<p>一般诉求应在 <strong>5 个工作日</strong>内办结并反馈；情况复杂的，延长后的办理时限不超过 15 个工作日，并应告知诉求人<span class="sup" data-s="7">1</span>。</p>
@@ -1113,19 +1167,19 @@ const SRC=[
  {t:'市级财政专项资金管理办法（2026 年修订）.docx', kb:'政策法规库', loc:'第十二条 · 第 6 页',
   frag:'申报单位应当提交专项资金申报书、项目实施方案与绩效目标表、上年度专项资金使用情况说明及审计报告等材料，并对所提交材料的真实性、完整性负责。',
   hl:'专项资金申报书、项目实施方案与绩效目标表'},
- {t:'关于进一步优化政务服务提升行政效能的实施意见.pdf', kb:'政策法规库', loc:'第四部分 · 第 14 页',
+ {t:'关于进一步优化综合服务提升行政效能的实施意见.pdf', kb:'政策法规库', loc:'第四部分 · 第 14 页',
   frag:'各申报单位需一并提供单位法人证书、开户许可证复印件及项目配套资金证明材料。自二〇二六年起，在原集中申报窗口基础上增设补充申报窗口，具体时间为每年九月一日至九月十五日。',
   hl:'增设补充申报窗口，具体时间为每年九月一日至九月十五日'},
- {t:'行政审批事项目录清单（2026 版）.xlsx', kb:'政务服务办事指南库', loc:'第 87 行 · 财政类',
+ {t:'行政审批事项目录清单（2026 版）.xlsx', kb:'综合服务办事指南库', loc:'第 87 行 · 财政类',
   frag:'事项名称：市级财政专项资金申报审核。受理方式：由主管部门初审汇总后统一报送，不受理申报单位直接报送。承诺办结时限：20 个工作日。',
   hl:'由主管部门初审汇总后统一报送，不受理申报单位直接报送'},
  {t:'市级财政专项资金管理办法（2026 年修订）.docx', kb:'政策法规库', loc:'第十三条 · 第 6 页',
   frag:'专项资金集中申报期为每年三月一日至三月三十一日，逾期不再受理。主管部门应当在申报期结束后十个工作日内完成初审并汇总上报。', hl:'每年三月一日至三月三十一日'},
  {t:'机关公文处理工作办法.docx', kb:'本单位制度库', loc:'第十八条 · 第 9 页',
   frag:'成文日期以负责人签发日期为准；联合行文以最后签发机关负责人的签发日期为准。用阿拉伯数字将年、月、日标全，年份应标全称，月、日不编虚位。', hl:'用阿拉伯数字将年、月、日标全'},
- {t:'政务服务中心窗口服务规范.pdf', kb:'政务服务办事指南库', loc:'第三章 · 第 5 页',
-  frag:'政务服务中心应统一设置综合窗口，实行前台综合受理、后台分类审批、统一窗口出件，并统一窗口标识、服务用语和办事流程。', hl:'前台综合受理、后台分类审批、统一窗口出件'},
- {t:'12345 政务服务便民热线办理规程.pdf', kb:'政务服务办事指南库', loc:'第十五条 · 第 8 页',
+ {t:'综合服务中心窗口服务规范.pdf', kb:'综合服务办事指南库', loc:'第三章 · 第 5 页',
+  frag:'综合服务中心应统一设置综合窗口，实行前台综合受理、后台分类审批、统一窗口出件，并统一窗口标识、服务用语和办事流程。', hl:'前台综合受理、后台分类审批、统一窗口出件'},
+ {t:'12345 综合服务便民热线办理规程.pdf', kb:'综合服务办事指南库', loc:'第十五条 · 第 8 页',
   frag:'一般诉求应当自承办单位收到工单之日起五个工作日内办结并反馈。情况复杂的，经批准可延长至十五个工作日，并应告知诉求人。涉及紧急安全风险的工单应当即时转办。', hl:'五个工作日内办结并反馈'}
 ];
 function noHitAnswer(txt,reason=''){
@@ -1192,8 +1246,8 @@ function qaStarter(){
     <div class="ex-grid">
       ${[['市级财政专项资金申报需要提交哪些材料？','政策法规库 · 高频问题'],
          ['机关公文的成文日期应该怎么标注？','本单位制度库'],
-         ['政务服务中心窗口的设置标准是什么？','政务服务办事指南库'],
-         ['12345 热线工单的办理时限是多久？','政务服务办事指南库']]
+         ['综合服务中心窗口的设置标准是什么？','综合服务办事指南库'],
+         ['12345 热线工单的办理时限是多久？','综合服务办事指南库']]
         .map(([q,s])=>`<button class="ex" onclick="qaAsk(this.dataset.q)" data-q="${esc(q)}">
           <span class="exi">${ic('quote','ic ic-s')}</span>
           <span><b>${q}</b><span>${s}</span></span></button>`).join('')}
@@ -1219,7 +1273,7 @@ function qaRender(){
             <span class="meta"><span>${s.kb}</span><span>${s.loc}</span></span></span></button>`}).join('')}</div></div>`:''}
       </div>
       <div class="acts-row">
-        <button class="aicon" title="复制" onclick="toast('已复制到剪贴板','ok')">${ic('copy','ic ic-s')}</button>
+        <button class="aicon" title="复制" onclick="copyText(this.closest('.msg')?.querySelector('.ans')?.innerText||'')">${ic('copy','ic ic-s')}</button>
         <button class="aicon" title="重新生成" onclick="qaRegenerate(${i})">${ic('refresh','ic ic-s')}</button>
         <button class="aicon fb" data-i="${i}" data-v="up" title="有帮助">${ic('up-th','ic ic-s')}</button>
         <button class="aicon fb" data-i="${i}" data-v="down" title="没帮助">${ic('dn-th','ic ic-s')}</button>
@@ -1252,9 +1306,10 @@ function saveQaFeedback(i){
   closeAll(); toast(reason?'反馈原因已提交，感谢帮助我们改进':'反馈已记录','ok');
 }
 function qaScrollEnd(){ const b=$('#qaBody'); if(b) b.scrollTop=b.scrollHeight; }
-function qaNew(){ qaMsgs=[]; render(); }
+function qaNew(){qaBusy=false;qaMsgs=[];render();}
 function qaAsk(q){ const ta=$('#qaIn'); if(ta) ta.value=q; qaSend(); }
 async function qaSend(){
+  const active=beginAction();
   if(qaBusy) return;
   const ta=$('#qaIn'); let txt=(ta.value||'').trim();
   if(!txt) return toast('请输入问题','warn');
@@ -1262,7 +1317,7 @@ async function qaSend(){
   qaBusy=true; ta.value=''; $('#qaSend').disabled=true;
   qaMsgs.push({r:'u',t:txt}); qaMsgs.push({r:'load'});
   $('#qaBody').innerHTML=qaRender(); qaScrollEnd();
-  await sleep(1100);
+  await sleep(1100); if(!active())return;
   qaMsgs.pop();
   qaMsgs.push({r:'a',d:sc}); APP.qaTotal++;
   $('#qaBody').innerHTML=qaRender(); qaBind(); qaScrollEnd();
@@ -1276,8 +1331,9 @@ function qaToAssistant(i){
   go('assist-form',{a:ASSIST.find(x=>x.id==='zw')});
 }
 async function qaRegenerate(i){
+  const active=beginAction();
   const u=[...qaMsgs.slice(0,i)].reverse().find(m=>m.r==='u'); if(!u||!qaMsgs[i]) return;
-  toast('正在使用当前检索范围重新生成…'); await sleep(650);
+  toast('正在使用当前检索范围重新生成…'); await sleep(650); if(!active())return;
   qaMsgs[i].d=qaAnswerFor(u.t); $('#qaBody').innerHTML=qaRender(); qaBind(); qaScrollEnd();
   toast('已基于当前知识库范围重新生成','ok');
 }
@@ -1348,14 +1404,14 @@ function toggleFav(id,el){
 
 /* =============== 工具示例数据 =============== */
 function demoVisual(label,c1='#1856A7',c2='#6B4FA8'){
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="1000" height="560" fill="url(#g)"/><circle cx="810" cy="105" r="170" fill="white" opacity=".1"/><path d="M0 410 C180 320 300 500 470 405 S760 330 1000 430 V560 H0Z" fill="white" opacity=".13"/><path d="M40 465 H960" stroke="white" opacity=".32"/><text x="55" y="88" fill="white" opacity=".78" font-size="20" font-family="Arial,sans-serif">政务新媒体 · 示例视觉</text><text x="55" y="285" fill="white" font-size="58" font-weight="700" font-family="Arial,'Microsoft YaHei',sans-serif">${label}</text><text x="58" y="334" fill="white" opacity=".82" font-size="25" font-family="Arial,'Microsoft YaHei',sans-serif">让服务更简单，让办事更高效</text></svg>`;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="1000" height="560" fill="url(#g)"/><circle cx="810" cy="105" r="170" fill="white" opacity=".1"/><path d="M0 410 C180 320 300 500 470 405 S760 330 1000 430 V560 H0Z" fill="white" opacity=".13"/><path d="M40 465 H960" stroke="white" opacity=".32"/><text x="55" y="88" fill="white" opacity=".78" font-size="20" font-family="Arial,sans-serif">新媒体 · 示例视觉</text><text x="55" y="285" fill="white" font-size="58" font-weight="700" font-family="Arial,'Microsoft YaHei',sans-serif">${label}</text><text x="58" y="334" fill="white" opacity=".82" font-size="25" font-family="Arial,'Microsoft YaHei',sans-serif">让服务更简单，让办事更高效</text></svg>`;
   return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
 }
 const TDEMO={
  text:{
   ph:'粘贴需要检查和优化的文本…',
   input:`为进一步加强机关做风建设，各部门务必高度重视，把没做完的事情做完。相关材料截止8月28日前报送办公室。`,
-  params:[['处理方式','检查并优化|仅检查|仅润色'],['文本类型','政务材料|公众号文章|工作简报']],
+  params:[['处理方式','检查并优化|仅检查|仅润色'],['文本类型','办公材料|公众号文章|工作简报']],
   res:()=>`<div class="res"><h4>优化后文本</h4><p>为进一步加强机关作风建设，各部门要高度重视，对尚未办结的事项建立台账、逐项销号。相关材料请于 8 月 28 日前报送办公室。</p><h4>问题与修改</h4><table class="tbl"><tbody>${[['错别字','做风建设','作风建设'],['用语规范','务必高度重视','要高度重视'],['表述优化','把没做完的事情做完','对尚未办结的事项建立台账、逐项销号'],['时间表述','截止 8 月 28 日前','请于 8 月 28 日前']].map(([t,a,b])=>`<tr><td><span class="tag">${t}</span></td><td><span class="diff-del">${a}</span></td><td><span class="diff-add">${b}</span></td></tr>`).join('')}</tbody></table><p style="font-size:12px;color:var(--text-3);margin-top:12px">结果仅供辅助修改，正式使用前请人工确认语义未改变。</p></div>`
  },
  align:{
@@ -1428,14 +1484,14 @@ const TDEMO={
   </div>`
  },
  read:{
-  file:{n:'关于进一步优化政务服务提升行政效能的实施意见.pdf', sz:'2.4 MB · 共 24 页', ic:'', c:''},
+  file:{n:'关于进一步优化综合服务提升行政效能的实施意见.pdf', sz:'2.4 MB · 共 24 页', ic:'', c:''},
   drop:'支持 PDF、Word、PPT、TXT，单个文件不超过 50 MB',
   params:[['输出粒度','标准摘要|详细要点|一句话概括'],['是否保留原文页码','保留|不保留']],
   tabs:['内容摘要','核心要点','结构大纲'],
   res:i=>[
    `<div class="res"><h4>内容摘要</h4>
-    <p>本文件是市政府为深化"放管服"改革、提升政务服务效能出台的综合性指导意见，共分四个部分、十八条。文件确立了"一件事一次办"的总体目标，要求到 2026 年底前实现市级政务服务事项网上可办率不低于 95%，企业开办、不动产登记等高频事项办理时限在现有基础上再压缩 30%。</p>
-    <p>文件同时对政务服务标准化、数据共享机制、窗口服务规范和监督评价体系作出具体安排，并明确自二〇二六年起在原集中申报窗口基础上增设补充申报窗口。</p>
+    <p>本文件是市政府为深化"放管服"改革、提升综合服务效能出台的综合性指导意见，共分四个部分、十八条。文件确立了"一件事一次办"的总体目标，要求到 2026 年底前实现市级综合服务事项网上可办率不低于 95%，企业开办、不动产登记等高频事项办理时限在现有基础上再压缩 30%。</p>
+    <p>文件同时对综合服务标准化、数据共享机制、窗口服务规范和监督评价体系作出具体安排，并明确自二〇二六年起在原集中申报窗口基础上增设补充申报窗口。</p>
     <p style="font-size:12.5px;color:var(--text-3);margin-top:14px">原文 1.8 万字 → 摘要 268 字，压缩比 1.5%</p></div>`,
    `<div class="res"><h4>核心要点</h4><ol>
      <li><strong>总体目标</strong>（第 2 页）：2026 年底前网上可办率不低于 95%，全面推行"一件事一次办"</li>
@@ -1448,19 +1504,19 @@ const TDEMO={
    `<div class="res"><h4>结构大纲</h4>
     <ul style="line-height:2.2">
       <li><strong>一、总体要求</strong>（第 1—3 页）<ul><li>指导思想</li><li>基本原则</li><li>工作目标</li></ul></li>
-      <li><strong>二、重点任务</strong>（第 4—15 页）<ul><li>（一）深化审批制度改革</li><li>（二）推进政务服务标准化</li><li>（三）强化数据共享应用</li><li>（四）优化申报受理机制</li></ul></li>
+      <li><strong>二、重点任务</strong>（第 4—15 页）<ul><li>（一）深化审批制度改革</li><li>（二）推进综合服务标准化</li><li>（三）强化数据共享应用</li><li>（四）优化申报受理机制</li></ul></li>
       <li><strong>三、服务保障</strong>（第 16—19 页）<ul><li>窗口设置与人员配备</li><li>信息化支撑</li></ul></li>
       <li><strong>四、组织实施</strong>（第 20—24 页）<ul><li>加强组织领导</li><li>建立监督评价机制</li><li>抓好宣传引导</li></ul></li>
     </ul></div>`][i]
  },
  data:{
-  file:{n:'政务新媒体运营数据_2026-08.xlsx', sz:'286 KB · 31 条发布记录', ic:'chart', c:'w'},
+  file:{n:'新媒体运营数据_2026-08.xlsx', sz:'286 KB · 31 条发布记录', ic:'chart', c:'w'},
   drop:'支持 XLSX、XLS、CSV，单个文件不超过 20 MB',
   params:[['分析粒度','按文章|按周|按月'],['核心指标','阅读、分享、收藏、关注转化|仅阅读与分享']],
   tabs:['数据概览','文章表现','分析建议'],
   res:i=>[
    `<div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">${[['发布文章','31','篇'],['总阅读','86,420','次'],['平均阅读','2,788','次'],['分享率','4.8','%']].map(([t,v,u])=>`<div class="kpi"><div class="lb">${t}</div><b>${v}<span class="un">${u}</span></b></div>`).join('')}</div><div class="card"><div class="card-h"><h3>近 4 周阅读趋势</h3></div><div class="card-b">${[['第 1 周',62,'18,620'],['第 2 周',78,'23,410'],['第 3 周',70,'20,960'],['第 4 周',91,'27,430']].map(([n,p,v])=>`<div class="hbar"><div class="hh"><span class="nm">${n}</span><span class="vv">${v}</span></div><div class="tr"><div class="fl" style="width:${p}%"></div></div></div>`).join('')}</div></div>`,
-   `<div class="card"><div class="card-h"><h3>文章表现 Top 5</h3></div><div class="card-b" style="padding:0"><table class="tbl"><thead><tr><th>文章</th><th>阅读</th><th>分享</th><th>收藏</th></tr></thead><tbody>${[['一图读懂“一件事一次办”','6,842','326','218'],['企业开办进入“一日办”','5,970','281','169'],['政策申报指南','5,460','246','302'],['政务服务开放日预告','4,892','198','96'],['窗口服务新变化','4,360','176','88']].map(r=>`<tr>${r.map((v,j)=>`<td class="${j?'num':''}">${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`,
+   `<div class="card"><div class="card-h"><h3>文章表现 Top 5</h3></div><div class="card-b" style="padding:0"><table class="tbl"><thead><tr><th>文章</th><th>阅读</th><th>分享</th><th>收藏</th></tr></thead><tbody>${[['一图读懂“一件事一次办”','6,842','326','218'],['企业开办进入“一日办”','5,970','281','169'],['政策申报指南','5,460','246','302'],['综合服务开放日预告','4,892','198','96'],['窗口服务新变化','4,360','176','88']].map(r=>`<tr>${r.map((v,j)=>`<td class="${j?'num':''}">${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`,
    `<div class="res"><h4>关键发现</h4><ol><li><strong>政策图解类</strong>文章阅读和分享同时领先，适合作为固定栏目。</li><li>含明确办事时限、材料清单的文章收藏率高于平均值 38%。</li><li>建议把下周内容分为“政策图解”“办事清单”和“现场故事”三条线。</li></ol><p style="font-size:12px;color:var(--text-3)">建议基于用户上传的运营数据；本期不自动采集外部账号阅读量。</p></div>`][i]
  },
  ocr:{
@@ -1485,7 +1541,7 @@ const TDEMO={
  asr:{
   file:{n:'全市经济运行分析会（2026-08-18）.m4a', sz:'42.8 MB · 时长 58 分 12 秒', ic:'audio', c:'p'},
   drop:'支持 MP3、WAV、M4A、MP4，单个文件不超过 500 MB',
-  params:[['是否区分发言人','自动区分|不区分'],['专业词表','政务通用词表|不启用']],
+  params:[['是否区分发言人','自动区分|不区分'],['专业词表','办公通用词表|不启用']],
   tabs:['转写文稿','发言统计'],
   res:i=>[
    `<div class="res">
@@ -1512,7 +1568,8 @@ const TDEMO={
 };
 
 /* =============== P04 文本型工作台 =============== */
-let wbState={run:0,done:0};
+let wbState={done:false};
+function wbActions(id){return `<button class="btn sm" onclick="copyFrom('#wbOut')">${ic('copy','ic ic-s')}复制</button><button class="btn sm" onclick="toast('原型阶段不生成真实文件','warn')">${ic('dl','ic ic-s')}下载</button><button class="btn sm" onclick="wbRun('${id}')">${ic('refresh','ic ic-s')}重新生成</button>`;}
 ROUTES['tool-text']={
   nav:'tools', crumb:c=>backCrumb('tools','AI 工具',c.tool.t),
   html:c=>{
@@ -1528,7 +1585,7 @@ ROUTES['tool-text']={
             <select class="sel" id="p${i}">${o.split('|').map(v=>`<option>${v}</option>`).join('')}</select></div>`).join('')}
           <div class="fld"><label>或上传文件</label>
             <div class="drop" onclick="toast('原型阶段不处理真实文件，请使用示例文本')" style="padding:20px">
-              <b style="font-size:13px">点击或拖拽文件到此处</b>
+              <b style="font-size:13px">文件导入说明</b>
               <p style="margin-top:3px">支持 Word、TXT，不超过 20 MB</p></div></div>
         </div>
         <div class="wb-f">
@@ -1539,8 +1596,8 @@ ROUTES['tool-text']={
       </div>
       <div class="wb-r">
         <div class="wb-h" style="background:var(--surface)"><h3>处理结果</h3>
-          <div class="rt" id="wbActs"></div></div>
-        <div class="wb-b" id="wbOut">${wbEmpty()}</div>
+          <div class="rt" id="wbActs">${wbState.done?wbActions(c.tool.id):''}</div></div>
+        <div class="wb-b" id="wbOut">${wbState.done?TDEMO[c.tool.id].res():wbEmpty()}</div>
       </div>
     </div>`;
   }
@@ -1549,12 +1606,13 @@ function wbEmpty(){
   return `<div class="empty"><span class="eic">${ic('doc','ic ic-l')}</span>
     <h4>暂无结果</h4><p>在左侧填入文本并选择参数后，点击下方按钮开始处理</p></div>`;
 }
-function wbReset(){ $('#wbOut').innerHTML=wbEmpty(); $('#wbActs').innerHTML=''; }
+function wbReset(){wbState.done=false;viewRevision++; $('#wbOut').innerHTML=wbEmpty(); $('#wbActs').innerHTML='';const b=$('#wbRun');b.disabled=false;b.innerHTML=ic('polish','ic ic-s')+'开始处理';}
 function fillDemo(){
   const t=ctx.tool, d=TDEMO[t.id];
-  $('#wbIn').value=d.input; toast('已填入示例文本','ok');
+  wbReset(); $('#wbIn').value=d.input; toast('已填入示例文本','ok');
 }
 async function wbRun(id){
+  const active=beginAction();
   const inp=$('#wbIn');
   if(!inp.value.trim()) return toast('请先填入待处理文本，可点击右上角「填入示例文本」','warn');
   const b=$('#wbRun'); b.disabled=true; b.innerHTML='<span class="spin"></span>正在处理…';
@@ -1563,17 +1621,19 @@ async function wbRun(id){
     <div style="display:flex;align-items:center;gap:9px;color:var(--text-3);font-size:13px;margin-bottom:18px">
       <span class="spin"></span>${running}</div>
     ${[96,88,92,74,84,90,66].map(w=>`<div class="skel" style="width:${w}%;margin-bottom:12px"></div>`).join('')}</div>`;
-  await sleep(1500);
-  $('#wbOut').innerHTML=TDEMO[id].res();
-  $('#wbActs').innerHTML=`<button class="btn sm" onclick="toast('已复制到剪贴板','ok')">${ic('copy','ic ic-s')}复制</button>
-    <button class="btn sm" onclick="toast('原型阶段不生成真实文件','warn')">${ic('dl','ic ic-s')}下载</button>
-    <button class="btn sm" onclick="wbRun('${id}')">${ic('refresh','ic ic-s')}重新生成</button>`;
+  await sleep(1500); if(!active())return;
+  wbState.done=true;$('#wbOut').innerHTML=TDEMO[id].res();
+  $('#wbActs').innerHTML=wbActions(id);
   b.disabled=false; b.innerHTML=ic('refresh','ic ic-s')+'重新处理';
   toast('处理完成','ok');
 }
 
 /* =============== P05 文件型工作台 =============== */
+const fileTools={};
 let ftTab=0, ftLoaded=false;
+const ftFiles={};
+function ftAccept(id){return {read:'.pdf,.doc,.docx,.txt',data:'.xlsx,.xls,.csv',ocr:'.png,.jpg,.jpeg,.webp,.pdf',asr:'.mp3,.wav,.m4a'}[id];}
+function ftChoose(files){const f=files?.[0],id=ctx.tool.id;if(!f)return;const ext='.'+f.name.split('.').pop().toLowerCase();if(!ftAccept(id).split(',').includes(ext)||!f.size||f.size>50*1024*1024)return toast('格式不支持、文件为空或超过 50 MB，请重新选择','warn');ftFiles[id]={...TDEMO[id].file,n:f.name,sz:'已选择文件 · 处理结果为演示数据'};ftLoaded=true;ftDone=false;ftTab=0;render();toast('已选择文件，原型不解析真实内容','ok');}
 ROUTES['tool-file']={
   nav:'tools', crumb:c=>backCrumb('tools','AI 工具',c.tool.t),
   html:c=>{
@@ -1583,9 +1643,9 @@ ROUTES['tool-file']={
         <div class="wb-h">${ic(c.tool.ic)}<h3>${c.tool.t}</h3></div>
         <div class="wb-b">
           <div class="fld"><label>上传文件<span class="req">*</span></label>
-            <div id="ftDrop">${ftLoaded?ftFile(d):`<div class="drop" onclick="ftPick()">
+            <input type="file" id="ftInput" accept="${ftAccept(c.tool.id)}" hidden onchange="ftChoose(this.files);this.value=''"><button class="btn sm" style="margin-bottom:8px" onclick="$('#ftInput').click()">${ftLoaded?'替换文件':'选择本地文件'}</button><div id="ftDrop">${ftLoaded?ftFile(d):`<div class="drop" onclick="ftPick()">
               <span class="dic">${ic('up','ic ic-l')}</span>
-              <b>点击选择文件，或拖拽到此处</b><p>${d.drop}</p></div>`}</div></div>
+              <b>点击载入示例文件</b><p>${d.drop}</p></div>`}</div></div>
           ${d.params.map(([n,o],i)=>`<div class="fld"><label>${n}</label>
             <select class="sel">${o.split('|').map(v=>`<option>${v}</option>`).join('')}</select></div>`).join('')}
         </div>
@@ -1596,7 +1656,7 @@ ROUTES['tool-file']={
       </div>
       <div class="wb-r">
         <div class="tabs" id="ftTabs">${d.tabs.map((t,i)=>`<button class="tab ${i===ftTab?'on':''}" onclick="ftSwitch(${i},'${c.tool.id}')">${t}</button>`).join('')}</div>
-        <div class="wb-b" id="ftOut">${ftEmpty()}</div>
+        <div class="wb-b" id="ftOut">${ftDone?TDEMO[c.tool.id].res(ftTab):ftEmpty()}</div>
       </div>
     </div>`;
   }
@@ -1606,12 +1666,13 @@ function ftEmpty(){
     <h4>等待处理</h4><p>请先在左侧上传文件，处理完成后结果将显示在这里</p></div>`;
 }
 function ftFile(d){
-  const f=d.file;
+  const f=ftFiles[ctx.tool.id]||d.file;
   return `<div class="file-i"><span class="fic ${f.c||'w'}">${ic(f.ic||'doc','ic ic-l')}</span>
-    <span class="fi"><b>${f.n}</b><span>${f.sz}</span></span>
-    <button class="aicon" onclick="ftLoaded=false;render()" title="移除">${ic('x','ic ic-s')}</button></div>`;
+    <span class="fi"><b>${esc(f.n)}</b><span>${esc(f.sz)}</span></span>
+    <button class="aicon" onclick="ftRemove()" title="移除">${ic('x','ic ic-s')}</button></div>`;
 }
-function ftPick(){ ftLoaded=true; render(); toast('已载入示例文件','ok'); }
+function ftPick(){delete ftFiles[ctx.tool.id];ftLoaded=true;ftDone=false;ftTab=0;render();toast('已载入示例文件；处理结果使用演示数据','ok');}
+function ftRemove(){delete ftFiles[ctx.tool.id];ftLoaded=false;ftDone=false;ftTab=0;render();toast('文件及对应结果已移除','ok');}
 function ftSwitch(i,id){
   if(!ftDone) return toast('请先处理文件','warn');
   ftTab=i; $$('#ftTabs .tab').forEach((t,j)=>t.classList.toggle('on',j===i));
@@ -1619,6 +1680,7 @@ function ftSwitch(i,id){
 }
 let ftDone=false;
 async function ftRun(id){
+  const active=beginAction();
   if(!ftLoaded) return toast('请先上传文件，可点击上传区载入示例文件','warn');
   const b=$('#ftRun'); b.disabled=true; b.innerHTML='<span class="spin"></span>处理中…';
   const steps={
@@ -1632,7 +1694,7 @@ async function ftRun(id){
       <div style="display:flex;align-items:center;gap:9px;color:var(--text-3);font-size:13px;margin-bottom:18px">
         <span class="spin"></span>${steps[i]}（${i+1}/3）</div>
       ${[94,86,90,72,88].map(w=>`<div class="skel" style="width:${w}%;margin-bottom:12px"></div>`).join('')}</div>`;
-    await sleep(700);
+    await sleep(700); if(!active())return;
   }
   ftDone=true; ftTab=0;
   $$('#ftTabs .tab').forEach((t,j)=>t.classList.toggle('on',j===0));
@@ -1641,8 +1703,8 @@ async function ftRun(id){
   toast('处理完成','ok');
 }
 function goMinutesFromAsr(){
-  flowState.transcript={file:TDEMO.asr.file.n,text:'已转写 8,642 字，并完成时间轴和发言人区分'};
-  mLoaded=true; mDone=false; mTab=0;
+  flowState.transcript={file:(ftFiles.asr||TDEMO.asr.file).n,text:'已转写 8,642 字，并完成时间轴和发言人区分'};
+  mFileName=flowState.transcript.file;mLoaded=true; mDone=false; mTab=0;
   go('minutes',{from:'asr'}); toast('已携带转写结果，无需重复上传','ok');
 }
 </script>
@@ -1743,12 +1805,13 @@ function loadResearchSample(){
   toast('已恢复“东西湖十五五”会议命题','ok');
 }
 async function startResearch(){
+  const active=beginAction();
   const a=ASSIST.find(x=>x.id==='research'),payload={};
   $$('[id^="af"]').forEach(el=>payload[el.dataset.label]=el.value.trim());
   if(Object.values(payload).some(v=>!v))return toast('请先补全研究命题和方向','warn');
   const b=$('#researchRun');b.disabled=true;
   const stages=['正在拆解研究问题…','正在检索政府公开资料…','正在交叉核验关键数据…','正在形成深度研究初稿…'];
-  for(const s of stages){b.innerHTML=`<span class="spin"></span>${s}`;await sleep(520);}
+  for(const s of stages){b.innerHTML=`<span class="spin"></span>${s}`;await sleep(520); if(!active())return;}
   const built=buildDraft(a,payload,null);
   flowState.draft={assistantId:'research',payload,useKb:false,sourceCount:RESEARCH_SOURCES.length,sources:RESEARCH_SOURCES,title:built.title,html:built.html,version:1};
   wMsgs=[
@@ -1814,12 +1877,13 @@ function loadPlanSample(){
   toast('已恢复重点会议宣传任务示例','ok');
 }
 async function startPlanIdeation(){
+  const active=beginAction();
   const payload={};
   $$('[id^="af"]').forEach(el=>payload[el.dataset.label]=el.value.trim());
   if(Object.values(payload).some(v=>!v))return toast('请先补全宣传任务和硬性条件','warn');
   const b=$('#planRun');b.disabled=true;
   for(const s of ['正在识别硬信息与创意空间…','正在生成差异化玩法…','正在整理可执行的内容组合…']){
-    b.innerHTML=`<span class="spin"></span>${s}`;await sleep(480);
+    b.innerHTML=`<span class="spin"></span>${s}`;await sleep(480); if(!active())return;
   }
   planState={brief:payload,round:0,selected:[0],directions:planDirectionBatch(0)};
   go('plan-studio',{a:ASSIST.find(x=>x.id==='plan')});
@@ -1859,9 +1923,10 @@ ROUTES['plan-studio']={
   }
 };
 async function generatePlanDraft(){
+  const active=beginAction();
   ensurePlanState();const b=$('#planDraftRun');b.disabled=true;
   for(const s of ['正在深化创意主方向…','正在补全会前会中会后安排…','正在生成任务分工与风险控制…']){
-    b.innerHTML=`<span class="spin"></span>${s}`;await sleep(500);
+    b.innerHTML=`<span class="spin"></span>${s}`;await sleep(500); if(!active())return;
   }
   const a=ASSIST.find(x=>x.id==='plan'),built=buildDraft(a,planState.brief,null);
   flowState.draft={assistantId:'plan',payload:planState.brief,useKb:false,planDirections:planState.selected.map(i=>planState.directions[i].n),title:built.title,html:built.html,version:1};
@@ -2067,7 +2132,7 @@ function ensureDraft(a){
   return flowState.draft;
 }
 ROUTES.write={
-  nav:'assist', crumb:c=>backCrumb('assist','AI 助手',(c.a?c.a.t:'政务材料写作助手')+' · 工作台'),
+  nav:'assist', crumb:c=>backCrumb('assist','AI 助手',(c.a?c.a.t:'办公材料写作助手')+' · 工作台'),
   html:c=>{
     const a=c.a||ASSIST[0];
     const d=ensureDraft(a);
@@ -2092,7 +2157,7 @@ ROUTES.write={
           <button class="btn sm" onclick="rewriteDraftParagraph()">${ic('refresh','ic ic-s')}整段重写</button>
           <button class="btn sm" onclick="runDraftCheck()">${ic('shield','ic ic-s')}${isResearch?'来源与事实检查':isPlan?'方案完整性检查':'输出前检查'}</button>
           <span class="wc" id="wc">正文 512 字</span>
-          <button class="btn sm" onclick="toast('已复制全文','ok')">${ic('copy','ic ic-s')}复制</button>
+          <button class="btn sm" onclick="copyFrom('#paper')">${ic('copy','ic ic-s')}复制</button>
           <button class="btn sm pri" onclick="toast('原型阶段不生成真实文件','warn')">${ic('dl','ic ic-s')}导出 Word</button>
         </div>
         <div class="editor"><div class="paper" id="paper" contenteditable="true" spellcheck="false">${d.html}</div></div>
@@ -2102,20 +2167,22 @@ ROUTES.write={
   init(){
     const p=$('#paper');
     const upd=()=>{ $('#wc').textContent='正文 '+(p.innerText.replace(/\s/g,'').length)+' 字'; };
-    p.oninput=()=>{ flowState.draft.html=p.innerHTML; upd(); }; upd();
+    p.oninput=()=>{viewRevision++;wBusy=false;$('#wLoad')?.remove();flowState.draft.html=p.innerHTML;upd();}; upd();
     $('#wIn').onkeydown=e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); wSend(); } };
   }
 };
 async function wSend(){
+  if(wBusy)return;
+  const active=beginAction();
   const ta=$('#wIn'); const t=(ta.value||'').trim();
   if(!t) return toast('请输入修改意见','warn');
   ta.value='';
-  wMsgs.push({r:'u',t:esc(t)});
+  wBusy=true;wMsgs.push({r:'u',t:esc(t)});
   const b=$('#wBody');
   b.innerHTML+=`<div class="cs-msg u"><div class="b">${esc(t)}</div></div>
     <div class="cs-msg a" id="wLoad"><div class="b"><span class="spin" style="display:inline-block;vertical-align:-2px"></span> 正在修改…</div></div>`;
   b.scrollTop=b.scrollHeight;
-  await sleep(1200);
+  await sleep(1200); if(!active())return;wBusy=false;
   const p=$('#paper');
   const isResearch=flowState.draft&&flowState.draft.assistantId==='research';
   const isPlan=flowState.draft&&flowState.draft.assistantId==='plan';
@@ -2226,8 +2293,9 @@ function wxDemoImages(reset=false){
     {id:'wx-d2',name:'座谈交流实拍图.jpg',src:demoVisual('座谈交流实拍图','#123F7B','#6B4FA8'),from:'演示占位 · 正式使用需替换为已确认实拍图'},
     {id:'wx-d3',name:'团队交流实拍图.jpg',src:demoVisual('团队交流实拍图','#2E7D4F','#43A6C6'),from:'演示占位 · 正式使用需替换为已确认实拍图'}
   ];
-  wxState.images=reset?imgs:[...wxState.images,...imgs.filter(x=>!wxState.images.some(y=>y.id===x.id))];
-  if(!wxState.cover&&wxState.images.length) wxState.cover=wxState.images[0].id;
+  if(reset){wxState.images.forEach(x=>{if(x.src.startsWith('blob:'))URL.revokeObjectURL(x.src);});wxReleaseRemoved();}
+  wxState.images=(reset?imgs:[...wxState.images,...imgs.filter(x=>!wxState.images.some(y=>y.id===x.id))]).slice(0,12);
+  if(!wxState.images.some(x=>x.id===wxState.cover))wxState.cover=wxState.images[0]?.id||null;
 }
 const WX_APPROVED_SAMPLE=`武汉市商务局服务贸易处一行走进梵行科技，共话AI应用与产业协同
 
@@ -2246,10 +2314,9 @@ const WX_APPROVED_SAMPLE=`武汉市商务局服务贸易处一行走进梵行科
 座谈期间，双方还围绕AI与服务贸易的结合展开交流，并就全球数字贸易博览会合作招商推广以及杭汉产业协同等内容进行了交流。并进一步探讨如何借助展会、协会及产业平台，加强武汉园区企业对外展示和产业资源连接，推动杭州、武汉两地企业联动、项目互导和资源双向匹配的新模式。
 
 对梵行科技而言，AI数字员工的价值不仅在于提供新的AI工具，更在于能否真正进入企业岗位、流程和业务环节。未来，梵行科技也将继续围绕这一方向，推进AI能力与企业实际需求结合，并通过园区、协会及产业平台加强资源协同，让更多AI应用从展示走向真实业务。`;
-function wxParseApproved(text){
-  return text.split(/\n+/).map(x=>x.trim()).filter(Boolean).map((x,i)=>i===0||/^[一二三四五六七八九十]+、/.test(x)||x.length<=18&&!/[。！？]$/.test(x)?`<h3>${esc(x)}</h3>`:`<p>${esc(x)}</p>`).join('');
-}
-function wxArticle(){return wxState.articleHtml||wxParseApproved(wxState.approvedText||WX_APPROVED_SAMPLE);}
+function wxBlocks(text){return text.split(/\n+/).map(x=>x.trim()).filter(Boolean).map((text,i)=>({text,heading:i===0||/^[一二三四五六七八九十]+、/.test(text)||text.length<=22&&!/[。！？]$/.test(text)}));}
+function wxParseApproved(text){return wxBlocks(text).map(x=>x.heading?`<h3>${esc(x.text)}</h3>`:`<p>${esc(x.text)}</p>`).join('');}
+function wxArticle(){return wxState.articleHtml||wxParseApproved(wxState.approvedText);}
 function wxSteps(){
   const second=wxState.outputMode==='story'?'编辑长图草图并确认':'编辑标题、小标题与排版';
   return ['导入素材并选择风格',second].map((t,i)=>{
@@ -2262,18 +2329,44 @@ const WX_STYLE_INTENTS=[
   {id:'documentary',t:'专业纪实',d:'实拍图片优先，稳重留白与编辑感'},
   {id:'warm',t:'人文叙事',d:'突出人物、现场温度与连续阅读节奏'}
 ];
-function wxStyleIntent(id){wxState.styleIntent=id;render();}
+function wxStyleIntent(id){if(wxState.styleIntent===id)return;wxState.styleIntent=id;wxState.articleReady=false;wxState.storyApproved=false;render();}
 function wxIntentOptions(){return `<div class="intent-grid">${WX_STYLE_INTENTS.map(x=>`<button class="intent-card ${wxState.styleIntent===x.id?'on':''}" onclick="wxStyleIntent('${x.id}')"><b>${x.t}</b><span>${x.d}</span></button>`).join('')}</div>`;}
-function wxCompactImages(){return wxState.images.length?`<div class="compact-image-strip">${wxState.images.map(x=>`<div class="compact-image"><img src="${x.src}" alt="${esc(x.name)}"><span>${esc(x.name)}</span></div>`).join('')}</div>`:`<span style="font-size:11px;color:var(--text-3)">尚未加入图片</span>`;}
-function wxCompactSource(){const excerpt=(wxState.approvedText||'').replace(/\s+/g,' ').slice(0,220);return `<details class="source-fold"><summary>查看已审定素材 · ${wxState.documentName?esc(wxState.documentName):'粘贴正文'} · ${wxState.images.length} 张图片</summary><div class="source-fold-body"><p>${esc(excerpt)}${wxState.approvedText.length>220?'…':''}</p>${wxCompactImages()}</div></details>`;}
-function wxBuildSections(text){if(text.includes('AI数字员工')&&text.includes('梵行科技'))return ['聚焦企业需求，探讨AI数字员工应用','深化交流合作，探讨产业协同路径'];const lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean);return lines.slice(1).filter(x=>x.length<=22&&!/[。！？]$/.test(x)).slice(0,6);}
+let wxRemovedImage=null;
+function wxCompactImages(){
+  const undo=wxRemovedImage?`<div class="image-undo">已移除「${esc(wxRemovedImage.image.name)}」<button class="btn sm" onclick="wxUndoRemove()">撤销删除</button></div>`:'';
+  return undo+(wxState.images.length?`<div class="compact-image-strip">${wxState.images.map((x,i)=>`<div class="compact-image ${x.id===wxState.cover?'selected-cover':''}">
+    <img src="${x.src}" alt="${esc(x.name)}"><button class="image-delete" aria-label="删除图片：${esc(x.name)}" title="删除图片" onclick="wxRemove('${x.id}')">×</button>
+    <span title="${esc(x.name)}">${esc(x.name)}</span><div class="compact-image-actions"><button title="前移" aria-label="前移图片：${esc(x.name)}" onclick="wxMove(${i},-1)" ${i===0?'disabled':''}>←</button><button title="后移" aria-label="后移图片：${esc(x.name)}" onclick="wxMove(${i},1)" ${i===wxState.images.length-1?'disabled':''}>→</button><button class="cover-pick" aria-pressed="${wxState.cover===x.id&&wxState.coverMode==='photo'}" onclick="wxCover('${x.id}')">${wxState.cover===x.id&&wxState.coverMode==='photo'?'已用首图':'用作首图'}</button></div></div>`).join('')}</div>`:`<div class="image-empty">暂无实拍图 · 可以继续上传，也可使用素色首图或故事长图</div>`);
+}
+function wxReleaseRemoved(){if(wxRemovedImage?.image.src.startsWith('blob:'))URL.revokeObjectURL(wxRemovedImage.image.src);wxRemovedImage=null;}
+function wxUndoRemove(){
+  if(!wxRemovedImage)return;
+  if(wxState.images.length>=12)return toast('图片已达 12 张，请先移除一张再撤销','warn');
+  const {image,index,cover,mode}=wxRemovedImage;wxState.images.splice(Math.min(index,wxState.images.length),0,image);
+  if(cover===image.id){wxState.cover=cover;wxState.coverMode=mode;}else if(!wxState.cover)wxState.cover=image.id;
+  wxRemovedImage=null;render();toast('图片已恢复到原位置','ok');
+}
+function wxCompactSource(){const excerpt=(wxState.approvedText||'').replace(/\s+/g,' ').slice(0,220);return `<details class="source-fold"><summary>查看已审定素材 · ${wxState.documentName?esc(wxState.documentName):'粘贴正文'} · ${wxState.images.length} 张图片</summary><div class="source-fold-body"><input id="wxMoreImages" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden onchange="wxUpload(this.files);this.value=''"><button class="btn sm" style="margin-bottom:8px" onclick="$('#wxMoreImages').click()">追加实拍图片</button><p>${esc(excerpt)}${wxState.approvedText.length>220?'…':''}</p>${wxCompactImages()}</div></details>`;}
+function wxBuildSections(text){return wxBlocks(text).slice(1).filter(x=>x.heading).map(x=>x.text);}
 function wxEditSection(i,v){wxState.sectionTitles[i]=v;wxRefreshPhone();}
 function wxApplySectionTitles(html){let n=-1;return html.replace(/<h3>([\s\S]*?)<\/h3>/g,m=>{n++;if(n===0)return m;const v=wxState.sectionTitles[n-1];return v!==undefined?`<h3>${esc(v)}</h3>`:m;});}
-function wxStoryEdit(i,key,v){wxState.storyEdits[i]={...(wxState.storyEdits[i]||{}),[key]:v};wxRefreshPhone();}
+function wxStoryEdit(i,key,v){
+  const wasApproved=wxState.storyApproved;
+  wxState.storyEdits[i]={...(wxState.storyEdits[i]||{}),[key]:v};wxState.storyApproved=false;wxState.storySnapshot='';
+  if(wasApproved){const field=document.activeElement,pos=field?.selectionStart;render();const next=$('#wxStory-'+i+'-'+key);if(next){next.focus();if(pos!==null)next.setSelectionRange(pos,pos);}toast('文字已修改，旧确认已失效，请重新确认','warn');}else wxRefreshPhone();
+}
+function wxStorySignature(){return JSON.stringify([wxState.approvedText,wxState.storyStyle,wxStoryScenes()]);}
+function wxCanShowStory(){return wxState.storyApproved&&wxState.storySnapshot===wxStorySignature()&&wxState.verifiedDemo&&wxState.storyStyle==='soft3d'&&wxState.storyRound===0&&Object.keys(wxState.storyEdits).length===0;}
+function wxInvalidateSource(text){
+  if(text===wxState.approvedText)return;
+  viewRevision++;wxState.approvedText=text;wxState.articleReady=false;wxState.layoutReady=false;wxState.articleHtml='';wxState.articleTitle='';wxState.sectionTitles=[];wxState.storyApproved=false;wxState.verifiedDemo=false;
+  const b=$('#wxGenerate');if(b){b.disabled=false;b.innerHTML='重新识别文稿并继续';}wxRefreshPhone();
+}
 function wxStoryBack(){wxState.storyApproved=false;render();toast('已返回草图，可修改后重新生成','ok');}
 function wxGo(n){
+  closeAll();
   if(n>1&&!wxState.articleReady) return toast('请先导入审定正文和实拍图，生成标题与排版方案','warn');
-  wxState.step=n; render();
+  wxState.step=n; render();$('#view').scrollTop=0;
 }
 const WX_MODULES=[
   ['column','主题主视觉','根据文章基调生成'],['feature','重点标题构图','来自原文重点句'],['section','章节识别系统','原文小标题'],['photo','实拍图画框','不改变照片内容'],
@@ -2329,16 +2422,23 @@ function wxBuildVisualStyles(text,brief='',round=0){
   return (round%2?second:first).map(x=>brief?{...x,reason:x.reason+` 已吸收调整：“${brief}”。`}:x);
 }
 function wxVisualChoices(){return `<div class="visual-candidates">${wxState.styleCandidates.map(x=>`<button class="visual-choice ${wxState.visualStyle===x.id?'on':''}" onclick="wxVisualStyle('${x.id}')"><span class="visual-mini ${x.id}"><i></i></span><b>${esc(x.t)}</b><span>${esc(x.d)}</span><div class="visual-evidence">${x.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div><small>${esc(x.reason)}</small></button>`).join('')}</div>`;}
-function wxPickTitle(i){const x=wxState.titleCandidates[i];if(!x)return;wxState.titleIndex=i;wxState.articleTitle=x.t;render();toast('已选择标题，右侧版式同步更新','ok');}
-function wxEditTitle(v){wxState.articleTitle=v;wxState.titleIndex=-1;wxRefreshPhone();const s=$('#wxTitleSource');if(s)s.innerHTML='<b>状态：</b>标题已人工修改，请确认仍与原文含义一致。';}
-function wxApprovedPick(files){const f=files&&files[0];if(!f)return;wxState.documentName=f.name;render();toast('已载入审定稿文件名，原型请在正文框确认内容','ok');}
+function wxPickTitle(i){const x=wxState.titleCandidates[i];if(!x)return;wxState.coverVariant=1;wxState.titleIndex=i;wxState.articleTitle=x.t;render();toast('已选择标题，右侧版式同步更新','ok');}
+function wxEditTitle(v){wxState.coverVariant=1;wxState.articleTitle=v;wxState.titleIndex=-1;wxRefreshPhone();const s=$('#wxTitleSource');if(s)s.innerHTML='<b>状态：</b>标题已人工修改，请确认仍与原文含义一致。';}
+async function wxApprovedPick(files){
+  const f=files?.[0];if(!f)return;
+  if(!/\.(docx?|pdf|txt|md)$/i.test(f.name)||!f.size||f.size>20*1024*1024)return toast('请选择 20 MB 以内的 Word、PDF、TXT 或 Markdown 文件','warn');
+  if(!/\.(txt|md)$/i.test(f.name)){toast('此 Demo 尚不解析 Word/PDF，请复制审定正文粘贴到下方；原稿未被替换','warn');return;}
+  const active=beginAction();
+  try{const text=await f.text();if(!active())return;if(!text.trim())return toast('文件中没有可读取的正文','warn');wxInvalidateSource(text);wxState.documentName=f.name;render();toast('已读取文本，请确认正文','ok');}catch{toast('文件读取失败，请重试或直接粘贴正文','err');}
+}
 function wxVisualStyle(id){wxState.visualStyle=id;render();toast('已切换文章生成的视觉基调','ok');}
 function wxRegenerateVisuals(newBatch=false){const v=($('#wxVisualBrief')?.value||'').trim();wxState.visualBrief=v;if(newBatch)wxState.visualRound++;const current=wxState.visualStyle;wxState.styleCandidates=wxBuildVisualStyles(wxState.approvedText,v,wxState.visualRound);wxState.visualStyle=newBatch?(wxState.styleCandidates[0]?.id||'coordinates'):(wxState.styleCandidates.some(x=>x.id===current)?current:wxState.styleCandidates[0]?.id||'coordinates');render();toast(newBatch?'已生成一批全新的视觉方向':'已按反馈调整当前视觉方向','ok');}
-function wxCoverMode(id){wxState.coverMode=id;render();toast(id==='solid'?'已选择素色背景＋创意字体':'已选择实拍照片＋创意字体','ok');}
+function wxCoverMode(id){if(id==='photo'&&!wxState.images.length)return toast('请先加入实拍图，或选择素色首图','warn');wxState.coverMode=id;render();toast(id==='solid'?'已选择素色背景＋创意字体':'已选择实拍照片＋创意字体','ok');}
 function wxRegenerateCover(){wxState.coverVariant=(wxState.coverVariant+1)%3;render();toast('已重新生成一版首图构图','ok');}
 function wxMotion(id){wxState.coverMotion=id;render();toast(id==='subtle'?'已开启轻动效预览':'已切换为静态首图','ok');}
+function wxCanShowCover(){return wxState.verifiedDemo&&wxState.articleTitle===wxBuildTitles(WX_APPROVED_SAMPLE)[0].t;}
 function wxCoverOptions(){
-  const photo=wxState.images.find(x=>x.id===wxState.cover)||wxState.images[0], title=wxState.verifiedDemo?'AI数字员工走进企业场景':wxState.articleTitle, motion=wxState.coverMotion==='subtle'?'motion':'', verified=wxState.verifiedDemo&&wxState.coverVariant===0;
+  const photo=wxState.images.find(x=>x.id===wxState.cover)||wxState.images[0], title=wxState.articleTitle, motion=wxState.coverMotion==='subtle'?'motion':'', verified=wxCanShowCover()&&wxState.coverVariant===0;
   const solid=verified?`<span class="cover-thumb generated verified-art ${motion}"><img src="${WX_VERIFIED_ASSETS.cover}" alt="Seedream 生成的创意字体首图"><em class="verified-badge">Seedream 实测</em></span>`:`<span class="cover-thumb solid ${motion}"><small>TOPIC / 主题首图</small><strong>${esc(title)}</strong></span>`;
   return `<div class="cover-mode-row"><button class="cover-mode ${wxState.coverMode==='solid'?'on':''}" onclick="wxCoverMode('solid')">${solid}<b>素色背景＋创意字体</b><span>${verified?'已接入本篇文章的真实生成结果':'生成配色、纹理与字体构图，不使用照片'}</span></button><button class="cover-mode ${wxState.coverMode==='photo'?'on':''}" onclick="wxCoverMode('photo')"><span class="cover-thumb photo ${motion}">${photo?`<img src="${photo.src}" alt="${esc(photo.name)}">`:''}<strong>${esc(title)}</strong></span><b>实拍照片＋创意字体</b><span>使用已确认照片，只裁切、叠色和排字</span></button></div><div class="cover-motion-row"><span>呈现方式 · 动效只作用于首图视觉</span><button class="motion-choice ${wxState.coverMotion==='static'?'on':''}" onclick="wxMotion('static')">静态</button><button class="motion-choice ${wxState.coverMotion==='subtle'?'on':''}" onclick="wxMotion('subtle')">轻动效</button></div><div class="visual-note">本篇实测首图由 Seedream 生成准确中文创意字；照片型首图仍只使用用户确认照片。轻动效不改动正文和实拍内容。</div><div class="visual-actions"><button class="btn sm" onclick="wxRegenerateCover()">${ic('refresh','ic ic-s')}换一版首图构图</button></div>`;
 }
@@ -2362,8 +2462,8 @@ function wxStoryScenes(){
   ]);
 }
 function wxStoryStyle(id){wxState.storyStyle=id;wxState.storyApproved=false;render();toast(id==='soft3d'?'已选择轻 3D 动漫':'已选择扁平叙事插画','ok');}
-function wxStoryRegenerate(){wxState.storyRound++;wxState.storyApproved=false;wxState.storyEdits={};render();toast('已重新生成一版草图节奏，原文未改动','ok');}
-function wxStoryApprove(){wxState.storyApproved=true;render();toast(wxState.verifiedDemo?'草图文字已确认，已载入 Seedream 图字一体成稿':'草图文字已确认，正式环境将提交 Seedream 图字一体生成','ok');}
+function wxStoryRegenerate(confirmed=false){if(!confirmed&&Object.keys(wxState.storyEdits).length){return openDlg('<div class="pnl-h"><h3>更换草图？</h3></div><div class="pnl-b">当前手动编辑的对白将被替换，原始正文不受影响。</div><div class="pnl-f"><button class="btn" onclick="closeAll()">保留当前草图</button><button class="btn pri" onclick="closeAll();wxStoryRegenerate(true)">确认更换</button></div>',460);}wxState.storyRound++;wxState.storyApproved=false;wxState.storyEdits={};render();toast('已重新生成一版草图节奏，原文未改动','ok');}
+function wxStoryApprove(){if(wxStoryScenes().some(x=>!x.title.trim()||!x.beat.trim()))return toast('请补全每一幕的标题与对白','warn');wxState.storyApproved=true;wxState.storySnapshot=wxStorySignature();render();toast(wxCanShowStory()?'已载入与原始示例版本对应的实测效果稿':'草图已确认；当前为静态 Demo，尚未提交模型生成','ok');}
 function wxStoryOptions(){
   const scenes=wxStoryScenes(), fit=wxState.verifiedDemo?'高':'中';
   return `<div class="story-fit"><b>AI 适配判断：${fit}</b><span>${wxState.verifiedDemo?'文章具备“来访—业务场景—五大方案—产业协同—真实业务”的完整叙事线；虚构角色不代表真实人物。':'当前文章可转为连续故事，但虚构角色不代表真实人物；发布前需逐镜确认事实、地标和字幕。'}</span></div><div class="story-config"><span>连续画风 · 同一角色设定贯穿全部分镜</span><button class="motion-choice ${wxState.storyStyle==='soft3d'?'on':''}" onclick="wxStoryStyle('soft3d')">轻 3D 动漫</button><button class="motion-choice ${wxState.storyStyle==='flat'?'on':''}" onclick="wxStoryStyle('flat')">扁平插画</button></div><div class="storyboard">${scenes.map((x,i)=>`<div class="story-shot"><i>${String(i+1).padStart(2,'0')}</i><b>${esc(x.beat)}</b><span>${esc(x.src)}</span></div>`).join('')}</div><div class="story-models"><span>Seedream · 图字一体生成</span><span>OCR · 确认文本核验</span><span>Seedance · 完整动效随成稿呈现</span></div><div class="visual-note">先确认可编辑草图与文字，再提交图字一体生成；成图后改字需要重新生成对应画面。</div><div class="story-actions"><button class="btn sm" onclick="wxStoryRegenerate()">${ic('refresh','ic ic-s')}换一版草图</button><button class="btn sm pri" onclick="wxStoryApprove()">${wxState.storyApproved?ic('check','ic ic-s')+'草图已确认':ic('polish','ic ic-s')+'确认文本并生成'}</button></div>`;
@@ -2381,7 +2481,7 @@ function wxStageLegacy(){
     <div class="wx-upload-locked" style="margin-bottom:14px"><b>${ic('shield','ic ic-s')}内容边界已锁定</b><p>正文和实拍图片视为已完成三审三校。系统只识别结构、提炼标题，生成文章专属视觉基调与非事实型装饰素材，不润色、不改写、不补充事实。</p></div>
     <input id="wxApprovedFile" type="file" accept=".doc,.docx,.pdf,.txt,.md" hidden onchange="wxApprovedPick(this.files);this.value=''">
     <div class="fld"><label>已审定稿件<span class="req">*</span></label><div class="source-action"><button class="btn" onclick="$('#wxApprovedFile').click()">${ic('up','ic ic-s')}选择 Word / PDF</button><span style="font-size:12px;color:var(--text-3)">${wxState.documentName?esc(wxState.documentName):'也可以直接粘贴下方正文'}</span></div></div>
-    <div class="fld"><label>已审定正文<span class="req">*</span><span style="float:right;color:var(--ok);font-weight:400">系统不会修改原文</span></label><textarea class="ta" id="wxApprovedText" rows="12" placeholder="粘贴已经审核确认的公众号正文…" oninput="wxState.approvedText=this.value">${esc(wxState.approvedText)}</textarea></div>
+    <div class="fld"><label>已审定正文<span class="req">*</span><span style="float:right;color:var(--ok);font-weight:400">系统不会修改原文</span></label><textarea class="ta" id="wxApprovedText" rows="12" placeholder="粘贴已经审核确认的公众号正文…" oninput="wxInvalidateSource(this.value)">${esc(wxState.approvedText)}</textarea></div>
     <div class="fld"><label>已确认实拍图片<span class="req">*</span></label><input id="wxImageInput" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden onchange="wxUpload(this.files);this.value=''"><button class="btn" onclick="$('#wxImageInput').click()">${ic('img','ic ic-s')}上传实拍图片</button><span style="margin-left:9px;font-size:12px;color:var(--text-3)">${wxState.images.length?`已加入 ${wxState.images.length} 张，可调整顺序`:'支持 JPG、PNG、WebP'}</span></div>
     ${wxState.images.length?wxGallery():''}
   </div><div class="pnl-f"><button class="btn" onclick="wxLoadMaterialDemo()">载入客户场景示例</button><button class="btn pri" id="wxGenerate" onclick="wxGenerateArticle()">${ic('polish','ic ic-s')}生成标题与文章专属基调</button></div></div>`;
@@ -2392,18 +2492,18 @@ function wxStageLegacy(){
     <div class="fld" style="margin-top:10px"><label>最终标题<span style="float:right;color:var(--warn);font-weight:400">可人工微调后确认</span></label><input class="inp" value="${esc(wxState.articleTitle)}" oninput="wxEditTitle(this.value)"><div class="title-source" id="wxTitleSource"><b>当前依据：</b>${selected?esc(selected.src):'标题已人工修改，请确认与原文含义一致。'}</div></div>
     <div class="wx-work-section"><div class="wx-work-title"><b>2. 已审定正文</b><span>${ic('shield','ic ic-s')}只读，不参与润色和改写</span></div><div class="approved-lock">${ic('check','ic ic-s')}正文内容与导入版本一致</div><div class="approved-copy">${wxState.articleHtml}</div><button class="btn sm" id="wxRegenerate" style="margin-top:9px" onclick="wxGenerateArticle(true)">${ic('refresh','ic ic-s')}重新识别标题与段落</button></div>
     <div class="wx-work-section"><div class="wx-work-title"><b>3. 实拍图片与位置</b><span>图片不生成；排序、正文穿插，并可指定照片首图底图</span></div><input id="wxImageInput" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden onchange="wxUpload(this.files);this.value=''"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:11px"><button class="btn sm" onclick="$('#wxImageInput').click()">${ic('up','ic ic-s')}追加已确认图片</button><button class="btn sm" onclick="wxDemoImages();render();toast('已载入演示实拍图','ok')">从已审素材库选择</button></div>${wxGallery()}</div>
-    <div class="wx-work-section"><div class="wx-work-title"><b>4. AI 生成的整体排版基调</b><span>不是固定模板，由当前文章语义生成</span></div>${wxVisualChoices()}<div class="visual-brief"><input class="inp" id="wxVisualBrief" value="${esc(wxState.visualBrief)}" placeholder="可选：例如更现代、更年轻、减少政务蓝…"><button class="btn sm" onclick="wxRegenerateVisuals(false)">按反馈调整</button></div><div class="visual-actions"><button class="btn sm dissatisfied" onclick="wxRegenerateVisuals(true)">${ic('refresh','ic ic-s')}都不满意，生成一批新方向</button></div><div class="visual-note">可以整批重生成，也可以保留当前方向后只调整配色或构图；两种操作都不会改动正文与实拍图片。</div></div>
+    <div class="wx-work-section"><div class="wx-work-title"><b>4. AI 生成的整体排版基调</b><span>不是固定模板，由当前文章语义生成</span></div>${wxVisualChoices()}<div class="visual-brief"><input class="inp" id="wxVisualBrief" oninput="wxState.visualBrief=this.value" value="${esc(wxState.visualBrief)}" placeholder="可选：例如更现代、更年轻、减少专业蓝…"><button class="btn sm" onclick="wxRegenerateVisuals(false)">按反馈调整</button></div><div class="visual-actions"><button class="btn sm dissatisfied" onclick="wxRegenerateVisuals(true)">${ic('refresh','ic ic-s')}都不满意，生成一批新方向</button></div><div class="visual-note">可以整批重生成，也可以保留当前方向后只调整配色或构图；两种操作都不会改动正文与实拍图片。</div></div>
     <div class="wx-work-section"><div class="wx-work-title"><b>5. 选择公众号成稿形态</b><span>常规图文与故事长图是两条独立输出链路</span></div>${wxOutputModes()}${wxState.outputMode==='article'?`<div class="wx-work-title"><b>常规图文首图形式</b><span>照片型只使用已审实拍图</span></div>${wxCoverOptions()}`:wxStoryOptions()}</div>
     ${wxState.outputMode==='article'?`<div class="wx-work-section"><div class="wx-work-title"><b>6. 主题视觉素材组件</b><span>已启用 ${wxState.modules.length} 个，可按文章增减</span></div>${wxStyleLibrary()}</div>`:''}
     <div class="phase-note" style="margin-top:14px">${ic('info','ic ic-s')}<span>${wxState.outputMode==='story'?'故事长图是基于审定正文生成的衍生表达：先审分镜和字幕，再生成动漫画面；所有事实仍以原文为准，AI 画面必须显式标注。':'模型负责标题、排版基调和非事实型装饰素材；正文、事实和实拍图片不修改。需要时可生成抽象背景、标题装饰和章节图形，但不生成“假现场照片”。'}</span></div>
-  </div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">替换原文或图片</button><button class="btn" onclick="toast('已复制公众号图文排版结果','ok')">${ic('copy','ic ic-s')}复制排版结果</button><button class="btn pri" onclick="toast('已导出标题、原文、实拍图与版式素材包（原型示意）','ok')">${ic('dl','ic ic-s')}导出排版素材包</button></div></div>`;
+  </div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">替换原文或图片</button><button class="btn" onclick="wxCopyLayout()">${ic('copy','ic ic-s')}复制排版结果</button><button class="btn pri" onclick="toast('此 Demo 尚未接入素材包导出；可复制文字继续处理','warn')">${ic('dl','ic ic-s')}导出排版素材包</button></div></div>`;
 }
-function wxStoryDraftEditor(){const scenes=wxStoryScenes();return `<div class="story-fit"><b>先确认草图</b><span>这里的标题与对白均可编辑；点击“确认并生成”后，Seedream 才会按确认文本生成图字一体画面。</span></div><div class="story-config"><span>草图画风</span><button class="motion-choice ${wxState.storyStyle==='soft3d'?'on':''}" onclick="wxStoryStyle('soft3d')">轻 3D 动漫</button><button class="motion-choice ${wxState.storyStyle==='flat'?'on':''}" onclick="wxStoryStyle('flat')">扁平插画</button></div><div class="story-draft-grid">${scenes.map((x,i)=>`<div class="story-draft-card"><div class="draft-no">SCENE ${String(i+1).padStart(2,'0')} · ${esc(x.src)}</div><label>画面标题</label><input class="inp" value="${esc(x.title)}" oninput="wxStoryEdit(${i},'title',this.value)"><label>画面对白 / 说明</label><textarea class="ta" rows="2" oninput="wxStoryEdit(${i},'beat',this.value)">${esc(x.beat)}</textarea></div>`).join('')}</div><div class="story-models"><span>草图阶段 · 文本可编辑</span><span>Seedream · 确认后图字一体生成</span><span>OCR · 成图后逐字核验</span><span>Seedance · 完整动效随成稿呈现</span></div>${wxState.storyApproved?`<div class="story-status">${ic('check','ic ic-s')}<span>草图与文本已确认，右侧显示图字一体成稿。若需要改字，请返回草图修改并重新生成对应画面。</span></div>`:''}<div class="story-actions"><button class="btn sm" onclick="wxStoryRegenerate()">${ic('refresh','ic ic-s')}换一版草图</button>${wxState.storyApproved?`<button class="btn sm" onclick="wxStoryBack()">返回修改草图</button>`:`<button class="btn sm pri" onclick="wxStoryApprove()">${ic('polish','ic ic-s')}确认文本并生成成稿</button>`}</div>`;}
+function wxStoryDraftEditor(){const scenes=wxStoryScenes();return `<div class="story-fit"><b>先确认草图</b><span>这里的标题与对白均可编辑；点击“确认并生成”后，Seedream 才会按确认文本生成图字一体画面。</span></div><div class="story-config"><span>草图画风</span><button class="motion-choice ${wxState.storyStyle==='soft3d'?'on':''}" onclick="wxStoryStyle('soft3d')">轻 3D 动漫</button><button class="motion-choice ${wxState.storyStyle==='flat'?'on':''}" onclick="wxStoryStyle('flat')">扁平插画</button></div><div class="story-draft-grid">${scenes.map((x,i)=>`<div class="story-draft-card"><div class="draft-no">SCENE ${String(i+1).padStart(2,'0')} · ${esc(x.src)}</div><label>画面标题</label><input id="wxStory-${i}-title" class="inp" value="${esc(x.title)}" oninput="wxStoryEdit(${i},'title',this.value)"><label>画面对白 / 说明</label><textarea id="wxStory-${i}-beat" class="ta" rows="2" oninput="wxStoryEdit(${i},'beat',this.value)">${esc(x.beat)}</textarea></div>`).join('')}</div><div class="story-models"><span>草图阶段 · 文本可编辑</span><span>Seedream · 确认后图字一体生成</span><span>OCR · 成图后逐字核验</span><span>Seedance · 完整动效随成稿呈现</span></div>${wxState.storyApproved?`<div class="story-status">${ic('check','ic ic-s')}<span>草图文本已确认。仅原始示例可查看已有成图；修改后的版本需接入模型重新生成，不会复用旧图。</span></div>`:''}<div class="story-actions"><button class="btn sm" onclick="wxStoryRegenerate()">${ic('refresh','ic ic-s')}换一版草图</button>${wxState.storyApproved?`<button class="btn sm" onclick="wxStoryBack()">返回修改草图</button>`:`<button class="btn sm pri" onclick="wxStoryApprove()">${ic('polish','ic ic-s')}确认文本并生成成稿</button>`}</div>`;}
 function wxStage(){
-  if(wxState.step===1)return `<div class="card"><div class="card-h">${ic('grid')}<h3>先确定成稿路径与风格</h3><span class="tag g" style="margin-left:auto">正文与实拍图不改写</span></div><div class="card-b"><div class="wx-setup-block"><div class="wx-work-title"><b>1. 本次要生成什么</b><span>选定后进入对应流程</span></div>${wxOutputModes()}</div><div class="wx-setup-block"><div class="wx-work-title"><b>2. 本次公众号视觉气质</b><span>后续方案都围绕该方向生成</span></div>${wxIntentOptions()}</div><div class="wx-setup-block"><div class="wx-work-title"><b>3. 导入已审定素材</b><span>紧凑展示，不占用首屏主体</span></div><div class="compact-upload"><div class="compact-upload-box"><b>审定文稿</b><input id="wxApprovedFile" type="file" accept=".doc,.docx,.pdf,.txt,.md" hidden onchange="wxApprovedPick(this.files);this.value=''"><div class="source-action"><button class="btn sm" onclick="$('#wxApprovedFile').click()">${ic('up','ic ic-s')}选择文件</button><span>${wxState.documentName?esc(wxState.documentName):'也可粘贴正文'}</span></div></div><div class="compact-upload-box"><b>确认实拍图 · ${wxState.images.length} 张</b><input id="wxImageInput" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden onchange="wxUpload(this.files);this.value=''"><div class="source-action"><button class="btn sm" onclick="$('#wxImageInput').click()">${ic('img','ic ic-s')}上传图片</button><span>只参与裁切、排序与排版</span></div></div></div><div class="fld" style="margin-top:10px"><textarea class="ta" id="wxApprovedText" rows="6" placeholder="粘贴已经审核确认的公众号正文…" oninput="wxState.approvedText=this.value">${esc(wxState.approvedText)}</textarea></div>${wxCompactImages()}</div></div><div class="pnl-f"><button class="btn" onclick="wxLoadMaterialDemo()">载入客户场景示例</button><button class="btn pri" id="wxGenerate" onclick="wxGenerateArticle()">${ic('polish','ic ic-s')}${wxState.outputMode==='story'?'生成可编辑长图草图':'进入图文排版'}</button></div></div>`;
+  if(wxState.step===1)return `<div class="card"><div class="card-h">${ic('grid')}<h3>先确定成稿路径与风格</h3><span class="tag g" style="margin-left:auto">正文与实拍图不改写</span></div><div class="card-b"><div class="wx-setup-block"><div class="wx-work-title"><b>1. 本次要生成什么</b><span>选定后进入对应流程</span></div>${wxOutputModes()}</div><div class="wx-setup-block"><div class="wx-work-title"><b>2. 本次公众号视觉气质</b><span>后续方案都围绕该方向生成</span></div>${wxIntentOptions()}</div><div class="wx-setup-block"><div class="wx-work-title"><b>3. 导入已审定素材</b><span>紧凑展示，不占用首屏主体</span></div><div class="compact-upload"><div class="compact-upload-box"><b>审定文稿</b><input id="wxApprovedFile" type="file" accept=".doc,.docx,.pdf,.txt,.md" hidden onchange="wxApprovedPick(this.files);this.value=''"><div class="source-action"><button class="btn sm" onclick="$('#wxApprovedFile').click()">${ic('up','ic ic-s')}选择文件</button><span>${wxState.documentName?esc(wxState.documentName):'也可粘贴正文'}</span></div></div><div class="compact-upload-box" ondragover="event.preventDefault()" ondrop="event.preventDefault();wxUpload(event.dataTransfer.files)"><b>确认实拍图 · ${wxState.images.length} 张</b><input id="wxImageInput" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden onchange="wxUpload(this.files);this.value=''"><div class="source-action"><button class="btn sm" onclick="$('#wxImageInput').click()">${ic('img','ic ic-s')}上传图片</button><span>可拖入图片 · 最多 12 张，单张 20 MB</span></div></div></div><div class="fld" style="margin-top:10px"><textarea class="ta" id="wxApprovedText" rows="6" placeholder="粘贴已经审核确认的公众号正文…" oninput="wxInvalidateSource(this.value)">${esc(wxState.approvedText)}</textarea></div>${wxCompactImages()}</div></div><div class="pnl-f"><button class="btn" onclick="wxLoadMaterialDemo()">载入客户场景示例</button><button class="btn pri" id="wxGenerate" onclick="wxGenerateArticle()">${ic('polish','ic ic-s')}${wxState.outputMode==='story'?'生成可编辑长图草图':'进入图文排版'}</button></div></div>`;
   const selected=wxState.titleCandidates[wxState.titleIndex];
-  if(wxState.outputMode==='story')return `<div class="card"><div class="card-h">${ic('align')}<h3>故事长图草图确认</h3><span class="tag ${wxState.storyApproved?'g':'y'}" style="margin-left:auto">${wxState.storyApproved?'已确认并生成':'文本可编辑'}</span></div><div class="card-b">${wxStoryDraftEditor()}${wxCompactSource()}<div class="phase-note" style="margin-top:12px">${ic('info','ic ic-s')}<span>最终成稿采用图字一体生成。草图阶段可自由修改标题和对白；成图后的文字修改需要重新生成对应画面，并通过 OCR 与确认稿逐字比对。</span></div></div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">返回修改素材与风格</button><button class="btn pri" onclick="toast('已导出故事长图式成稿（原型示意）','ok')">${ic('dl','ic ic-s')}导出长图成稿</button></div></div>`;
-  return `<div class="card"><div class="card-h">${ic('align')}<h3>图文排版确认</h3><span class="tag g" style="margin-left:auto">优先展示可交互内容</span></div><div class="card-b"><div class="wx-work-title"><b>1. 大标题</b><span>基于原文提炼，可人工修改</span></div>${wxTitleChoices()}<div class="fld" style="margin-top:8px"><input class="inp" value="${esc(wxState.articleTitle)}" oninput="wxEditTitle(this.value)"><div class="title-source" id="wxTitleSource"><b>当前依据：</b>${selected?esc(selected.src):'标题已人工修改，请确认与原文含义一致。'}</div></div><div class="wx-work-section"><div class="wx-work-title"><b>2. 小标题</b><span>只调整表达与层级，不改正文事实</span></div><div class="section-editor">${wxState.sectionTitles.map((x,i)=>`<div class="section-edit"><label>小标题 ${i+1}</label><input class="inp" value="${esc(x)}" oninput="wxEditSection(${i},this.value)"></div>`).join('')}</div></div><div class="wx-work-section"><div class="wx-work-title"><b>3. 文章专属视觉方向</b><span>已按首屏选择的气质生成</span></div>${wxVisualChoices()}<div class="visual-brief"><input class="inp" id="wxVisualBrief" value="${esc(wxState.visualBrief)}" placeholder="继续微调，例如减少科技蓝、增加留白…"><button class="btn sm" onclick="wxRegenerateVisuals(false)">按反馈调整</button></div></div><div class="wx-work-section"><div class="wx-work-title"><b>4. 首图与版式组件</b><span>实拍图只裁切、叠色和排字</span></div>${wxCoverOptions()}<details class="source-fold"><summary>展开局部版式组件 · 当前 ${wxState.modules.length} 项</summary><div class="source-fold-body">${wxStyleLibrary()}</div></details></div>${wxCompactSource()}</div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">返回修改素材与风格</button><button class="btn" onclick="toast('已复制公众号图文排版结果','ok')">${ic('copy','ic ic-s')}复制排版</button><button class="btn pri" onclick="toast('已导出标题、原文、实拍图与版式素材包（原型示意）','ok')">${ic('dl','ic ic-s')}导出图文成稿</button></div></div>`;
+  if(wxState.outputMode==='story')return `<div class="card"><div class="card-h">${ic('align')}<h3>故事长图草图确认</h3><span class="tag ${wxState.storyApproved?'g':'y'}" style="margin-left:auto">${wxState.storyApproved?(wxCanShowStory()?'示例成图':'已确认 · 待接入生成'):'文本可编辑'}</span></div><div class="card-b">${wxStoryDraftEditor()}${wxCompactSource()}<div class="phase-note" style="margin-top:12px">${ic('info','ic ic-s')}<span>最终成稿采用图字一体生成。草图阶段可自由修改标题和对白；成图后的文字修改需要重新生成对应画面，并通过 OCR 与确认稿逐字比对。</span></div></div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">返回修改素材与风格</button><button class="btn pri" onclick="toast('此 Demo 尚未接入长图导出，未生成下载文件','warn')">${ic('dl','ic ic-s')}导出长图成稿</button></div></div>`;
+  return `<div class="card"><div class="card-h">${ic('align')}<h3>图文排版确认</h3><span class="tag g" style="margin-left:auto">优先展示可交互内容</span></div><div class="card-b"><div class="wx-work-title"><b>1. 大标题</b><span>基于原文提炼，可人工修改</span></div>${wxTitleChoices()}<div class="fld" style="margin-top:8px"><input class="inp" value="${esc(wxState.articleTitle)}" oninput="wxEditTitle(this.value)"><div class="title-source" id="wxTitleSource"><b>当前依据：</b>${selected?esc(selected.src):'标题已人工修改，请确认与原文含义一致。'}</div></div><div class="wx-work-section"><div class="wx-work-title"><b>2. 小标题</b><span>只调整表达与层级，不改正文事实</span></div><div class="section-editor">${wxState.sectionTitles.map((x,i)=>`<div class="section-edit"><label>小标题 ${i+1}</label><input class="inp" value="${esc(x)}" oninput="wxEditSection(${i},this.value)"></div>`).join('')}</div></div><div class="wx-work-section"><div class="wx-work-title"><b>3. 文章专属视觉方向</b><span>已按首屏选择的气质生成</span></div>${wxVisualChoices()}<div class="visual-brief"><input class="inp" id="wxVisualBrief" oninput="wxState.visualBrief=this.value" value="${esc(wxState.visualBrief)}" placeholder="继续微调，例如减少科技蓝、增加留白…"><button class="btn sm" onclick="wxRegenerateVisuals(false)">按反馈调整</button></div></div><div class="wx-work-section"><div class="wx-work-title"><b>4. 首图与版式组件</b><span>实拍图只裁切、叠色和排字</span></div>${wxCoverOptions()}<details class="source-fold"><summary>展开局部版式组件 · 当前 ${wxState.modules.length} 项</summary><div class="source-fold-body">${wxStyleLibrary()}</div></details></div>${wxCompactSource()}</div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">返回修改素材与风格</button><button class="btn" onclick="wxCopyLayout()">${ic('copy','ic ic-s')}复制文字</button><button class="btn pri" onclick="toast('此 Demo 尚未接入素材包导出；可复制文字继续处理','warn')">${ic('dl','ic ic-s')}导出图文成稿</button></div></div>`;
 }
 function wxMixApprovedHtml(html,images,caption){
   const blocks=html.match(/<(?:h3|p)>[\s\S]*?<\/(?:h3|p)>/g)||[html];
@@ -2413,13 +2513,13 @@ function wxMixApprovedHtml(html,images,caption){
 }
 function wxStoryPhoneLegacy(){
   const scenes=wxStoryScenes(), flat=wxState.storyStyle==='flat'?'flat':'';
-  if(wxState.verifiedDemo&&wxState.storyApproved&&wxState.storyStyle==='soft3d'){
+  if(wxCanShowStory()){
     const chapters=scenes.map((x,i)=>`<section class="story-chapter c${i+1}"><div class="story-copy"><small>STORY ${String(i+1).padStart(2,'0')} · ${esc(x.src)}</small><h2>${esc(x.title)}</h2><p>${esc(x.beat)}</p></div>${i===4?`<div class="story-motion-inline"><video src="${WX_VERIFIED_ASSETS.motion}" poster="${WX_VERIFIED_ASSETS.frame}" autoplay muted loop playsinline preload="metadata" ontimeupdate="if(this.currentTime>=1.8)this.currentTime=0"></video><span class="story-motion-badge">局部动效 · 1.8 秒循环</span></div><div class="story-motion-note"><b>Seedance 实测</b><span>作为长图末幕的一部分随文呈现，不单独输出。</span></div>`:`<div class="story-slice"><img src="${WX_VERIFIED_ASSETS.story}" alt="Seedream 长图第 ${i+1} 幕画面"></div>`}</section>`).join('');
     return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">梵行科技 · 长图式成稿实测预览</div></div><div class="story-long story-composite"><div class="story-composite-head"><b>ONE STORY</b> · 五幕连续长图 / 末幕内嵌短动效</div>${chapters}<div class="story-ai-mark">Seedream 画面 + 平台准确字幕 + Seedance 局部动效 · 虚构泛化人物，不代表真实人员</div><div class="story-end"><b>从文章到连续视觉叙事</b><span>字幕逐条溯源 · 动效随长图式成稿一并输出<br>AI 生成画面，发布前人工确认</span></div></div></div></div>`;
   }
-  return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">政务服务发布 · 故事长图预览</div></div><div class="story-long">${scenes.map((x,i)=>`<section class="story-scene ${flat}"><span class="scene-tag">STORY ${String(i+1).padStart(2,'0')} · AI 生成示意</span><h2>${esc(x.title)}</h2><p>${esc(x.beat)}</p><i class="story-character"></i><span class="story-source">依据：${esc(x.src)}</span></section>`).join('')}<div class="story-end"><b>一张长图 · 连续叙事</b><span>分镜字幕逐条溯源 · 角色为虚构形象<br>AI 生成画面，发布前人工确认</span></div></div></div></div>`;
+  return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">综合服务发布 · 故事长图预览</div></div><div class="story-long">${scenes.map((x,i)=>`<section class="story-scene ${flat}"><span class="scene-tag">STORY ${String(i+1).padStart(2,'0')} · AI 生成示意</span><h2>${esc(x.title)}</h2><p>${esc(x.beat)}</p><i class="story-character"></i><span class="story-source">依据：${esc(x.src)}</span></section>`).join('')}<div class="story-end"><b>一张长图 · 连续叙事</b><span>分镜字幕逐条溯源 · 角色为虚构形象<br>AI 生成画面，发布前人工确认</span></div></div></div></div>`;
 }
-function wxStoryPhone(){const scenes=wxStoryScenes(),flat=wxState.storyStyle==='flat'?'flat':'';if(wxState.verifiedDemo&&wxState.storyApproved&&wxState.storyStyle==='soft3d'){const inks=scenes.map((x,i)=>`<div class="story-ink s${i+1}"><small>SCENE ${String(i+1).padStart(2,'0')}</small><b>${esc(x.title)}</b><span>${esc(x.beat)}</span></div>`).join('');return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">梵行科技 · Seedream 图字一体成稿</div></div><div class="story-long"><div class="story-baked"><img src="${WX_VERIFIED_ASSETS.story}" alt="Seedream 图字一体故事长图生成示意">${inks}</div><div class="story-full-motion"><video src="${WX_VERIFIED_ASSETS.motion}" poster="${WX_VERIFIED_ASSETS.frame}" autoplay muted loop playsinline preload="metadata"></video><span class="story-motion-badge">Seedance 完整动效</span></div><div class="story-ai-mark">确认文本随画面统一生成 · OCR 逐字核验 · 生成后改字需重生成对应画面</div><div class="story-end"><b>图字一体 · 连续长图叙事</b><span>完整动效随成稿呈现<br>AI 生成画面，发布前人工确认</span></div></div></div></div>`;}return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">${wxState.storyApproved?'生成任务待返回':'可编辑长图草图'}</div></div><div class="draft-phone-note">草图阶段：左侧修改标题与对白，右侧同步预览；确认后才提交图字一体生成。</div><div class="story-long">${scenes.map((x,i)=>`<section class="story-scene ${flat}"><span class="scene-tag">SCENE ${String(i+1).padStart(2,'0')} · 草图</span><h2>${esc(x.title)}</h2><p>${esc(x.beat)}</p><i class="story-character"></i><span class="story-source">依据：${esc(x.src)}</span></section>`).join('')}<div class="story-end"><b>待确认草图</b><span>文字确认后提交 Seedream 图字一体生成</span></div></div></div></div>`;}
+function wxStoryPhone(){const scenes=wxStoryScenes(),flat=wxState.storyStyle==='flat'?'flat':'';if(wxCanShowStory()){const inks=scenes.map((x,i)=>`<div class="story-ink s${i+1}"><small>SCENE ${String(i+1).padStart(2,'0')}</small><b>${esc(x.title)}</b><span>${esc(x.beat)}</span></div>`).join('');return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">梵行科技 · Seedream 图字一体成稿</div></div><div class="story-long"><div class="story-baked"><img src="${WX_VERIFIED_ASSETS.story}" alt="Seedream 图字一体故事长图生成示意">${inks}</div><div class="story-full-motion"><video src="${WX_VERIFIED_ASSETS.motion}" poster="${WX_VERIFIED_ASSETS.frame}" autoplay muted loop playsinline preload="metadata"></video><span class="story-motion-badge">Seedance 完整动效</span></div><div class="story-ai-mark">确认文本随画面统一生成 · OCR 逐字核验 · 生成后改字需重生成对应画面</div><div class="story-end"><b>图字一体 · 连续长图叙事</b><span>完整动效随成稿呈现<br>AI 生成画面，发布前人工确认</span></div></div></div></div>`;}return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">${wxState.storyApproved?'已确认草图 · 尚未提交生成':'可编辑长图草图'}</div></div><div class="draft-phone-note">草图阶段：左侧修改标题与对白，右侧同步预览；确认后才提交图字一体生成。</div><div class="story-long">${scenes.map((x,i)=>`<section class="story-scene ${flat}"><span class="scene-tag">SCENE ${String(i+1).padStart(2,'0')} · 草图</span><h2>${esc(x.title)}</h2><p>${esc(x.beat)}</p><i class="story-character"></i><span class="story-source">依据：${esc(x.src)}</span></section>`).join('')}<div class="story-end"><b>待确认草图</b><span>文字确认后提交 Seedream 图字一体生成</span></div></div></div></div>`;}
 function wxPhone(){
   if(wxState.outputMode==='story') return wxStoryPhone();
   const mods=wxState.modules||[], tone=wxState.visualStyle||'coordinates';
@@ -2428,52 +2528,67 @@ function wxPhone(){
   const featureTitle=wxState.verifiedDemo?'AI数字员工，如何真正进入企业业务场景？':(wxState.approvedText.match(/加快构建[^。！？]+/)||[])[0]||wxState.titleCandidates.find(x=>x.t!==wxState.articleTitle)?.t||'';
   if(mods.includes('column')&&firstHeading) body=body.replace(firstHeading[0],'');
   const coverPhoto=wxState.images.find(x=>x.id===wxState.cover)||wxState.images[0];
-  const ordered=wxState.images.filter(x=>!(wxState.coverMode==='photo'&&coverPhoto&&x.id===coverPhoto.id)).sort((a,b)=>a.id===wxState.cover?-1:b.id===wxState.cover?1:0).slice(0,3);
+  const ordered=wxState.images.filter(x=>!(mods.includes('column')&&columnTitle&&wxState.coverMode==='photo'&&coverPhoto&&x.id===coverPhoto.id));
   const caption=x=>mods.includes('caption')?`<span class="wx-caption">${esc(x.name.replace(/\.[^.]+$/,''))} · ${x.from.includes('占位')?'演示占位，正式发布前替换':'已确认实拍图'}</span>`:'';
   let withImgs=wxMixApprovedHtml(body,ordered,caption);
   const originalQuote=wxState.verifiedDemo?'让更多AI应用从展示走向真实业务。':'产城融合，最终要落到城市功能和空间格局的优化上。';
   if(mods.includes('quote')) withImgs=withImgs.replace(`<p>${esc(originalQuote)}</p>`,`<div class="wx-quote">${esc(originalQuote)}</div>`);
   if(mods.includes('divider')) withImgs=withImgs.replace('</p>',`</p><div class="wx-divider"><i></i></div>`);
-  const footer=mods.includes('footer')?`<div class="wx-end"><b>政务服务发布</b><span>原文与实拍图片均来自已审定素材<br>标题及版式发布前由人工确认</span></div>`:'';
+  const footer=mods.includes('footer')?`<div class="wx-end"><b>综合服务发布</b><span>原文与实拍图片均来自已审定素材<br>标题及版式发布前由人工确认</span></div>`:'';
   const empty=!wxState.approvedText&&!wxState.articleReady;
-  const verifiedCover=wxState.verifiedDemo&&wxState.coverMode==='solid'&&wxState.coverVariant===0;
+  const verifiedCover=wxCanShowCover()&&wxState.coverMode==='solid'&&wxState.coverVariant===0&&tone==='ai-visit';
   const coverArt=mods.includes('column')&&columnTitle?(verifiedCover?`<figure class="wx-generated-cover"><img src="${WX_VERIFIED_ASSETS.cover}" alt="Seedream 生成的创意字体首图"><span class="verified-badge">Seedream 实测</span><figcaption><b>创意字准确生成</b><span>标题已人工核对</span></figcaption></figure>`:`<div class="wx-column-poster wx-cover-art ${wxState.coverMode} v${wxState.coverVariant} ${wxState.coverMotion==='subtle'?'motion':''}">${wxState.coverMode==='photo'&&coverPhoto?`<img src="${coverPhoto.src}" alt="${esc(coverPhoto.name)}">`:''}<small>${columnTitle}</small><b>${esc(wxState.articleTitle||featureTitle||columnTitle)}</b><i></i></div>`):'';
-  return `<div class="phone"><div class="phone-top"></div><div class="phone-body wx-tone-${tone} ${mods.includes('section')?'':'plain-section'} ${mods.includes('photo')?'framed-photo':''}">${empty?`<div class="empty" style="height:520px"><span class="eic">${ic('news','ic ic-l')}</span><h4>等待审定稿与实拍图片</h4><p>导入后，这里将预览标题、视觉基调和图文混排效果</p></div>`:`<div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">${wxState.verifiedDemo?'梵行科技 · 今天':'政务服务发布 · 今天'}</div></div><div class="wx-content">${coverArt}${mods.includes('feature')&&featureTitle?`<div class="wx-feature-title">${esc(featureTitle)}</div>`:''}${withImgs}${footer}</div>`}</div></div>`;
+  return `<div class="phone"><div class="phone-top"></div><div class="phone-body wx-tone-${tone} ${mods.includes('section')?'':'plain-section'} ${mods.includes('photo')?'framed-photo':''}">${empty?`<div class="empty" style="height:520px"><span class="eic">${ic('news','ic ic-l')}</span><h4>等待审定稿与实拍图片</h4><p>导入后，这里将预览标题、视觉基调和图文混排效果</p></div>`:`<div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">${wxState.verifiedDemo?'梵行科技 · 今天':'综合服务发布 · 今天'}</div></div><div class="wx-content">${coverArt}${mods.includes('feature')&&featureTitle?`<div class="wx-feature-title">${esc(featureTitle)}</div>`:''}${withImgs}${footer}</div>`}</div></div>`;
 }
 // v12: the cover is the first expression of the selected direction, and the final story uses baked-in text.
 function wxVisualStyle(id){wxState.visualStyle=id;wxState.coverVariant=id==='ai-visit'?0:1;render();toast('已切换视觉基调，首图与正文组件已同步更新','ok');}
 function wxRegenerateCover(){wxState.coverVariant=wxState.visualStyle==='ai-visit'?(wxState.coverVariant+1)%3:(wxState.coverVariant===1?2:1);render();toast('已按当前视觉基调重新生成一版首图构图','ok');}
 function wxCoverOptions(){
-  const photo=wxState.images.find(x=>x.id===wxState.cover)||wxState.images[0],title=wxState.verifiedDemo?'AI数字员工走进企业场景':wxState.articleTitle,motion=wxState.coverMotion==='subtle'?'motion':'',tone=wxState.visualStyle||'coordinates',styleName=wxState.styleCandidates.find(x=>x.id===tone)?.t||'当前视觉方向',verified=wxState.verifiedDemo&&wxState.coverVariant===0&&tone==='ai-visit';
+  const photo=wxState.images.find(x=>x.id===wxState.cover)||wxState.images[0],title=wxState.articleTitle,motion=wxState.coverMotion==='subtle'?'motion':'',tone=wxState.visualStyle||'coordinates',styleName=wxState.styleCandidates.find(x=>x.id===tone)?.t||'当前视觉方向',verified=wxCanShowCover()&&wxState.coverVariant===0&&tone==='ai-visit';
   const solid=verified?`<span class="cover-thumb generated verified-art ${motion}"><img src="${WX_VERIFIED_ASSETS.cover}" alt="Seedream 生成的创意字体首图"><em class="verified-badge">Seedream 实测</em></span>`:`<span class="cover-thumb solid tone-${tone} ${motion}"><small>TOPIC / 主题首图</small><strong>${esc(title)}</strong></span>`;
   return `<div class="cover-mode-row"><button class="cover-mode ${wxState.coverMode==='solid'?'on':''}" onclick="wxCoverMode('solid')">${solid}<b>素色背景＋创意字体</b><span>${verified?'已接入本篇文章的真实生成结果':`已随“${esc(styleName)}”同步配色、构图与字形`}</span></button><button class="cover-mode ${wxState.coverMode==='photo'?'on':''}" onclick="wxCoverMode('photo')"><span class="cover-thumb photo tone-${tone} ${motion}">${photo?`<img src="${photo.src}" alt="${esc(photo.name)}">`:''}<strong>${esc(title)}</strong></span><b>实拍照片＋创意字体</b><span>使用已确认照片，叠色与排字随当前方向变化</span></button></div><div class="cover-motion-row"><span>呈现方式 · 动效只作用于首图视觉</span><button class="motion-choice ${wxState.coverMotion==='static'?'on':''}" onclick="wxMotion('static')">静态</button><button class="motion-choice ${wxState.coverMotion==='subtle'?'on':''}" onclick="wxMotion('subtle')">轻动效</button></div><div class="visual-note">首图是当前整体风格的第一块模板：切换视觉方向时，首图配色、构图、字形与正文组件同步变化；照片型首图仍只使用用户确认照片。</div><div class="visual-actions"><button class="btn sm" onclick="wxRegenerateCover()">${ic('refresh','ic ic-s')}换一版首图构图</button></div>`;
 }
-function wxStoryPhone(){const scenes=wxStoryScenes(),flat=wxState.storyStyle==='flat'?'flat':'';if(wxState.verifiedDemo&&wxState.storyApproved&&wxState.storyStyle==='soft3d'){return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">梵行科技 · 图字一体成稿效果稿</div></div><div class="story-long"><div class="story-baked"><img src="${WX_VERIFIED_ASSETS.storyIntegrated}" alt="图字一体故事长图效果稿"></div><div class="story-full-motion"><video src="${WX_VERIFIED_ASSETS.motion}" poster="${WX_VERIFIED_ASSETS.frame}" autoplay muted loop playsinline preload="metadata"></video><span class="story-motion-badge">Seedance 完整动效</span></div><div class="story-ai-mark">本轮效果稿关键文字已人工核对 · 正式链路仍需 OCR 逐字复核 · 成图后改字需重生成对应画面</div><div class="story-end"><b>图字一体 · 连续长图叙事</b><span>完整动效随成稿呈现<br>AI 生成画面，发布前人工确认</span></div></div></div></div>`;}return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">${wxState.storyApproved?'生成任务待返回':'可编辑长图草图'}</div></div><div class="draft-phone-note">草图阶段：左侧修改标题与对白，右侧同步预览；确认后才提交图字一体生成。</div><div class="story-long">${scenes.map((x,i)=>`<section class="story-scene ${flat}"><span class="scene-tag">SCENE ${String(i+1).padStart(2,'0')} · 草图</span><h2>${esc(x.title)}</h2><p>${esc(x.beat)}</p><i class="story-character"></i><span class="story-source">依据：${esc(x.src)}</span></section>`).join('')}<div class="story-end"><b>待确认草图</b><span>文字确认后提交 Seedream 图字一体生成</span></div></div></div></div>`;}
+function wxStoryPhone(){const scenes=wxStoryScenes(),flat=wxState.storyStyle==='flat'?'flat':'';if(wxCanShowStory()){return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">梵行科技 · 图字一体成稿效果稿</div></div><div class="story-long"><div class="story-baked"><img src="${WX_VERIFIED_ASSETS.storyIntegrated}" alt="图字一体故事长图效果稿"></div><div class="story-full-motion"><video src="${WX_VERIFIED_ASSETS.motion}" poster="${WX_VERIFIED_ASSETS.frame}" autoplay muted loop playsinline preload="metadata"></video><span class="story-motion-badge">Seedance 完整动效</span></div><div class="story-ai-mark">本轮效果稿关键文字已人工核对 · 正式链路仍需 OCR 逐字复核 · 成图后改字需重生成对应画面</div><div class="story-end"><b>图字一体 · 连续长图叙事</b><span>完整动效随成稿呈现<br>AI 生成画面，发布前人工确认</span></div></div></div></div>`;}return `<div class="phone"><div class="phone-top"></div><div class="phone-body story-phone"><div class="wx-main-title"><h1>${esc(wxState.articleTitle||'待确认文章标题')}</h1><div class="phone-meta">${wxState.storyApproved?'已确认草图 · 尚未提交生成':'可编辑长图草图'}</div></div><div class="draft-phone-note">草图阶段：左侧修改标题与对白，右侧同步预览；确认后才提交图字一体生成。</div><div class="story-long">${scenes.map((x,i)=>`<section class="story-scene ${flat}"><span class="scene-tag">SCENE ${String(i+1).padStart(2,'0')} · 草图</span><h2>${esc(x.title)}</h2><p>${esc(x.beat)}</p><i class="story-character"></i><span class="story-source">依据：${esc(x.src)}</span></section>`).join('')}<div class="story-end"><b>待确认草图</b><span>文字确认后提交 Seedream 图字一体生成</span></div></div></div></div>`;}
 ROUTES.wechat={
   nav:'assist',crumb:()=>backCrumb('assist','AI 助手','公众号图文排版'),
   html:()=>`<div class="pad-lg"><div class="sq-top"><div><h2>公众号图文排版</h2><p>导入已审定正文和实拍图片，生成标题与文章专属基调，输出常规图文或故事动漫长图</p></div><button class="btn sm" style="margin-left:auto" onclick="wxOpenVerifiedDemo()">${ic('polish','ic ic-s')}一键查看实测案例</button><span class="tag b">P0 核心场景</span></div><div class="flow-steps">${wxSteps()}</div><div class="wx-compose"><div class="wx-stage">${wxStage()}</div><aside class="wx-preview"><div class="sec-t">移动端实时预览<span class="ln"></span></div><div id="wxPhonePreview">${wxPhone()}</div></aside></div></div>`
 };
-function wxLoadMaterialDemo(){const mode=wxState.outputMode,intent=wxState.styleIntent;wxState.approvedText=WX_APPROVED_SAMPLE;wxState.documentName='梵行科技调研审定稿.docx';wxDemoImages(true);wxState.articleReady=false;wxState.layoutReady=false;wxState.articleHtml='';wxState.articleTitle='';wxState.titleCandidates=[];wxState.sectionTitles=[];wxState.styleCandidates=[];wxState.visualStyle='ai-visit';wxState.visualBrief='';wxState.visualRound=0;wxState.coverMode='solid';wxState.coverVariant=0;wxState.coverMotion='static';wxState.outputMode=mode;wxState.styleIntent=intent;wxState.storyStyle='soft3d';wxState.storyRound=0;wxState.storyApproved=false;wxState.storyEdits={};wxState.verifiedDemo=true;wxState.step=1;render();toast('已载入梵行科技调研审定稿与 3 张实拍图占位，已保留成稿路径与视觉气质','ok');}
-async function wxOpenVerifiedDemo(){wxLoadMaterialDemo();await wxGenerateArticle();}
+function wxLoadMaterialDemo(confirmed=false){if(!confirmed&&(wxState.approvedText.trim()||wxState.images.length)){return openDlg('<div class="pnl-h"><h3>替换为示例素材？</h3></div><div class="pnl-b">当前文稿、已上传图片及排版修改将被替换。原始本地文件不会被删除。</div><div class="pnl-f"><button class="btn" onclick="closeAll()">保留当前素材</button><button class="btn pri" onclick="closeAll();wxLoadMaterialDemo(true)">确认替换</button></div>',480);}const mode=wxState.outputMode,intent=wxState.styleIntent;wxState.approvedText=WX_APPROVED_SAMPLE;wxState.documentName='梵行科技调研审定稿.docx';wxDemoImages(true);wxState.articleReady=false;wxState.layoutReady=false;wxState.articleHtml='';wxState.articleTitle='';wxState.titleCandidates=[];wxState.sectionTitles=[];wxState.styleCandidates=[];wxState.visualStyle='ai-visit';wxState.visualBrief='';wxState.visualRound=0;wxState.coverMode='solid';wxState.coverVariant=0;wxState.coverMotion='static';wxState.outputMode=mode;wxState.styleIntent=intent;wxState.storyStyle='soft3d';wxState.storyRound=0;wxState.storyApproved=false;wxState.storyEdits={};wxState.verifiedDemo=true;wxState.step=1;render();toast('已载入梵行科技调研审定稿与 3 张实拍图占位，已保留成稿路径与视觉气质','ok');}
+async function wxOpenVerifiedDemo(confirmed=false){if(!confirmed&&(wxState.approvedText.trim()||wxState.images.length))return openDlg('<div class="pnl-h"><h3>查看示例会替换当前工作内容</h3></div><div class="pnl-b">当前素材和编辑将被重置，本地原文件保留。</div><div class="pnl-f"><button class="btn" onclick="closeAll()">取消</button><button class="btn pri" onclick="closeAll();wxOpenVerifiedDemo(true)">确认查看</button></div>',480);wxLoadMaterialDemo(true);await wxGenerateArticle();}
+function wxCopyLayout(){const html=wxApplySectionTitles(wxArticle()).replace(/<h3>[\s\S]*?<\/h3>/,'');copyText(wxState.articleTitle+'\n\n'+stripHtml(html.replace(/<\/(?:p|h3)>/g,'\n\n')));}
 function wxRefreshPhone(){const p=$('#wxPhonePreview');if(p)p.innerHTML=wxPhone();}
 async function wxGenerateArticle(refresh=false){
-  const ta=$('#wxApprovedText'), text=((ta&&ta.value)||wxState.approvedText||'').trim();
+  const active=beginAction();
+  const ta=$('#wxApprovedText'), text=(ta?ta.value:wxState.approvedText).trim();
   if(!text) return toast('请先粘贴或载入已审定正文','warn');
-  if(!wxState.images.length) return toast('请先上传或载入已确认实拍图片','warn');
+  if(wxState.articleReady&&!refresh){wxState.step=2;render();return;}
   const b=$('#wxRegenerate')||$('#wxGenerate'); if(b){b.disabled=true;b.innerHTML='<span class="spin"></span>正在识别原文层级…';}
-  await sleep(500); if(b)b.innerHTML='<span class="spin"></span>正在提炼可溯源标题…';
-  await sleep(500); if(b)b.innerHTML='<span class="spin"></span>正在生成文章专属视觉基调…';
-  await sleep(500);const mode=wxState.outputMode,intent=WX_STYLE_INTENTS.find(x=>x.id===wxState.styleIntent)?.t||'';wxState.approvedText=text;wxState.articleHtml=wxParseApproved(text);wxState.titleCandidates=wxBuildTitles(text);wxState.titleIndex=0;wxState.articleTitle=wxState.titleCandidates[0]?.t||'';wxState.sectionTitles=wxBuildSections(text);wxState.visualRound=0;wxState.styleCandidates=wxBuildVisualStyles(text,intent,wxState.visualRound);wxState.visualStyle=wxState.styleCandidates[0]?.id||'coordinates';wxState.coverMode='solid';wxState.coverVariant=0;wxState.coverMotion='static';wxState.outputMode=mode;wxState.storyRound=0;wxState.storyApproved=false;wxState.storyEdits={};wxState.verifiedDemo=text.includes('武汉市商务局服务贸易处')&&text.includes('梵行科技');wxState.articleReady=true;wxState.layoutReady=true;wxState.step=2;render();toast(refresh?'已重新识别，原文与实拍图未改动':mode==='story'?'已生成可编辑长图草图，请先确认标题与对白':'已进入图文排版，可编辑大标题与小标题','ok');
+  await sleep(500); if(!active())return; if(b)b.innerHTML='<span class="spin"></span>正在提炼可溯源标题…';
+  await sleep(500); if(!active())return; if(b)b.innerHTML='<span class="spin"></span>正在生成文章专属视觉基调…';
+  await sleep(500); if(!active())return;const mode=wxState.outputMode,intent=WX_STYLE_INTENTS.find(x=>x.id===wxState.styleIntent)?.t||'';wxState.approvedText=text;wxState.articleHtml=wxParseApproved(text);wxState.titleCandidates=wxBuildTitles(text);wxState.titleIndex=0;wxState.articleTitle=wxState.titleCandidates[0]?.t||'';wxState.sectionTitles=wxBuildSections(text);wxState.visualRound=0;wxState.styleCandidates=wxBuildVisualStyles(text,intent,wxState.visualRound);wxState.visualStyle=wxState.styleCandidates[0]?.id||'coordinates';wxState.coverMode='solid';wxState.coverVariant=0;wxState.coverMotion='static';wxState.outputMode=mode;wxState.storyRound=0;wxState.storyApproved=false;wxState.storyEdits={};wxState.verifiedDemo=text===WX_APPROVED_SAMPLE.trim();wxState.articleReady=true;wxState.layoutReady=true;wxState.step=2;render();toast(refresh?'已重新识别，原文与实拍图未改动':mode==='story'?'已生成可编辑长图草图，请先确认标题与对白':'已进入图文排版，可编辑大标题与小标题','ok');
 }
 function wxUpload(files){
-  const list=[...files].filter(f=>/^image\/(png|jpeg|webp)$/.test(f.type)).slice(0,12-wxState.images.length);
-  if(!list.length) return toast('请选择 JPG、PNG 或 WebP 图片','warn');
-  list.forEach((f,i)=>wxState.images.push({id:'local-'+Date.now()+'-'+i,name:f.name,src:URL.createObjectURL(f),from:'已确认实拍图'}));
-  if(!wxState.cover) wxState.cover=wxState.images[0].id; render(); toast(`已加入 ${list.length} 张已确认实拍图`,'ok');
+  if(!files?.length)return;
+  let added=0,invalid=0,duplicate=0,overflow=0;
+  for(const f of files){
+    if(!/^image\/(png|jpeg|webp)$/.test(f.type)||f.size>20*1024*1024||f.size===0){invalid++;continue;}
+    const fingerprint=[f.name,f.size,f.lastModified].join(':');
+    if(wxState.images.some(x=>x.fingerprint===fingerprint)){duplicate++;continue;}
+    if(wxState.images.length>=12){overflow++;continue;}
+    wxState.images.push({id:'local-'+Date.now()+'-'+Math.random().toString(36).slice(2),name:f.name,src:URL.createObjectURL(f),fingerprint,from:'已确认实拍图'});added++;
+  }
+  if(!wxState.cover)wxState.cover=wxState.images[0]?.id||null;
+  render();toast([`已加入 ${added} 张`,invalid?'已跳过不支持、空文件或超过 20 MB 的图片':'',duplicate?`跳过 ${duplicate} 张重复图片`:'',overflow?'最多 12 张，超出部分未加入':''].filter(Boolean).join('；'),added?'ok':'warn');
 }
-function wxCover(id){wxState.cover=id;render();toast('已设为照片型首图底图','ok');}
-function wxMove(i,d){const j=i+d;if(j<0||j>=wxState.images.length)return;[wxState.images[i],wxState.images[j]]=[wxState.images[j],wxState.images[i]];render();}
-function wxRemove(id){const x=wxState.images.find(a=>a.id===id);if(x&&x.src.startsWith('blob:'))URL.revokeObjectURL(x.src);wxState.images=wxState.images.filter(a=>a.id!==id);if(wxState.cover===id)wxState.cover=wxState.images[0]?.id||null;render();}
+function wxCover(id){if(!wxState.images.some(x=>x.id===id))return;wxState.cover=id;wxState.coverMode='photo';render();toast('已设为照片型首图底图','ok');}
+function wxMove(i,d){const j=i+d;if(i<0||i>=wxState.images.length||j<0||j>=wxState.images.length)return;[wxState.images[i],wxState.images[j]]=[wxState.images[j],wxState.images[i]];render();}
+function wxRemove(id){
+  const index=wxState.images.findIndex(a=>a.id===id);if(index<0)return;
+  wxReleaseRemoved();wxRemovedImage={image:wxState.images[index],index,cover:wxState.cover,mode:wxState.coverMode};
+  wxState.images.splice(index,1);if(wxState.cover===id)wxState.cover=wxState.images[0]?.id||null;
+  if(!wxState.images.length)wxState.coverMode='solid';
+  render();toast('图片已移除，预览已同步；可撤销本次删除','ok');
+}
 function wxToggleModule(id){
   if(id==='none') wxState.modules=[];
   else if(wxState.modules.includes(id)) wxState.modules=wxState.modules.filter(x=>x!==id);
@@ -2483,23 +2598,32 @@ function wxToggleModule(id){
 </script>
 <script>
 /* =============== P10 运营数据分析工作台 =============== */
-let dataState={loaded:false,done:false,file:'政务新媒体运营数据_2026-08.xlsx'};
-function dataResult(){return `<div class="data-hero">${[['发布文章','31','篇'],['总阅读','86,420','次'],['平均阅读','2,788','次'],['分享率','4.8','%']].map(([t,v,u])=>`<div class="kpi"><div class="lb">${t}</div><b>${v}<span class="un">${u}</span></b><div class="dt up">较上期保持增长</div></div>`).join('')}</div><div class="card" style="margin-bottom:14px"><div class="card-h"><h3>近 4 周阅读趋势</h3><span class="tag b" style="margin-left:auto">数据来自已导入 Excel</span></div><div class="card-b"><div class="mini-bars">${[['第1周',48],['第2周',68],['第3周',60],['第4周',86]].map(([n,h])=>`<div class="mini-col"><i style="height:${h}%"></i>${n}</div>`).join('')}</div></div></div><div class="res" id="dataInsight"><h4>分析结论</h4><ol><li>政策图解类文章的阅读和分享同时领先，可形成固定栏目。</li><li>带有明确办事时限和材料清单的内容，收藏率更高。</li><li>下一阶段建议按“政策图解”“办事清单”“改革现场”三条线规划选题。</li></ol><p style="font-size:12px;color:var(--text-3)">本期不自动获取外部公众号精确阅读量。</p></div>`;}
+let dataState={loaded:false,done:false,file:'新媒体运营数据_2026-08.xlsx',dimensions:['内容趋势','文章对比','选题建议'],followups:[]};
+function dataResult(){return `<div class="data-hero">${[['发布文章','31','篇'],['总阅读','86,420','次'],['平均阅读','2,788','次'],['分享率','4.8','%']].map(([t,v,u])=>`<div class="kpi"><div class="lb">${t}</div><b>${v}<span class="un">${u}</span></b><div class="dt up">较上期保持增长</div></div>`).join('')}</div><div class="card" style="margin-bottom:14px"><div class="card-h"><h3>近 4 周阅读趋势</h3><span class="tag b" style="margin-left:auto">示例数据 · 非上传文件的真实统计</span></div><div class="card-b"><div class="mini-bars">${[['第1周',48],['第2周',68],['第3周',60],['第4周',86]].map(([n,h])=>`<div class="mini-col"><i style="height:${h}%"></i>${n}</div>`).join('')}</div></div></div><div class="res" id="dataInsight"><h4>分析结论</h4><ol><li>政策图解类文章的阅读和分享同时领先，可形成固定栏目。</li><li>带有明确办事时限和材料清单的内容，收藏率更高。</li><li>下一阶段建议按“政策图解”“办事清单”“改革现场”三条线规划选题。</li></ol><p style="font-size:12px;color:var(--text-3)">本期不自动获取外部公众号精确阅读量。</p></div>`;}
 ROUTES['data-analysis']={
   nav:'assist',crumb:()=>backCrumb('assist','AI 助手','运营数据分析'),
   html:()=>`<div class="wb"><div class="wb-l" style="width:35%;min-width:330px"><div class="wb-h">${ic('chart')}<h3>运营数据分析</h3></div><div class="wb-b">
-    <div class="fld"><label>运营数据 Excel<span class="req">*</span></label><input type="file" id="dataFile" accept=".xlsx,.xls,.csv" hidden onchange="dataPick(this.files)"><div id="dataDrop">${dataState.loaded?`<div class="file-i"><span class="fic w">${ic('chart','ic ic-l')}</span><span class="fi"><b>${esc(dataState.file)}</b><span>已识别标题、发布时间、阅读、分享与收藏字段</span></span></div>`:`<div class="drop" onclick="$('#dataFile').click()"><span class="dic">${ic('up','ic ic-l')}</span><b>选择 Excel 或 CSV</b><p>支持公众号后台导出表和自建运营台账</p></div>`}</div></div>
-    <button class="btn" style="width:100%;margin-bottom:15px" onclick="dataState.loaded=true;dataState.file='政务新媒体运营数据_2026-08.xlsx';render();toast('已载入示例数据','ok')">载入示例数据</button>
-    <div class="fld"><label>分析维度</label><div class="chips"><button class="chip on">内容趋势</button><button class="chip on">文章对比</button><button class="chip on">选题建议</button></div></div>
+    <div class="fld"><label>运营数据 Excel<span class="req">*</span></label><input type="file" id="dataFile" accept=".xlsx,.xls,.csv" hidden onchange="dataPick(this.files)"><div id="dataDrop">${dataState.loaded?`<div class="file-i"><span class="fic w">${ic('chart','ic ic-l')}</span><span class="fi"><b>${esc(dataState.file)}</b><span>已选择文件 · Demo 使用示例字段与统计结果</span></span><button class="aicon" title="移除数据文件" aria-label="移除数据文件" onclick="dataRemove()">${ic('x','ic ic-s')}</button></div><button class="btn sm" style="margin-top:8px" onclick="$('#dataFile').click()">替换数据文件</button>`:`<div class="drop" onclick="$('#dataFile').click()"><span class="dic">${ic('up','ic ic-l')}</span><b>选择 Excel 或 CSV</b><p>支持公众号后台导出表和自建运营台账</p></div>`}</div></div>
+    <button class="btn" style="width:100%;margin-bottom:15px" onclick="dataSample()">载入示例数据</button>
+    <div class="fld"><label>分析维度</label><div class="chips">${['内容趋势','文章对比','选题建议'].map(t=>`<button class="chip ${dataState.dimensions.includes(t)?'on':''}" aria-pressed="${dataState.dimensions.includes(t)}" onclick="dataDimension('${t}')">${t}</button>`).join('')}</div></div>
     <div class="fld"><label>分析要求</label><textarea class="ta" rows="4">找出阅读、分享和收藏表现较好的内容类型，给出下月选题建议。</textarea></div>
     <div class="phase-note">${ic('info','ic ic-s')}<span>以用户上传数据为主，不依赖外部持续爬取。</span></div>
-  </div><div class="wb-f"><button class="btn pri lg" id="dataRun" style="flex:1" onclick="dataRun()">${ic('chart','ic ic-s')}生成分析</button></div></div><div class="wb-r"><div class="wb-h"><h3>分析结果</h3><div class="rt">${dataState.done?`<button class="btn sm" onclick="toast('已导出分析报告（原型示意）','ok')">${ic('dl','ic ic-s')}导出报告</button>`:''}</div></div><div class="wb-b" id="dataOut">${dataState.done?dataResult():`<div class="empty"><span class="eic">${ic('chart','ic ic-l')}</span><h4>等待数据</h4><p>导入运营数据后，系统将生成图表、文章对比和运营建议</p></div>`}</div>${dataState.done?`<div style="padding:12px 16px;border-top:1px solid var(--border);background:#fff"><div class="cmp-box"><textarea id="dataQ" style="height:44px" placeholder="继续追问，例如：只看政策解读类文章…"></textarea><div class="cmp-bar"><span class="kb">基于本次数据</span><button class="send" onclick="dataFollow()">${ic('send','ic ic-s')}</button></div></div></div>`:''}</div></div>`
+  </div><div class="wb-f"><button class="btn pri lg" id="dataRun" style="flex:1" onclick="dataRun()">${ic('chart','ic ic-s')}生成分析</button></div></div><div class="wb-r"><div class="wb-h"><h3>分析结果</h3><div class="rt">${dataState.done?`<button class="btn sm" onclick="toast('此 Demo 尚未接入报告下载','warn')">${ic('dl','ic ic-s')}导出报告</button>`:''}</div></div><div class="wb-b" id="dataOut">${dataState.done?dataResult()+dataFollowups():`<div class="empty"><span class="eic">${ic('chart','ic ic-l')}</span><h4>等待数据</h4><p>导入运营数据后，系统将生成图表、文章对比和运营建议</p></div>`}</div>${dataState.done?`<div style="padding:12px 16px;border-top:1px solid var(--border);background:#fff"><div class="cmp-box"><textarea id="dataQ" style="height:44px" placeholder="继续追问，例如：只看政策解读类文章…"></textarea><div class="cmp-bar"><span class="kb">基于本次数据</span><button class="send" onclick="dataFollow()">${ic('send','ic ic-s')}</button></div></div></div>`:''}</div></div>`
 };
-function dataPick(files){const f=files&&files[0];if(!f)return;dataState.loaded=true;dataState.file=f.name;dataState.done=false;render();toast('已读取文件名，原型使用示例数据演示','ok');}
-async function dataRun(){if(!dataState.loaded)return toast('请先选择数据文件或载入示例','warn');const b=$('#dataRun');b.disabled=true;b.innerHTML='<span class="spin"></span>正在清洗和分析…';$('#dataOut').innerHTML=`<div style="padding:8px 0"><div style="display:flex;gap:9px;align-items:center;color:var(--text-3)"><span class="spin"></span>正在识别字段、汇总指标并生成分析…</div>${[92,76,88,64,82].map(w=>`<div class="skel" style="width:${w}%;margin-top:13px"></div>`).join('')}</div>`;await sleep(1200);dataState.done=true;render();toast('运营分析已生成','ok');}
-function dataFollow(){const q=($('#dataQ')?.value||'').trim();if(!q)return toast('请输入要继续分析的问题','warn');$('#dataInsight').innerHTML+=`<h4>针对追问的补充分析</h4><p>已基于本次上传表格缩小统计范围：政策解读类文章的平均收藏率最高，建议优先补充办事材料和时限信息。</p>`;$('#dataQ').value='';toast('已补充分析','ok');}
+function dataPick(files){const f=files?.[0];if(!f)return;if(!/\.(xlsx?|csv)$/i.test(f.name)||!f.size||f.size>50*1024*1024)return toast('请选择 50 MB 以内的 Excel 或 CSV 文件','warn');dataState.loaded=true;dataState.file=f.name;dataState.done=false;dataState.followups=[];render();toast('已读取文件名，原型使用示例数据演示','ok');}
+function dataRemove(){dataState.loaded=false;dataState.done=false;dataState.followups=[];render();toast('数据文件与旧分析已移除','ok');}
+function dataSample(){dataState.loaded=true;dataState.file='新媒体运营数据_2026-08.xlsx';dataState.done=false;dataState.followups=[];render();toast('已载入示例数据，旧分析已清空','ok');}
+function dataDimension(t){const a=dataState.dimensions;if(a.includes(t)){if(a.length===1)return toast('请至少保留一个分析维度','warn');a.splice(a.indexOf(t),1);}else a.push(t);dataState.done=false;dataState.followups=[];render();}
+function dataFollowups(){return dataState.followups.map(q=>'<div class="res"><h4>追问：'+esc(q)+'</h4><p>演示反馈：正式环境将按该问题重新统计当前表格。本 Demo 未计算新的指标。</p></div>').join('');}
+async function dataRun(){
+  const active=beginAction();if(!dataState.loaded)return toast('请先选择数据文件或载入示例','warn');const b=$('#dataRun');b.disabled=true;b.innerHTML='<span class="spin"></span>正在清洗和分析…';$('#dataOut').innerHTML=`<div style="padding:8px 0"><div style="display:flex;gap:9px;align-items:center;color:var(--text-3)"><span class="spin"></span>正在识别字段、汇总指标并生成分析…</div>${[92,76,88,64,82].map(w=>`<div class="skel" style="width:${w}%;margin-top:13px"></div>`).join('')}</div>`;await sleep(1200); if(!active())return;dataState.done=true;dataState.followups=[];render();toast('示例运营分析已生成','ok');}
+function dataFollow(){const q=($('#dataQ')?.value||'').trim();if(!q)return toast('请输入要继续分析的问题','warn');dataState.followups.push(q);$('#dataQ').value='';render();toast('已记录追问（演示）','ok');}
 /* =============== P10 会议纪要工作台 =============== */
-let mLoaded=false, mDone=false, mTab=0;
+let mExtras=[true,true,false];
+function mToggleExtra(i){mExtras[i]=!mExtras[i];mDone=false;render();}
+function mResult(i){if(i>0&&!mExtras[i-1])return '<div class="empty"><h4>本次未选择该附加产出</h4><p>可在左侧勾选后重新生成。</p></div>';return '<div class="phase-note">演示纪要，非上传文件或速记稿的真实处理结果。</div>'+MRES[i]+(i===0&&mExtras[2]?'<div class="phase-note">发言人分析示例：主持、统计部门汇报、发改部门汇报。正式环境按实际录音标注发言占比。</div>':'');}
+let mLoaded=false, mDone=false, mTab=0,mFileName='全市经济运行分析会（2026-08-18）.m4a',mText='';
+function mPick(files){const f=files?.[0];if(!f)return;if(!/\.(mp3|wav|m4a|txt|docx?)$/i.test(f.name)||!f.size||f.size>100*1024*1024)return toast('请选择 100 MB 以内的录音或文稿','warn');mFileName=f.name;mLoaded=true;mDone=false;mTab=0;flowState.transcript=null;render();toast('已选择文件；原型用示例纪要演示','ok');}
 const MRES=[
 `<div class="res">
   <div style="text-align:center;font-size:18px;font-weight:600;font-family:'STZhongsong','SimSun',serif;margin-bottom:6px">
@@ -2521,7 +2645,7 @@ const MRES=[
   <thead><tr><th style="width:46px">序号</th><th>议定内容</th><th style="width:132px">责任单位</th></tr></thead><tbody>
   ${[['1','紧盯全年经济增长目标不动摇，各相关部门按季度分解任务并跟踪落实','市发改局'],
      ['2','对重点项目建立月度调度机制，每月末通报项目开工率与投资完成进度','市发改局、市住建局'],
-     ['3','研究出台促进市场主体增长的支持措施，重点优化开办环节办事流程','市市场监管局、市政务服务局'],
+     ['3','研究出台促进市场主体增长的支持措施，重点优化开办环节办事流程','市市场监管局、市综合服务局'],
      ['4','各部门于本月底前将下半年重点工作方案报市政府办公室汇总','市直各部门']]
     .map(([i,c,d])=>`<tr><td class="num">${i}</td><td style="line-height:1.75">${c}</td>
       <td><span class="tag b">${d}</span></td></tr>`).join('')}
@@ -2548,14 +2672,15 @@ ROUTES.minutes={
       <div class="wb-h">${ic('mic')}<h3>会议纪要助手</h3></div>
       <div class="wb-b">
         <div class="fld"><label>会议录音 / 速记稿<span class="req">*</span></label>
-          <div id="mDrop">${mLoaded?`<div class="file-i">
+          <input type="file" id="mFile" accept=".mp3,.wav,.m4a,.txt,.doc,.docx" hidden onchange="mPick(this.files);this.value=''"><button class="btn sm" style="margin-bottom:8px" onclick="$('#mFile').click()">${mLoaded?'替换录音或文稿':'选择本地录音或文稿'}</button><div id="mDrop">${mLoaded?`<div class="file-i">
             <span class="fic a">${ic('audio','ic ic-l')}</span>
-            <span class="fi"><b>全市经济运行分析会（2026-08-18）.m4a</b><span>42.8 MB · 时长 58 分 12 秒</span></span>
+            <span class="fi"><b>${esc(mFileName)}</b><span>Demo 使用示例转写与纪要结果</span></span>
             ${flowState.transcript?'<span class="tag g">已携带转写稿</span>':''}
             <button class="aicon" onclick="mLoaded=false;mDone=false;flowState.transcript=null;render()">${ic('x','ic ic-s')}</button></div>`
-            :`<div class="drop" onclick="mLoaded=true;render();toast('已载入示例录音','ok')">
+            :`<div class="drop" onclick="mFileName='全市经济运行分析会（2026-08-18）.m4a';mLoaded=true;mDone=false;render();toast('已载入示例录音','ok')">
               <span class="dic">${ic('audio','ic ic-l')}</span>
-              <b>点击选择录音，或拖拽到此处</b><p>支持 MP3、WAV、M4A，也可直接粘贴速记稿文本</p></div>`}</div></div>
+              <b>点击载入示例录音</b><p>本原型使用示例转写稿演示，不解析真实录音</p></div>`}</div></div>
+        <div class="fld"><label>或粘贴速记稿</label><textarea class="ta" rows="3" placeholder="输入已有速记稿；此 Demo 仍展示示例结果" oninput="mText=this.value">${esc(mText)}</textarea></div>
         <div class="fld"><label>会议名称</label><input class="inp" value="全市经济运行分析会"></div>
         <div class="fld"><label>会议时间</label><input class="inp" value="2026 年 8 月 18 日"></div>
         <div class="fld"><label>会议地点</label><input class="inp" value="市政府第二会议室"></div>
@@ -2566,7 +2691,7 @@ ROUTES.minutes={
             border-radius:var(--r);background:var(--surface-2)">
             ${['提取议定事项并标注责任单位','生成待办清单并推算完成时限','标注发言人及发言占比'].map((t,i)=>
               `<label style="display:flex;align-items:center;gap:9px;font-size:12.5px;cursor:pointer">
-                <span class="chk ${i<2?'on':''}" onclick="this.classList.toggle('on')">${ic('check')}</span>${t}</label>`).join('')}
+                <button type="button" class="chk ${mExtras[i]?'on':''}" role="checkbox" aria-checked="${mExtras[i]}" aria-label="${t}" onclick="mToggleExtra(${i})">${ic('check')}</button>${t}</label>`).join('')}
           </div></div>
       </div>
       <div class="wb-f"><button class="btn pri lg" id="mRun" onclick="mRun()" style="flex:1">
@@ -2575,7 +2700,7 @@ ROUTES.minutes={
     <div class="wb-r">
       <div class="tabs" id="mTabs">${['纪要正文','议定事项','待办清单'].map((t,i)=>
         `<button class="tab ${i===mTab?'on':''}" onclick="mSwitch(${i})">${t}</button>`).join('')}</div>
-      <div class="wb-b" id="mOut">${mDone?MRES[mTab]:`<div class="empty">
+      <div class="wb-b" id="mOut">${mDone?mResult(mTab):`<div class="empty">
         <span class="eic">${ic('mic','ic ic-l')}</span><h4>等待生成</h4>
         <p>上传会议录音或粘贴速记稿后，将自动产出规范纪要、议定事项与待办清单</p></div>`}</div>
     </div>
@@ -2584,10 +2709,11 @@ ROUTES.minutes={
 function mSwitch(i){
   if(!mDone) return toast('请先生成会议纪要','warn');
   mTab=i; $$('#mTabs .tab').forEach((t,j)=>t.classList.toggle('on',j===i));
-  $('#mOut').innerHTML=MRES[i];
+  $('#mOut').innerHTML=mResult(i);
 }
 async function mRun(){
-  if(!mLoaded) return toast('请先上传录音，可点击上传区载入示例文件','warn');
+  const active=beginAction();
+  if(!mLoaded&&!mText.trim()) return toast('请先选择录音、粘贴速记稿或载入示例','warn');
   const b=$('#mRun'); b.disabled=true;
   const steps=[flowState.transcript?'正在校验已携带的转写稿…':'正在转写录音（58 分 12 秒）…','正在识别发言人…','正在提炼议定事项…','正在推算待办时限…'];
   for(let i=0;i<steps.length;i++){
@@ -2596,11 +2722,11 @@ async function mRun(){
       <div style="display:flex;align-items:center;gap:9px;color:var(--text-3);font-size:13px;margin-bottom:18px">
         <span class="spin"></span>${steps[i]}（${i+1}/4）</div>
       ${[95,88,92,70,86,90].map(w=>`<div class="skel" style="width:${w}%;margin-bottom:12px"></div>`).join('')}</div>`;
-    await sleep(750);
+    await sleep(750); if(!active())return;
   }
   mDone=true; mTab=0;
   $$('#mTabs .tab').forEach((t,j)=>t.classList.toggle('on',j===0));
-  $('#mOut').innerHTML=MRES[0];
+  $('#mOut').innerHTML=mResult(0);
   b.disabled=false; b.innerHTML=ic('refresh','ic ic-s')+'重新生成';
   APP.generated++;
   toast('会议纪要已生成','ok');
@@ -2614,11 +2740,11 @@ const TYPES=[['PDF',512,'#1856A7'],['Word',486,'#3A78C4'],['Excel',168,'#2E7D4F'
   ['PPT',78,'#C77A0A'],['图片扫描件',42,'#6B4FA8']];
 const TOP10=[
   ['市级财政专项资金管理办法（2026 年修订）.docx','政策法规库',126],
-  ['关于进一步优化政务服务提升行政效能的实施意见.pdf','政策法规库',98],
-  ['政务服务中心窗口服务规范.pdf','政务服务办事指南库',87],
+  ['关于进一步优化综合服务提升行政效能的实施意见.pdf','政策法规库',98],
+  ['综合服务中心窗口服务规范.pdf','综合服务办事指南库',87],
   ['机关公文处理工作办法.docx','本单位制度库',71],
-  ['行政审批事项目录清单（2026 版）.xlsx','政务服务办事指南库',64],
-  ['12345 政务服务便民热线办理规程.pdf','政务服务办事指南库',52],
+  ['行政审批事项目录清单（2026 版）.xlsx','综合服务办事指南库',64],
+  ['12345 综合服务便民热线办理规程.pdf','综合服务办事指南库',52],
   ['党政机关公文格式国家标准摘要.pdf','本单位制度库',47],
   ['市政府常务会议议事规则.docx','会议纪要与文件库',39],
   ['政府信息公开条例实施细则.pdf','政策法规库',33],
@@ -2758,7 +2884,7 @@ ROUTES['kb-docs']={
     return `<div class="pad">
       <div style="display:flex;align-items:center;gap:12px">
         <div><h2 style="font-size:19px;font-weight:600">文档列表</h2>
-          <p style="font-size:12.5px;color:var(--text-3);margin-top:2px">统一入库管理，一期不设可见范围与部门隔离</p></div>
+          <p style="font-size:12.5px;color:var(--text-3);margin-top:2px">统一入库管理，一期不设可见范围与处室隔离</p></div>
         <div style="margin-left:auto;display:flex;gap:8px">
           <button class="btn" onclick="toast('原型阶段不导出真实文件','warn')">${ic('dl','ic ic-s')}导出清单</button>
           <button class="btn pri" onclick="go('kb-upload')">${ic('up','ic ic-s')}上传文档</button></div>
@@ -3022,7 +3148,7 @@ function chunkRow(c,j){
       ${chOff[j]?'<span class="tag y">已停用</span>':''}
       <span class="ca">
         <button class="aicon" title="${chOff[j]?'启用':'停用'}" onclick="chToggle(${j})">${ic(chOff[j]?'check':'ban','ic ic-s')}</button>
-        <button class="aicon" title="复制" onclick="toast('已复制切片内容','ok')">${ic('copy','ic ic-s')}</button>
+        <button class="aicon" title="复制" onclick="copyText(this.closest('.chunk')?.querySelector('p')?.innerText||'')">${ic('copy','ic ic-s')}</button>
       </span></div>
     <p>${c.t}</p></div>`;
 }
@@ -3094,21 +3220,21 @@ function qRender(){
        :q.st==='ok'?'<span class="tag g"><span class="dot"></span>已生效</span>'
        :'<span class="tag r"><span class="dot"></span>解析失败</span>'}
       ${q.st==='fail'?`<button class="btn sm" onclick="qRetry(${i})">${ic('refresh','ic ic-s')}重试</button>`:''}
-      <button class="aicon" onclick="queue.splice(${i},1);$('#qList').innerHTML=qRender();$('#qStat').textContent=queue.length?'共 '+queue.length+' 个任务':'暂无任务'">${ic('x','ic ic-s')}</button>
+      <button class="aicon" title="${['queue','parsing'].includes(q.st)?'取消任务':'移除队列记录（不删除知识库文档）'}" onclick="qRemove(${i})">${ic('x','ic ic-s')}</button>
     </span></div>`).join('');
 }
 const UPSAMPLE=[
-  {n:'2026 年全市政务公开工作要点.docx', sz:'742 KB', ic:'doc', ck:64, fail:0,keywords:['政务公开工作要点','2026 年全市政务公开'],preview:'文件明确了 2026 年全市政务公开的总体要求、重点任务和保障措施，要求各单位完善主动公开目录并提升政策解读质量。'},
+  {n:'2026 年全市信息公开工作要点.docx', sz:'742 KB', ic:'doc', ck:64, fail:0,keywords:['信息公开工作要点','2026 年全市信息公开'],preview:'文件明确了 2026 年全市信息公开的总体要求、重点任务和保障措施，要求各单位完善主动公开目录并提升政策解读质量。'},
   {n:'市政府常务会议议事规则（修订稿）.pdf', sz:'1.3 MB', ic:'doc', ck:41, fail:0,keywords:['常务会议议事规则'],preview:'文件对市政府常务会议的议题申报、审核、审议和纪要办理流程作出规定。'},
   {n:'安全生产检查台账（扫描件）.pdf', sz:'26.4 MB', ic:'img', ck:0, fail:1, err:'文件已加密，无法提取文本内容。请解除加密后重新上传'},
   {n:'重点项目进度表（8 月）.xlsx', sz:'560 KB', ic:'table', ck:28, fail:0,keywords:['重点项目进度'],preview:'该表汇总了 8 月重点项目的投资完成率、形象进度和待协调事项。'}
 ];
 let upIdx=0;
 async function qAdd(){
-  if(upIdx>=UPSAMPLE.length){ return toast('示例文件已全部上传完毕，可点击队列中的 × 移除后重试','warn'); }
-  const s=UPSAMPLE[upIdx++], kb=$('#upKb').value;
+  if(upIdx>=UPSAMPLE.length)upIdx=0;
+  const s=UPSAMPLE[upIdx], kb=$('#upKb').value;
   // 同名冲突演示
-  if(s.n.startsWith('2026 年全市政务公开')&&!window._dupShown){
+  if(s.n.startsWith('2026 年全市信息公开')&&!window._dupShown){
     window._dupShown=1;
     return openDlg(`<div class="pnl-h"><h3>已存在同名文档</h3><button class="x" onclick="closeAll()">${ic('x')}</button></div>
       <div class="pnl-b"><div style="display:flex;gap:12px;align-items:flex-start">
@@ -3118,26 +3244,30 @@ async function qAdd(){
         <p style="font-size:12.5px;color:var(--text-3);line-height:1.8">
           该知识库中已存在同名文档（上传于 2026-07-30，共 58 段切片）。请选择处理方式：</p></div></div></div>
       <div class="pnl-f"><button class="btn" onclick="closeAll()">取消上传</button>
-        <button class="btn" onclick="closeAll();qPush(${upIdx-1},'另存为新文档')">另存为新文档</button>
-        <button class="btn pri" onclick="closeAll();qPush(${upIdx-1},'覆盖为新版本')">覆盖为新版本</button></div>`,520);
+        <button class="btn" onclick="closeAll();qPush(${upIdx},'另存为新文档')">另存为新文档</button>
+        <button class="btn pri" onclick="closeAll();qPush(${upIdx},'覆盖为新版本')">覆盖为新版本</button></div>`,520);
   }
-  qPush(upIdx-1);
+  qPush(upIdx);
 }
+function qUpdate(){const list=$('#qList'),stat=$('#qStat');if(list)list.innerHTML=qRender();if(stat)stat.textContent=queue.length?'共 '+queue.length+' 个任务':'暂无任务';}
+function qRemove(i){const q=queue[i];if(!q)return;q.cancelled=true;queue.splice(i,1);qUpdate();toast(q.st==='ok'?'仅移除队列记录，知识库文档保留':'任务已取消，不会继续入库','ok');}
 async function qPush(i,mode){
+  if(queue.some(q=>q.n===UPSAMPLE[i].n&&['queue','parsing'].includes(q.st)))return toast('该文件已有任务正在处理，请勿重复提交','warn');
+  upIdx=i+1;
   const s=UPSAMPLE[i], kb=$('#upKb')?$('#upKb').value:KBS[0].t;
   const tag=$('#upTag')?$('#upTag').value:'政策文件';
   const q={...s, kb, tag, st:'queue', p:0};
   queue.unshift(q);
-  $('#qList').innerHTML=qRender(); $('#qStat').textContent='共 '+queue.length+' 个任务';
+  qUpdate();
   if(mode) toast(mode==='覆盖为新版本'?'将覆盖原文档，旧版本切片会被替换':'已作为新文档加入队列','ok');
-  await sleep(500);
+  await sleep(500);if(q.cancelled)return;
   q.st='parsing';
   for(let p=0;p<=100;p+=20){
-    q.p=p; $('#qList').innerHTML=qRender(); await sleep(300);
+    if(q.cancelled)return;q.p=p;qUpdate();await sleep(300);if(q.cancelled)return;
   }
   if(s.fail){ q.st='fail'; q.err=s.err; toast('《'+s.n.slice(0,12)+'…》解析失败','err'); }
   else { q.st='ok'; commitQueueDoc(q,mode); toast('《'+s.n.slice(0,12)+'…》已生效，共 '+s.ck+' 段切片','ok'); }
-  $('#qList').innerHTML=qRender();
+  qUpdate();
 }
 function commitQueueDoc(q,mode){
   let name=q.n;
@@ -3145,7 +3275,7 @@ function commitQueueDoc(q,mode){
   const ext=(name.split('.').pop()||'').toLowerCase();
   const f=ext==='xlsx'||ext==='xls'?'Excel':ext==='pdf'?'PDF':ext==='pptx'?'PPT':'Word';
   const data={n:name,kb:q.kb,tag:q.tag,f,sz:q.sz,ck:q.ck,up:'陈静',dt:formatNow(),st:'ok',cite:0,preview:q.preview,keywords:q.keywords};
-  const old=DOCS.find(d=>d.n===name);
+  const old=DOCS.find(d=>d.n===name&&d.kb===q.kb);
   if(old) Object.assign(old,data);
   else{
     data.counted=mode==='覆盖为新版本'?false:true;
@@ -3158,6 +3288,15 @@ function qRetry(i){
   toast('该文件为加密扫描件，重试仍会失败。请先解除加密','warn');
 }
 
+/* Changing inputs cancels stale mock processing rather than overwriting new choices. */
+document.addEventListener('input',e=>{
+  if(/^af\d+$/.test(e.target.id)){viewRevision++;for(const [id,label] of [['researchRun','生成研究初稿'],['planRun','生成创意玩法方向']]){const b=$('#'+id);if(b?.disabled){b.disabled=false;b.textContent=label;}}}
+  if(!e.target.closest('.wb-l'))return;
+  if(cur==='tool-text')wbReset();
+  else if(cur==='tool-file'){viewRevision++;ftDone=false;$('#ftOut').innerHTML=ftEmpty();const b=$('#ftRun');b.disabled=false;b.textContent='开始处理';}
+  else if(cur==='minutes'){viewRevision++;mDone=false;$('#mOut').innerHTML='<div class="empty"><h4>条件已变更，请重新生成</h4></div>';const b=$('#mRun');b.disabled=false;b.textContent='生成会议纪要';}
+  else if(cur==='data-analysis'){viewRevision++;dataState.done=false;dataState.followups=[];$('#dataOut').innerHTML='<div class="empty"><h4>条件已变更，请重新分析</h4></div>';const b=$('#dataRun');b.disabled=false;b.textContent='生成分析';}
+});
 /* =============== 启动 =============== */
 render();
 </script>
