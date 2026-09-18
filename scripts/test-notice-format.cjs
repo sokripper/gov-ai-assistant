@@ -1,0 +1,36 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {JSDOM,VirtualConsole}=require('jsdom');
+const root=path.join(__dirname,'../docs/prototypes');
+let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+html=html.replace(/<script src="([^"]+)"><\/script>/g,(_,name)=>'<script>'+fs.readFileSync(path.join(root,name),'utf8')+'</script>');
+const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
+const dom=new JSDOM(html,{url:'https://demo.example/',runScripts:'dangerously',virtualConsole:vc,beforeParse(w){Object.defineProperty(w.HTMLElement.prototype,'innerText',{get(){return this.textContent;},set(v){this.textContent=v;}});}});
+const w=dom.window,e=s=>w.eval(s),q=s=>w.document.querySelector(s);let passed=0;
+const check=(name,fn)=>{fn();passed++;console.log('PASS '+name);};
+const set=(selector,v)=>{q(selector).value=v;q(selector).dispatchEvent(new w.Event('change',{bubbles:true}));};
+try{
+e("go('assist-form',{a:ASSIST.find(x=>x.id==='zw')})");
+check('meeting controls visible, knowledge mock hidden',()=>{assert.equal(q('#noticeFields').hidden,false);assert.equal(q('#noticeMeeting').hidden,false);assert.equal(q('[data-notice-kb]').hidden,true);});
+set('#af0','会议方案');
+check('plan hides scene selector',()=>assert.equal(q('#noticeSceneField').hidden,true));
+set('#nf-会议时间','2026年6月9日（星期二）18:00');set('#nf-会议地点','五楼会议室');set('#nf-参会范围','相关部门负责人');set('#nf-会议议程','1. 使用培训；\n2. 交流发言。');set('#nf-相关要求','提前10分钟入场。');set('#nf-发文单位','综合办公室');set('#nf-成文日期','2026年6月8日');
+e('startAssistant(false)');
+check('plan contains five sections and source-shaped typography structure',()=>{assert.ok(q('.notice-doc[data-notice-kind="plan"]'));assert.equal(q('.notice-recipient'),null);assert.equal(q('.notice-doc .ti').textContent,'智能体赋能高效办公会议方案');assert.equal(w.document.querySelectorAll('.notice-doc h5').length,3);assert.equal(w.document.querySelectorAll('.notice-doc .sign p').length,2);});
+check('facts preserved, no invented leaders or issue number',()=>{const t=q('#paper').textContent;assert.match(t,/星期二/);assert.match(t,/1. 使用培训/);assert.doesNotMatch(t,/安全生产|吕鹏|市府办发|领导讲话|待确认/);assert.equal(q('.notice-number'),null);});
+check('payload retained for later flow',()=>assert.equal(e('flowState.draft.payload["会议地点"]'),'五楼会议室'));
+check('mock rewrites do not damage meeting facts',()=>{const before=q('#paper').innerHTML;e('rewriteDraftParagraph();wSend()');assert.equal(q('#paper').innerHTML,before);});
+check('live edit check reads current paper',()=>{q('.notice-doc .sign p').textContent='【待确认：新署名】';e('runDraftCheck()');assert.match(q('#dlg').textContent,/新署名/);e('closeAll()');q('.notice-doc .sign p').textContent='新署名';e('runDraftCheck()');assert.match(q('#dlg').textContent,/未检出/);e('closeAll()');});
+e("go('assist-form',{a:ASSIST.find(x=>x.id==='zw')})");
+check('return restores fields and correct conditional visibility',()=>{assert.equal(q('#af0').value,'会议方案');assert.equal(q('#nf-会议地点').value,'五楼会议室');assert.equal(q('#noticeSceneField').hidden,true);});
+set('#af0','通知');set('#nf-通知场景','工作通知');set('#nf-通知事项','开展资料整理。');set('#nf-办理安排','各部门周五前提交。');e('startAssistant(false)');
+check('work notification does not inherit stale meeting arrangement',()=>{assert.ok(q('[data-notice-kind="work"]'));assert.match(q('#paper').textContent,/资料整理/);assert.doesNotMatch(q('#paper').textContent,/五楼|会议议程|参会范围/);});
+e("go('assist-form',{a:ASSIST.find(x=>x.id==='zw')})");set('#nf-通知场景','会议通知');set('#nf-会议地点','');e('startAssistant(false)');
+check('incomplete facts allowed but visible pending, recipient retained',()=>{assert.ok(q('.notice-recipient'));assert.match(q('#paper').textContent,/【待确认：会议地点】/);});
+check('input escaped and reference kept separate',()=>{const result=w.buildOfficeNotice({'事由 / 主题':'<img src=x>','会议地点':'<script>bad</script>'},{answer:'参考<内容>',sources:[{t:'资料A'}]});assert.ok(!result.html.includes('<img src=x>'));assert.match(result.html,/&lt;script&gt;/);assert.match(result.html,/notice-reference/);assert.match(result.html,/资料A/);});
+check('missing default fields explicit',()=>{const d=w.buildOfficeNotice();assert.match(d.html,/待确认：主题/);assert.match(d.html,/待确认：成文日期/);});
+e("go('assist-form',{a:ASSIST.find(x=>x.id==='zw')})");set('#af0','报告');
+check('unrelated material types keep original controls',()=>{assert.equal(q('#noticeFields').hidden,true);assert.equal(q('[data-notice-kb]').hidden,false);});
+check('other assistant forms remain unmodified',()=>{e("go('assist-form',{a:ASSIST.find(x=>x.id==='plan')})");assert.equal(q('#noticeFields'),null);e("go('assist-form',{a:ASSIST.find(x=>x.id==='research')})");assert.equal(q('#noticeFields'),null);});
+check('all modules loaded without runtime errors',()=>assert.deepEqual(errors,[]));
+console.log(`${passed} passed; DOM/state only, not browser visual QA.`);
+}finally{dom.window.close();}

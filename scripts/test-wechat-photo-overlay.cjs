@@ -1,0 +1,27 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {JSDOM,VirtualConsole}=require('jsdom'),root=path.join(__dirname,'../docs/prototypes');
+let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+html=html.replace(/<script src="([^"]+)"><\/script>/g,(_,name)=>'<script>'+fs.readFileSync(path.join(root,name),'utf8')+'</script>');
+const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
+const dom=new JSDOM(html,{url:'https://demo.example/',runScripts:'dangerously',virtualConsole:vc,beforeParse(w){Object.defineProperty(w.HTMLElement.prototype,'innerText',{get(){return this.textContent;},set(v){this.textContent=v;}});}});
+const w=dom.window,e=s=>w.eval(s),q=s=>w.document.querySelector(s),qa=s=>[...w.document.querySelectorAll(s)];let count=0;
+const check=(name,fn)=>{fn();count++;console.log('PASS '+name);};
+(async()=>{
+e("go('wechat')");
+check('latest case preview and named entry visible',()=>{assert.match(q('.ws-start-example').src,/creative-header.png/);assert.match(q('[onclick="wsLoadSchool(false,true)"]').textContent,/图文示例/);});
+await e('wsLoadSchool(true,true)');e("wsHeadOpen();wsHeadChoose('photo')");
+check('photo is base, generated lettering within same frame, no old split image',()=>{assert.match(q('.ws-preview .ws-photo-base').src,/image4.webp/);assert.ok(q('.ws-preview .ws-photo-overlay .ws-seed-lettering'));assert.equal(qa('.ws-preview img[src$="photo-header.png"]').length,0);assert.match(q('.ws-preview .ws-head-status').textContent,/实拍头图/);});
+check('known case does not automatically use frosted glass',()=>{assert.ok(q('.ws-preview .ws-photo-gradient'));assert.equal(q('.ws-preview .ws-photo-glass'),null);});
+check('pending treatment change cannot be silently confirmed',()=>{e("wsDraft('wsHeadTreatment','glass');wsFinish()");assert.match(q('#toast').textContent,/未应用/);assert.equal(e('wxState.studio.head.treatment'),'gradient');});
+e("wsDraft('wsHeadPlacement','right');wsHeadConfirm();wsHeadChoose('photo')");
+check('confirmed frosted glass is local to text and moves with it',()=>{assert.ok(q('.ws-preview .ws-photo-glass.ws-photo-at-right'));assert.ok(q('.ws-preview .ws-seed-lettering'));const css=fs.readFileSync(path.join(root,'wechat-studio.css'),'utf8');assert.match(css,/\.ws-photo-glass \.ws-photo-lettering:before/);assert.match(css,/\.ws-photo-direct \.ws-photo-lettering:before\{display:none\}/);});
+check('generation request carries composition policy and manual boundary',()=>{e('wsHeadRequest()');assert.equal(e('wxState.studio.head.request.photoComposition.treatment'),'glass');assert.equal(e('wxState.studio.head.request.photoComposition.placement'),'right');assert.match(e('wxState.studio.head.request.photoComposition.policy'),/禁止图文左右分栏/);});
+e('wsSave()');
+check('direct lettering mode and undo preserve earlier treatment',()=>{e("wsDraft('wsHeadTreatment','direct');wsDraft('wsHeadPlacement','bottom');wsHeadConfirm();wsHeadChoose('photo')");assert.ok(q('.ws-preview .ws-photo-direct'));e('wsUndo();wsUndo()');assert.equal(e('wxState.studio.head.treatment'),'glass');assert.ok(q('.ws-preview .ws-photo-glass'));});
+check('changed title never reuses previous generated glyphs',()=>{e("wsHeadOpen();wsDraft('wsHeadTitle','重新确认标题');wsHeadConfirm();wsHeadChoose('photo')");assert.equal(q('.ws-preview .ws-seed-lettering'),null);assert.match(q('.ws-preview .ws-photo-lettering').textContent,/重新确认标题/);assert.match(q('.ws-preview .ws-head-status').textContent,/头图方案/);});
+check('restoring session version also restores composition',()=>{e('wsRecover(2)');assert.equal(e('wxState.studio.head.treatment'),'glass');assert.equal(e('wxState.studio.head.placement'),'right');assert.ok(q('.ws-preview .ws-seed-lettering'));});
+e('wxLoadMaterialDemo(true)');await e('wxGenerateArticle()');e("wsHeadOpen();wsDraft('wsHeadTitle','新文章标题');wsHeadConfirm();wsHeadChoose('photo')");
+check('new article defaults to direct lettering without falsely analysing photo',()=>{assert.equal(e('wxState.studio.head.treatment'),'direct');assert.ok(q('.ws-preview .ws-photo-direct'));assert.equal(q('.ws-preview .ws-seed-lettering'),null);assert.match(q('.ws-inspector').textContent,/新照片默认直接叠字/);});
+check('no runtime errors',()=>assert.deepEqual(errors,[]));
+console.log(count+' passed; DOM/state checks only, not browser pixel QA.');
+})().catch(err=>{console.error(err);process.exitCode=1;}).finally(()=>dom.window.close());
