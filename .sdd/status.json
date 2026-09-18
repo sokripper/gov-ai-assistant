@@ -16,6 +16,7 @@
   "release_verification_source": "GitHub main commit and Pages build status; deployment status is not inferred from this file",
   "wechat_studio_revision": "2026-09-18: 接入40套排版、校企完整示例及通知格式；头图独立于正文模板，正文图片默认保留原图比例；支持局部修改、会话版本与长图失效管理。已有素材可预览，未接通的生成操作保留待处理状态；201项检查通过，浏览器像素级验证未完成",
   "template_gallery_revision": "2026-09-18: 用户澄清后恢复原三栏；侧栏每批10套版式特点示意，用少量示意文字和中性配图表达真实模板结构，不使用全文微缩或独立页面；点击在中央即时试排，头图不变。12项卡片测试按此语义更新，像素级验证仍受本地URL策略限制",
+  "layout_library_revision": "2026-09-18: 同步最新40套；01–20全部更新并适配内联嵌套结构，21–40源哈希不变；40个源文件哈希核对一致，无外链图片依赖；保留侧栏短示意、实时试排与独立头图",
   "release_requested_at": "2026-09-18",
   "release_target": "https://sokripper.github.io/gov-ai-assistant/"
 }
