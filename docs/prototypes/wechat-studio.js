@@ -115,16 +115,26 @@
   }
   Object.assign(window,{wsHeadOpen:headOpen,wsHeadConfirm:headConfirm,wsHeadChoose:headChoose,wsHeadNext:headNext,wsHeadRemove:headRemove,wsHeadRequest:headRequest});
   const layoutPageSize=10;
+  const specimenCache=new Map();
+  // A small sample of the actual template rules, not a miniature of the user's manuscript.
+  function layoutSpecimen(id){
+    if(specimenCache.has(id))return specimenCache.get(id).cloneNode(true);
+    const picture='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="240" height="130" viewBox="0 0 240 130"><rect width="240" height="130" fill="#e8edf2"/><circle cx="174" cy="35" r="14" fill="#bbc9d6"/><path d="M0 130L75 45 130 103 177 67 240 130" fill="#a3b5c6"/></svg>');
+    const holder=document.createElement('div');holder.innerHTML=localLayouts.render(id,{title:'标题样式',blocks:[{heading:true,text:'标题样式'},{heading:true,text:'章节标题'},{heading:false,text:'正文段落示意，展示阅读节奏。'},{heading:false,text:'清晰的层次，舒适的留白。'}],sections:['章节标题'],images:[{id:'sample-a',name:'配图示意',src:picture},{id:'sample-b',name:'配图示意',src:picture}],studio:{photos:{},photoGroups:[]},markedText:esc,decorate:()=>{},selected:''});
+    holder.querySelector('header')?.remove();holder.querySelector('.toc')?.remove();
+    holder.querySelectorAll('[data-ws]').forEach(el=>{['data-ws','role','tabindex','aria-label','data-source-paragraph','data-paragraph'].forEach(a=>el.removeAttribute(a));el.classList.remove('ws-selected');});
+    specimenCache.set(id,holder.cloneNode(true));return holder;
+  }
   function localLibrary(){
     const list=localCatalog.filter(t=>ui.category==='全部'||t.family===ui.category),pages=Math.max(1,Math.ceil(list.length/layoutPageSize)),batch=Math.min(ui.layoutBatch||0,pages-1),shown=list.slice(batch*layoutPageSize,(batch+1)*layoutPageSize);
     return `<div class="ws-inspector-head"><div><h3>选一套适合这篇文章的排版</h3><p class="ws-gallery-help">比较标题层级、图片位置与段落节奏 · 头图保持不变</p></div><span class="tag">共 ${localCatalog.length} 套</span></div><div class="ws-gallery-tools"><div class="ws-filters">${['全部','图文','信息','条目','叙事'].map(x=>`<button class="${ui.category===x?'on':''}" onclick="wsFilter('category','${x}')">${x}</button>`).join('')}</div><div class="ws-gallery-pages"><span>${batch+1} / ${pages} 批 · 本批 ${shown.length} 套</span><button class="btn sm" onclick="wsLayoutBatch(-1)" ${pages<=1?'disabled':''}>上一批</button><button class="btn sm" onclick="wsLayoutBatch()" ${pages<=1?'disabled':''}>换一批</button></div></div><div class="ws-inspector-body ws-gallery-body"><div class="ws-template-grid ws-local-grid">${shown.map(t=>{
-      const h=document.createElement('div');h.innerHTML=localArticle(t.id);h.querySelectorAll('[data-ws]').forEach(e=>{e.removeAttribute('data-ws');e.removeAttribute('role');e.removeAttribute('tabindex');e.removeAttribute('aria-label');e.classList.remove('ws-selected');});
+      const h=layoutSpecimen(t.id);
       const labels=[h.querySelector('.toc')?'章节索引':h.querySelector('.nx-heading,.chapter')?'分节标题':'连贯阅读',h.querySelector('.compare,.nx-sidephoto')?'左右图文':h.querySelector('.duo,.ws-photo-pair')?'并列图组':h.querySelector('img')?'图文穿插':'纯文字排版'];
-      return `<button class="ws-template ${wxState.studio.template===t.id?'on':''}" aria-pressed="${wxState.studio.template===t.id}" aria-label="使用 ${esc(t.name)}，查看完整排版" onclick="wsTemplate('${t.id}')"><div class="ws-card-top"><span>${t.id} · ${esc(t.family)}</span><b>${wxState.studio.template===t.id?'已选用':'点击试排'}</b></div><div class="ws-local-thumb" aria-hidden="true"><div class="ws-layout-content">${h.innerHTML}<div class="ws-thumb-end">— 全文结束 —</div></div></div><strong>${esc(t.name)}</strong><div class="ws-layout-tags">${labels.map(s=>'<span>'+s+'</span>').join('')}</div><small>${esc(t.description)}</small></button>`;
-    }).join('')}</div></div><div class="ws-gallery-foot"><span>缩略图展示全文结构 · 点击后在左侧查看大图</span><div><button class="btn" onclick="wsPanel('ai')">AI 定制</button><button class="btn pri" onclick="wsHeadOpen()">下一步：设计头图 →</button></div></div>`;
+      return `<button class="ws-template ${wxState.studio.template===t.id?'on':''}" aria-pressed="${wxState.studio.template===t.id}" aria-label="使用 ${esc(t.name)}，试排当前文章" onclick="wsTemplate('${t.id}')"><div class="ws-card-top"><span>${t.id} · ${esc(t.family)}</span><b>${wxState.studio.template===t.id?'已选用':'试排'}</b></div><div class="ws-local-thumb ws-specimen" aria-hidden="true"><div class="ws-layout-content">${h.innerHTML}</div></div><strong>${esc(t.name)}</strong><div class="ws-layout-tags">${labels.map(s=>'<span>'+s+'</span>').join('')}</div><small>${esc(t.description)}</small></button>`;
+    }).join('')}</div></div><div class="ws-gallery-foot"><span>卡片展示版式特点 · 点击应用到当前文章</span><div><button class="btn" onclick="wsPanel('ai')">AI 定制</button><button class="btn pri" onclick="wsHeadOpen()">设计头图 →</button></div></div>`;
   }
   function layoutBatch(direction=1){const count=localCatalog.filter(t=>ui.category==='全部'||t.family===ui.category).length,pages=Math.max(1,Math.ceil(count/layoutPageSize));ui.layoutBatch=((ui.layoutBatch||0)+direction+pages)%pages;redraw();const body=$('.ws-gallery-body');if(body)body.scrollTop=0;}
-  // Scale the actual complete article, not a fixed-height crop of its opening paragraphs.
+  // Fit only the compact specimen, independent of manuscript length and photo dimensions.
   let thumbObserver;
   function fitThumbnails(){
     thumbObserver?.disconnect();
@@ -328,7 +338,6 @@
   function mount(){
     thumbObserver?.disconnect();
     const p=$('#wxPhonePreview');if(!p)return;
-    p.closest('.ws').classList.toggle('ws-browsing',!ui.done&&wxState.outputMode!=='story'&&ui.panel==='styles'&&!!localCatalog.length);
     fitThumbnails();
     p.onclick=e=>{const el=e.target.closest('[data-ws]');if(el){if(el.dataset.paragraph!==undefined)ui.paragraph=Number(el.dataset.paragraph);select(el.dataset.ws);}};
     p.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){const el=e.target.closest('[data-ws]');if(el){e.preventDefault();select(el.dataset.ws);}}};
