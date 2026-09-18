@@ -1,4 +1,28 @@
 /* Preview-first WeChat prototype. Scoped to avoid changing other workspaces. */
+.ws.ws-browsing .ws-grid{grid-template-columns:minmax(300px,.8fr) minmax(560px,1.8fr)}
+.ws.ws-browsing .ws-editor{display:none}
+.ws.ws-browsing .ws-preview{padding:16px 18px}
+.ws.ws-browsing .ws-preview .phone{max-width:430px}
+.ws.ws-browsing .ws-local-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ws .ws-gallery-help{font-size:12px;color:#7b8798;margin:7px 0 0;line-height:1.6}
+.ws .ws-gallery-tools{padding:12px 18px;border-bottom:1px solid #e9edf3;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#fff}
+.ws .ws-gallery-tools .ws-filters{margin:0;gap:5px}
+.ws .ws-gallery-pages{display:flex;align-items:center;gap:8px;font-size:11px;color:#6c7b90}
+.ws .ws-gallery-body{padding:16px;background:#f7f8fb;scrollbar-gutter:stable}
+.ws .ws-local-grid .ws-template{padding:9px;border-radius:10px;transition:border-color .15s,box-shadow .15s}
+.ws .ws-local-grid .ws-template:hover{border-color:#8aa5cd;box-shadow:0 4px 14px #23446e12}
+.ws .ws-local-grid .ws-template:focus-visible{outline:3px solid #8aa5cd;outline-offset:3px}
+.ws .ws-local-grid .ws-template.on{background:#f5f8ff;box-shadow:0 0 0 2px #456cac}
+.ws .ws-card-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#7c899a;margin:0 0 8px;gap:4px}
+.ws .ws-card-top b{color:#43679c;font-weight:500}
+.ws .ws-layout-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.ws .ws-layout-tags span{padding:3px 5px;border-radius:4px;background:#edf1f6;font-size:10px;color:#60718a}
+.ws .ws-gallery-foot{padding:12px 18px;border-top:1px solid #e5eaf0;background:white;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;flex-shrink:0}
+.ws .ws-gallery-foot>span{font-size:11px;line-height:1.6;color:#768398}
+.ws .ws-gallery-foot>div{display:flex;gap:8px}.ws .ws-gallery-foot .btn{font-size:12px}
+@media(min-width:1700px){.ws.ws-browsing .ws-local-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:1279px) and (min-width:901px){.ws.ws-browsing .ws-grid{grid-template-columns:280px minmax(0,1fr)}.ws.ws-browsing .ws-local-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){.ws.ws-browsing .ws-grid{display:flex;flex-direction:column;overflow:auto}.ws.ws-browsing .ws-preview{order:2;flex-shrink:0;max-height:600px;overflow:auto}.ws.ws-browsing .ws-inspector{order:1;flex-shrink:0}.ws.ws-browsing .ws-local-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ws.ws-browsing .ws-gallery-body{max-height:520px;overflow:auto}.ws .ws-gallery-foot>span{font-size:0}.ws .ws-gallery-foot>span:after{content:'点击模板，下方查看完整排版';font-size:11px}.ws .ws-gallery-tools{padding:10px}}
 .ws .ws-head-real img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain}
 .ws .ws-workflow-foot{flex-shrink:0;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:14px 24px;border-top:1px solid var(--border);background:#fff;z-index:3}
 .ws .ws-workflow-status{font-size:12px;line-height:1.7;color:#6e7d90;min-width:0}
@@ -60,8 +84,9 @@
 .ws .ws-layout-content p.ws-f-divider{border-bottom:1px solid var(--edge);padding-bottom:16px}
 .ws .ws-layout-content p.ws-f-heading{font-weight:700;font-size:18px}
 .ws .ws-local-grid{grid-template-columns:1fr 1fr;gap:10px}
-.ws .ws-local-thumb{height:190px;overflow:hidden;position:relative;background:#fff;pointer-events:none;border:1px solid #e7eaf0;border-radius:4px}
-.ws .ws-local-thumb>.ws-layout-content{width:430px;transform:scale(.29);transform-origin:top left}
+.ws .ws-local-thumb{height:250px;overflow:hidden;position:relative;background:#edf0f4;pointer-events:none;border:1px solid #e7eaf0;border-radius:6px}
+.ws .ws-local-thumb>.ws-layout-content{position:absolute;width:430px;transform:scale(.1);transform-origin:top left;background:white;box-shadow:0 3px 14px #1d314c20}
+.ws .ws-thumb-end{padding:20px 0;text-align:center;font:12px/1.6 sans-serif;color:#8994a4;background:white}
 .ws .ws-local-grid .ws-template{min-width:0;padding:8px}
 .ws .ws-local-grid .ws-template strong{display:block;font-size:12px;margin-top:8px}
 .ws .ws-local-grid .ws-template small{font-size:10px;line-height:1.6;display:block;margin-top:5px}
