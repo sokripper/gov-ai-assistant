@@ -6,17 +6,19 @@
   "current_task": null,
   "blocked": false,
   "notes": "对齐稿已更新至 v16；一期 AI 工具已移除独立宣传配图生成，公众号首图、装饰素材和故事长图统一保留在公众号图文排版助手中。公众号原型首屏先选择成稿路径与视觉气质，再紧凑导入审定正文和实拍图。产业与政策研究已改为命题驱动并生成带引用的东西湖十五五研究范文。活动与宣传策划已改为两段式：输入主题与硬性条件后先生成差异化创意玩法，单选一条核心叙事主线或整批换新，再形成含指导思想、三阶段宣传、内容矩阵、任务分工和风险控制的正式方案；候选与操作区采用紧凑首屏布局。人员、日期、责任单位、统计数据与政治表述均保留人工确认。个人 Skill gov-wechat-visual-production 已创建并校验通过。API Key 未写入项目。PRD.md 待补（用户要求先出 demo）",
-  "interaction_revision": "2026-09-18",
+  "interaction_revision": "2026-09-20",
   "interaction_tests": {
-    "passed": 213,
+    "passed": 264,
     "failed": 0,
-    "kind": "DOM/state/CSS contract and product-copy checks; current browser pixel verification unavailable due URL security policy"
+    "kind": "DOM/state/CSS contract and product-copy checks; platform administration pages visually checked at 1440×1000 and 1024×768"
   },
   "wording_revision": "2026-09-18: 清理用户界面的模型名称、真实成图和实现说明，保留产品操作、内容确认及真实待处理状态",
   "release_verification_source": "GitHub main commit and Pages build status; deployment status is not inferred from this file",
   "wechat_studio_revision": "2026-09-18: 接入40套排版、校企完整示例及通知格式；头图独立于正文模板，正文图片默认保留原图比例；支持局部修改、会话版本与长图失效管理。已有素材可预览，未接通的生成操作保留待处理状态；201项检查通过，浏览器像素级验证未完成",
   "template_gallery_revision": "2026-09-18: 用户澄清后恢复原三栏；侧栏每批10套版式特点示意，用少量示意文字和中性配图表达真实模板结构，不使用全文微缩或独立页面；点击在中央即时试排，头图不变。12项卡片测试按此语义更新，像素级验证仍受本地URL策略限制",
   "layout_library_revision": "2026-09-18: 同步最新40套；01–20全部更新并适配内联嵌套结构，21–40源哈希不变；40个源文件哈希核对一致，无外链图片依赖；保留侧栏短示意、实时试排与独立头图",
+  "knowledge_workspace_revision": "2026-09-20: 已依据参考管理平台观察到的功能更新个人/共享/部门库、营运总览与问答原型；去掉右侧重复目录表格，目录树操作与内容概览合并为两栏；营运总览移除普通用户难理解的请求日志，替换为当前账户可查看文件列表，支持按名称/摘要、来源库和处理状态筛选并直达所在目录；问答按账号权限范围表达，支持多轮、当前浏览器会话历史、新建和停止。37项集成检查+213项既有回归通过。未接入内网后端、未验证真实权限，像素级验证未完成；本轮未发布。",
+  "platform_admin_revision": "2026-09-20: 全局导航重组为工作台、知识与资料、组织管理；移除全局最近会话，问答历史仅保留在知识库问答页。单位用量与用户管理对齐9个真实单位及94份资料统计；用户管理支持账号和临时密码分列复制、新建账号自动生成临时密码、密码重置、账号编辑与启停，已修改密码不可查看。首页按核心入口、主要功能、常用任务、账号资料重排，个人用量保留首屏直达且不增加独立菜单；全局采用浅色卡片化政务办公视觉。14项管理页集成检查及全量264项回归通过；新版首页在1440×1000及1024×768像素检查通过。本轮未发布。",
   "release_requested_at": "2026-09-18",
   "release_target": "https://sokripper.github.io/gov-ai-assistant/"
 }

@@ -8,7 +8,7 @@ const w=dom.window,e=s=>w.eval(s),q=s=>w.document.querySelector(s),qa=s=>[...w.d
 const check=(name,fn)=>{fn();count++;console.log('PASS '+name);};
 (async()=>{
 e("go('wechat')");
-check('latest case preview and named entry visible',()=>{assert.match(q('.ws-start-example').src,/creative-header.png/);assert.match(q('[onclick="wsLoadSchool(false,true)"]').textContent,/图文示例/);});
+check('latest case preview and named entry visible',()=>{assert.match(q('.ws-start-example').src,/creative-header.png/);assert.match(q('[onclick="wsLoadSchool(false,true)"]').textContent,/图文成稿/);});
 await e('wsLoadSchool(true,true)');e("wsHeadOpen();wsHeadChoose('photo')");
 check('photo is base, generated lettering within same frame, no old split image',()=>{assert.match(q('.ws-preview .ws-photo-base').src,/image4.webp/);assert.ok(q('.ws-preview .ws-photo-overlay .ws-seed-lettering'));assert.equal(qa('.ws-preview img[src$="photo-header.png"]').length,0);assert.match(q('.ws-preview .ws-head-status').textContent,/实拍头图/);});
 check('known case does not automatically use frosted glass',()=>{assert.ok(q('.ws-preview .ws-photo-gradient'));assert.equal(q('.ws-preview .ws-photo-glass'),null);});

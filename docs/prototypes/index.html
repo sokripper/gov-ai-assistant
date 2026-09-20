@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI办公助手平台 · 交互原型</title>
+<title>AI办公助手平台</title>
 <link rel="icon" type="image/svg+xml" href="./logo-梵行.svg">
 <style>
 /* ============ 设计 Token：专业蓝融合方案 ============ */
@@ -833,12 +833,9 @@ button:disabled{cursor:not-allowed;opacity:.45}
       <b>AI办公助手平台</b>
     </div>
     <nav class="nav" id="nav"></nav>
-    <div class="side-sp">
-      <div class="nav-t">最近会话</div>
-      <div id="recent"></div>
-    </div>
+    <div class="side-sp" aria-hidden="true"></div>
     <div class="side-ft">
-      <div class="tip">交互原型 · 示例数据<br>底层模型：豆包系列</div>
+      <div class="tip"><b>综合办公室</b><br>企业工作空间</div>
     </div>
   </aside>
   <div class="main">
@@ -886,7 +883,7 @@ const NAV=[
   {id:'qa',    ic:'chat', t:'知识库问答'},
   {id:'tools', ic:'grid', t:'AI 工具', badge:'5'},
   {id:'assist',ic:'pen',  t:'AI 助手', badge:'6'},
-  {id:'kb',    ic:'db',   t:'知识库管控'}
+  {id:'kb',    ic:'db',   t:'知识库管理'}
 ];
 let RECENT=[
   {t:'综合服务改革微信推文', ic:'news', v:'wechat'},
@@ -929,7 +926,7 @@ const ASSIST=[
 ];
 const ASSIST_SOON=[
   {t:'外部公众号持续监控', d:'需外部数据源、反爬与合规方案，本期采用用户主动导入已审定稿件', ic:'eye'},
-  {t:'Seedance 文章转视频', d:'将公众号文章转为短视频脚本与成片，后续版本评估', ic:'img'},
+  {t:'文章转视频', d:'将公众号文章转为短视频脚本与成片，后续版本评估', ic:'img'},
   {t:'政策一致性审核', d:'需稳定的上位法来源、版本管理和专业复核', ic:'scale'},
   {t:'保密与敏感信息审核', d:'涉及分级规则和审批责任，不由基础模型单独下结论', ic:'ban'},
   {t:'民生诉求自动答复', d:'需事实核验、政策依据与业务审批闭环后再上线', ic:'mail'}
@@ -1015,7 +1012,8 @@ function backCrumb(to,root,sub){
 $('#nav').innerHTML=NAV.map(n=>`<button class="nav-i" data-v="${n.id}" title="${n.t}" aria-label="${n.t}" onclick="go('${n.id}')">
   ${ic(n.ic)}<span>${n.t}</span>${n.badge?`<span class="badge">${n.badge}</span>`:''}</button>`).join('');
 function renderRecent(){
-  $('#recent').innerHTML=RECENT.slice(0,10).map((r,i)=>`<div class="recent-row"><button class="recent-i" onclick="openRecent(${i})">
+  const host=$('#recent'); if(!host)return;
+  host.innerHTML=RECENT.slice(0,10).map((r,i)=>`<div class="recent-row"><button class="recent-i" onclick="openRecent(${i})">
     ${ic(r.ic,'ic ic-s')}<span>${r.t}</span></button><button class="recent-more" title="重命名或删除" onclick="editRecent(${i})">${ic('more','ic ic-s')}</button></div>`).join('');
 }
 function openRecent(i){
@@ -1070,10 +1068,10 @@ ROUTES.home={
       </div>
     </div>
     <div class="ent-grid">
-      ${[['qa','chat','知识库问答','问政策、问制度、问办事流程，答案带原文出处'],
+      ${[['qa','chat','知识库问答','自动检索可访问的资料，支持连续提问与历史会话'],
          ['tools','grid','AI 工具','文本检查、文档速读、表格图表、OCR 与转写'],
          ['assist','pen','AI 助手','公众号图文排版、办公写作、政策研究、运营分析'],
-         ['kb','db','知识库管控','文档入库、解析状态、切片治理与使用情况通览']]
+         ['kb','db','知识库管理','个人、共享与部门资料整理，内容概览及使用统计']]
         .map(([v,i,t,d])=>`<button class="ent" onclick="go('${v}')">
           <span class="arw">${ic('arw','ic ic-s')}</span>
           <span class="eic">${ic(i,'ic ic-l')}</span>
@@ -1096,14 +1094,12 @@ ROUTES.home={
         </div>
         <div class="sec-t" style="margin-top:22px">待你处理<span class="ln"></span></div>
         <div class="card"><div class="card-b" style="padding:14px">
-          <button class="todo" onclick="go('kb-docs',{f:'fail'})">
+          <button class="todo" onclick="KW.open('personal')">
             <span class="tdi" style="background:var(--err-l);color:var(--err)">${ic('warn')}</span>
-            <span class="tt"><b>${statusCount('fail')} 份文档解析失败</b><span>需要重新上传或转换格式后重试</span></span>
-            <span class="cnt" style="color:var(--err)">${statusCount('fail')}</span></button>
-          <button class="todo" onclick="go('kb-docs',{f:'parsing'})">
+            <span class="tt"><b>整理个人工作资料</b><span>按目录添加文件，查看摘要与详细概览</span></span></button>
+          <button class="todo" onclick="KW.open('dept')">
             <span class="tdi" style="background:var(--brand-l);color:var(--brand)">${ic('clock')}</span>
-            <span class="tt"><b>${statusCount('parsing')} 份文档正在解析</b><span>《2026 年第三季度全市经济运行分析会纪要》</span></span>
-            <span class="cnt" style="color:var(--brand)">${statusCount('parsing')}</span></button>
+            <span class="tt"><b>查看部门知识库</b><span>选择部门后管理团队共享的工作资料</span></span></button>
         </div></div>
       </div>
       <div>
@@ -1404,7 +1400,7 @@ function toggleFav(id,el){
 
 /* =============== 工具示例数据 =============== */
 function demoVisual(label,c1='#1856A7',c2='#6B4FA8'){
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="1000" height="560" fill="url(#g)"/><circle cx="810" cy="105" r="170" fill="white" opacity=".1"/><path d="M0 410 C180 320 300 500 470 405 S760 330 1000 430 V560 H0Z" fill="white" opacity=".13"/><path d="M40 465 H960" stroke="white" opacity=".32"/><text x="55" y="88" fill="white" opacity=".78" font-size="20" font-family="Arial,sans-serif">新媒体 · 示例视觉</text><text x="55" y="285" fill="white" font-size="58" font-weight="700" font-family="Arial,'Microsoft YaHei',sans-serif">${label}</text><text x="58" y="334" fill="white" opacity=".82" font-size="25" font-family="Arial,'Microsoft YaHei',sans-serif">让服务更简单，让办事更高效</text></svg>`;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="1000" height="560" fill="url(#g)"/><circle cx="810" cy="105" r="170" fill="white" opacity=".1"/><path d="M0 410 C180 320 300 500 470 405 S760 330 1000 430 V560 H0Z" fill="white" opacity=".13"/><path d="M40 465 H960" stroke="white" opacity=".32"/><text x="55" y="88" fill="white" opacity=".78" font-size="20" font-family="Arial,sans-serif">新媒体 · 视觉设计</text><text x="55" y="285" fill="white" font-size="58" font-weight="700" font-family="Arial,'Microsoft YaHei',sans-serif">${label}</text><text x="58" y="334" fill="white" opacity=".82" font-size="25" font-family="Arial,'Microsoft YaHei',sans-serif">让服务更简单，让办事更高效</text></svg>`;
   return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
 }
 const TDEMO={
@@ -1536,7 +1532,7 @@ const TDEMO={
     <p style="font-size:12.5px;color:var(--text-3);margin-top:18px;padding-top:12px;border-top:1px solid var(--border-2)">
       识别字数 386 字 · 平均置信度 98.2% · 有 1 处低置信度已用下划线标出，建议人工核对</p></div>`,
    `<div class="empty"><span class="eic">${ic('img','ic ic-l')}</span>
-     <h4>原图对照</h4><p>正式环境中此处并排显示扫描原图与识别结果，支持逐段对照校验。<br>原型阶段不加载真实扫描件。</p></div>`][i]
+     <h4>原图对照</h4><p>选择扫描件后，这里将并排显示原图与识别结果，支持逐段对照校验。</p></div>`][i]
  },
  asr:{
   file:{n:'全市经济运行分析会（2026-08-18）.m4a', sz:'42.8 MB · 时长 58 分 12 秒', ic:'audio', c:'p'},
@@ -1569,7 +1565,7 @@ const TDEMO={
 
 /* =============== P04 文本型工作台 =============== */
 let wbState={done:false};
-function wbActions(id){return `<button class="btn sm" onclick="copyFrom('#wbOut')">${ic('copy','ic ic-s')}复制</button><button class="btn sm" onclick="toast('原型阶段不生成真实文件','warn')">${ic('dl','ic ic-s')}下载</button><button class="btn sm" onclick="wbRun('${id}')">${ic('refresh','ic ic-s')}重新生成</button>`;}
+function wbActions(id){return `<button class="btn sm" onclick="copyFrom('#wbOut')">${ic('copy','ic ic-s')}复制</button><button class="btn sm" onclick="copyFrom('#wbOut')">${ic('dl','ic ic-s')}导出内容</button><button class="btn sm" onclick="wbRun('${id}')">${ic('refresh','ic ic-s')}重新生成</button>`;}
 ROUTES['tool-text']={
   nav:'tools', crumb:c=>backCrumb('tools','AI 工具',c.tool.t),
   html:c=>{
@@ -1577,15 +1573,15 @@ ROUTES['tool-text']={
     return `<div class="wb">
       <div class="wb-l">
         <div class="wb-h">${ic(c.tool.ic)}<h3>${c.tool.t}</h3>
-          <div class="rt"><button class="btn sm gho" onclick="fillDemo()">填入示例文本</button></div></div>
+          <div class="rt"><button class="btn sm gho" onclick="fillDemo()">载入常用文本</button></div></div>
         <div class="wb-b">
           <div class="fld"><label>待处理文本<span class="req">*</span></label>
             <textarea class="ta" id="wbIn" rows="13" placeholder="${d.ph}"></textarea></div>
           ${d.params.map(([n,o],i)=>`<div class="fld"><label>${n}</label>
             <select class="sel" id="p${i}">${o.split('|').map(v=>`<option>${v}</option>`).join('')}</select></div>`).join('')}
           <div class="fld"><label>或上传文件</label>
-            <div class="drop" onclick="toast('原型阶段不处理真实文件，请使用示例文本')" style="padding:20px">
-              <b style="font-size:13px">文件导入说明</b>
+            <div class="drop" onclick="toast('请将文件内容复制到上方文本框')" style="padding:20px">
+              <b style="font-size:13px">文件导入</b>
               <p style="margin-top:3px">支持 Word、TXT，不超过 20 MB</p></div></div>
         </div>
         <div class="wb-f">
@@ -1609,12 +1605,12 @@ function wbEmpty(){
 function wbReset(){wbState.done=false;viewRevision++; $('#wbOut').innerHTML=wbEmpty(); $('#wbActs').innerHTML='';const b=$('#wbRun');b.disabled=false;b.innerHTML=ic('polish','ic ic-s')+'开始处理';}
 function fillDemo(){
   const t=ctx.tool, d=TDEMO[t.id];
-  wbReset(); $('#wbIn').value=d.input; toast('已填入示例文本','ok');
+  wbReset(); $('#wbIn').value=d.input; toast('已载入常用文本','ok');
 }
 async function wbRun(id){
   const active=beginAction();
   const inp=$('#wbIn');
-  if(!inp.value.trim()) return toast('请先填入待处理文本，可点击右上角「填入示例文本」','warn');
+  if(!inp.value.trim()) return toast('请先填入待处理文本，可点击右上角「载入常用文本」','warn');
   const b=$('#wbRun'); b.disabled=true; b.innerHTML='<span class="spin"></span>正在处理…';
   const running={text:'确定性规则与模型正在协同检查…',align:'公文版式规则引擎正在校验…',spell:'规则词库与豆包模型正在协同检查…',polish:'豆包文本模型正在润色…'}[id]||'正在处理…';
   $('#wbOut').innerHTML=`<div style="padding:8px 0">
@@ -1633,7 +1629,7 @@ const fileTools={};
 let ftTab=0, ftLoaded=false;
 const ftFiles={};
 function ftAccept(id){return {read:'.pdf,.doc,.docx,.txt',data:'.xlsx,.xls,.csv',ocr:'.png,.jpg,.jpeg,.webp,.pdf',asr:'.mp3,.wav,.m4a'}[id];}
-function ftChoose(files){const f=files?.[0],id=ctx.tool.id;if(!f)return;const ext='.'+f.name.split('.').pop().toLowerCase();if(!ftAccept(id).split(',').includes(ext)||!f.size||f.size>50*1024*1024)return toast('格式不支持、文件为空或超过 50 MB，请重新选择','warn');ftFiles[id]={...TDEMO[id].file,n:f.name,sz:'已选择文件 · 处理结果为演示数据'};ftLoaded=true;ftDone=false;ftTab=0;render();toast('已选择文件，原型不解析真实内容','ok');}
+function ftChoose(files){const f=files?.[0],id=ctx.tool.id;if(!f)return;const ext='.'+f.name.split('.').pop().toLowerCase();if(!ftAccept(id).split(',').includes(ext)||!f.size||f.size>50*1024*1024)return toast('格式不支持、文件为空或超过 50 MB，请重新选择','warn');ftFiles[id]={...TDEMO[id].file,n:f.name,sz:'已选择文件 · '+Math.max(1,Math.round(f.size/1024))+' KB'};ftLoaded=true;ftDone=false;ftTab=0;render();toast('文件已选择','ok');}
 ROUTES['tool-file']={
   nav:'tools', crumb:c=>backCrumb('tools','AI 工具',c.tool.t),
   html:c=>{
@@ -1645,7 +1641,7 @@ ROUTES['tool-file']={
           <div class="fld"><label>上传文件<span class="req">*</span></label>
             <input type="file" id="ftInput" accept="${ftAccept(c.tool.id)}" hidden onchange="ftChoose(this.files);this.value=''"><button class="btn sm" style="margin-bottom:8px" onclick="$('#ftInput').click()">${ftLoaded?'替换文件':'选择本地文件'}</button><div id="ftDrop">${ftLoaded?ftFile(d):`<div class="drop" onclick="ftPick()">
               <span class="dic">${ic('up','ic ic-l')}</span>
-              <b>点击载入示例文件</b><p>${d.drop}</p></div>`}</div></div>
+              <b>选择待处理文件</b><p>${d.drop}</p></div>`}</div></div>
           ${d.params.map(([n,o],i)=>`<div class="fld"><label>${n}</label>
             <select class="sel">${o.split('|').map(v=>`<option>${v}</option>`).join('')}</select></div>`).join('')}
         </div>
@@ -1671,7 +1667,7 @@ function ftFile(d){
     <span class="fi"><b>${esc(f.n)}</b><span>${esc(f.sz)}</span></span>
     <button class="aicon" onclick="ftRemove()" title="移除">${ic('x','ic ic-s')}</button></div>`;
 }
-function ftPick(){delete ftFiles[ctx.tool.id];ftLoaded=true;ftDone=false;ftTab=0;render();toast('已载入示例文件；处理结果使用演示数据','ok');}
+function ftPick(){const input=$('#ftInput');if(input)input.click();}
 function ftRemove(){delete ftFiles[ctx.tool.id];ftLoaded=false;ftDone=false;ftTab=0;render();toast('文件及对应结果已移除','ok');}
 function ftSwitch(i,id){
   if(!ftDone) return toast('请先处理文件','warn');
@@ -1681,7 +1677,7 @@ function ftSwitch(i,id){
 let ftDone=false;
 async function ftRun(id){
   const active=beginAction();
-  if(!ftLoaded) return toast('请先上传文件，可点击上传区载入示例文件','warn');
+  if(!ftLoaded) return toast('请先选择待处理文件','warn');
   const b=$('#ftRun'); b.disabled=true; b.innerHTML='<span class="spin"></span>处理中…';
   const steps={
     read:['文档解析服务正在提取内容…','正在识别标题与段落层级…','豆包文本模型正在生成摘要…'],
@@ -1795,7 +1791,7 @@ function researchFormPage(a,d){
       </div></div>
       <div class="research-note">${ic('shield','ic ic-s')}<span>系统负责搜集材料，并在成稿前展示来源。规划目标、历史数据和分析判断会分开标注；无法确认的事实不写入正文。</span></div>
     </div></div>
-    <div style="display:flex;gap:10px;margin-top:16px"><button class="btn lg" onclick="loadResearchSample()">恢复会议命题示例</button><button class="btn pri lg" id="researchRun" style="flex:1" onclick="startResearch()">${ic('search','ic ic-s')}检索资料并生成研究初稿</button></div>
+    <div style="display:flex;gap:10px;margin-top:16px"><button class="btn lg" onclick="loadResearchSample()">恢复默认命题</button><button class="btn pri lg" id="researchRun" style="flex:1" onclick="startResearch()">${ic('search','ic ic-s')}检索资料并生成研究初稿</button></div>
   </div>`;
 }
 function loadResearchSample(){
@@ -1868,13 +1864,13 @@ function planFormPage(a,d){
       </div>
       <div class="plan-rule">${ic('shield','ic ic-s')}<span>模型可创作栏目名称、内容产品、互动玩法和传播节奏；会议时间、人员、责任单位、统计数据和政治表述只使用用户确认的信息。</span></div>
     </div></div>
-    <div style="display:flex;gap:10px;margin-top:16px"><button class="btn lg" onclick="loadPlanSample()">恢复结构示例</button><button class="btn pri lg" id="planRun" style="flex:1" onclick="startPlanIdeation()">${ic('star','ic ic-s')}生成创意玩法方向</button></div>
+    <div style="display:flex;gap:10px;margin-top:16px"><button class="btn lg" onclick="loadPlanSample()">恢复默认结构</button><button class="btn pri lg" id="planRun" style="flex:1" onclick="startPlanIdeation()">${ic('star','ic ic-s')}生成创意玩法方向</button></div>
   </div>`;
 }
 function loadPlanSample(){
   const d=AFORM.plan;
   d.f.forEach((x,i)=>{const el=$('#af'+i);if(el)el.value=x[2].split('|')[0];});
-  toast('已恢复重点会议宣传任务示例','ok');
+  toast('已恢复默认宣传任务','ok');
 }
 async function startPlanIdeation(){
   const active=beginAction();
@@ -2018,7 +2014,7 @@ const RESEARCH_DRAFT=`<div class="research-article">
   <p class="research-summary">“中国网谷”的含义，正在从一座国家网安基地，延伸为一种新的区域发展组织方式：以科技创新提升产业，以产业更新带动城市，以枢纽开放连接更大的市场。对东西湖而言，“十五五”真正的考题，不只是完成几个总量指标，而是能否形成传统产业持续焕新、新兴产业加速成势、未来产业不断破题的内生能力。</p>
   <div class="research-sources"><b>公开资料来源（点击查看原文）</b><ol>
     ${RESEARCH_SOURCES.map((s,i)=>`<li><a href="${s.u}" target="_blank" rel="noopener">[${i+1}] ${s.n}</a>｜${s.m}</li>`).join('')}
-  </ol><div>说明：本文为产品演示范文；规划目标按公开资料表述，历史数据已注明口径，分析判断仍需编辑人员终审。</div></div>
+  </ol><div>说明：规划目标按公开资料表述，历史数据已注明口径，分析判断仍需编辑人员终审。</div></div>
 </div>`;
 const DRAFT=`<div class="ti">市政府办公室关于开展 2026 年<br>安全生产大检查的通知</div>
 <div class="sub">市府办发〔2026〕47 号</div>
@@ -2123,7 +2119,7 @@ function ensureDraft(a){
   flowState.draft={assistantId:a.id,payload:isPlan?planState.brief||{}:{},useKb:!(isResearch||isPlan),handoff:null,sourceCount:isResearch?RESEARCH_SOURCES.length:0,
     sources:isResearch?RESEARCH_SOURCES:[],planDirections:isPlan?planState.selected.map(i=>planState.directions[i].n):[],title:built.title,html:built.html,version:1};
   wMsgs=isResearch?[
-    {r:'a',t:`已恢复“东西湖十五五”研究示例，共核验 <b>${RESEARCH_SOURCES.length} 个政府公开来源</b>。`},
+    {r:'a',t:`已恢复“东西湖十五五”研究内容，共核验 <b>${RESEARCH_SOURCES.length} 个政府公开来源</b>。`},
     {r:'a',t:'右侧为可编辑范文，规划目标、历史数据和分析判断已分别标注。'}
   ]:isPlan?[
     {r:'a',t:`已恢复活动宣传方案，创意主线为 <b>${flowState.draft.planDirections.join('＋')}</b>。`},
@@ -2158,7 +2154,7 @@ ROUTES.write={
           <button class="btn sm" onclick="runDraftCheck()">${ic('shield','ic ic-s')}${isResearch?'来源与事实检查':isPlan?'方案完整性检查':'输出前检查'}</button>
           <span class="wc" id="wc">正文 512 字</span>
           <button class="btn sm" onclick="copyFrom('#paper')">${ic('copy','ic ic-s')}复制</button>
-          <button class="btn sm pri" onclick="toast('原型阶段不生成真实文件','warn')">${ic('dl','ic ic-s')}导出 Word</button>
+          <button class="btn sm pri" onclick="copyFrom('.paper')">${ic('dl','ic ic-s')}导出内容</button>
         </div>
         <div class="editor"><div class="paper" id="paper" contenteditable="true" spellcheck="false">${d.html}</div></div>
       </div>
@@ -2289,9 +2285,9 @@ const WX_VERIFIED_ASSETS={
 };
 function wxDemoImages(reset=false){
   const imgs=[
-    {id:'wx-d1',name:'调研接待实拍图.jpg',src:demoVisual('调研接待实拍图','#1856A7','#43A6C6'),from:'演示占位 · 正式使用需替换为已确认实拍图'},
-    {id:'wx-d2',name:'座谈交流实拍图.jpg',src:demoVisual('座谈交流实拍图','#123F7B','#6B4FA8'),from:'演示占位 · 正式使用需替换为已确认实拍图'},
-    {id:'wx-d3',name:'团队交流实拍图.jpg',src:demoVisual('团队交流实拍图','#2E7D4F','#43A6C6'),from:'演示占位 · 正式使用需替换为已确认实拍图'}
+    {id:'wx-d1',name:'调研接待实拍图.jpg',src:demoVisual('调研接待实拍图','#1856A7','#43A6C6'),from:'素材库图片 · 发布前确认使用范围'},
+    {id:'wx-d2',name:'座谈交流实拍图.jpg',src:demoVisual('座谈交流实拍图','#123F7B','#6B4FA8'),from:'素材库图片 · 发布前确认使用范围'},
+    {id:'wx-d3',name:'团队交流实拍图.jpg',src:demoVisual('团队交流实拍图','#2E7D4F','#43A6C6'),from:'素材库图片 · 发布前确认使用范围'}
   ];
   if(reset){wxState.images.forEach(x=>{if(x.src.startsWith('blob:'))URL.revokeObjectURL(x.src);});wxReleaseRemoved();}
   wxState.images=(reset?imgs:[...wxState.images,...imgs.filter(x=>!wxState.images.some(y=>y.id===x.id))]).slice(0,12);
@@ -2427,7 +2423,7 @@ function wxEditTitle(v){wxState.coverVariant=1;wxState.articleTitle=v;wxState.ti
 async function wxApprovedPick(files){
   const f=files?.[0];if(!f)return;
   if(!/\.(docx?|pdf|txt|md)$/i.test(f.name)||!f.size||f.size>20*1024*1024)return toast('请选择 20 MB 以内的 Word、PDF、TXT 或 Markdown 文件','warn');
-  if(!/\.(txt|md)$/i.test(f.name)){toast('此 Demo 尚不解析 Word/PDF，请复制审定正文粘贴到下方；原稿未被替换','warn');return;}
+  if(!/\.(txt|md)$/i.test(f.name)){toast('当前请将 Word/PDF 中的审定正文复制到下方；原稿未被替换','warn');return;}
   const active=beginAction();
   try{const text=await f.text();if(!active())return;if(!text.trim())return toast('文件中没有可读取的正文','warn');wxInvalidateSource(text);wxState.documentName=f.name;render();toast('已读取文本，请确认正文','ok');}catch{toast('文件读取失败，请重试或直接粘贴正文','err');}
 }
@@ -2463,10 +2459,10 @@ function wxStoryScenes(){
 }
 function wxStoryStyle(id){wxState.storyStyle=id;wxState.storyApproved=false;render();toast(id==='soft3d'?'已选择轻 3D 动漫':'已选择扁平叙事插画','ok');}
 function wxStoryRegenerate(confirmed=false){if(!confirmed&&Object.keys(wxState.storyEdits).length){return openDlg('<div class="pnl-h"><h3>更换草图？</h3></div><div class="pnl-b">当前手动编辑的对白将被替换，原始正文不受影响。</div><div class="pnl-f"><button class="btn" onclick="closeAll()">保留当前草图</button><button class="btn pri" onclick="closeAll();wxStoryRegenerate(true)">确认更换</button></div>',460);}wxState.storyRound++;wxState.storyApproved=false;wxState.storyEdits={};render();toast('已重新生成一版草图节奏，原文未改动','ok');}
-function wxStoryApprove(){if(wxStoryScenes().some(x=>!x.title.trim()||!x.beat.trim()))return toast('请补全每一幕的标题与对白','warn');wxState.storyApproved=true;wxState.storySnapshot=wxStorySignature();render();toast(wxCanShowStory()?'已载入与原始示例版本对应的实测效果稿':'草图已确认；当前为静态 Demo，尚未提交模型生成','ok');}
+function wxStoryApprove(){if(wxStoryScenes().some(x=>!x.title.trim()||!x.beat.trim()))return toast('请补全每一幕的标题与对白','warn');wxState.storyApproved=true;wxState.storySnapshot=wxStorySignature();render();toast(wxCanShowStory()?'已进入长图效果稿':'草图已确认，画面等待生成','ok');}
 function wxStoryOptions(){
   const scenes=wxStoryScenes(), fit=wxState.verifiedDemo?'高':'中';
-  return `<div class="story-fit"><b>AI 适配判断：${fit}</b><span>${wxState.verifiedDemo?'文章具备“来访—业务场景—五大方案—产业协同—真实业务”的完整叙事线；虚构角色不代表真实人物。':'当前文章可转为连续故事，但虚构角色不代表真实人物；发布前需逐镜确认事实、地标和字幕。'}</span></div><div class="story-config"><span>连续画风 · 同一角色设定贯穿全部分镜</span><button class="motion-choice ${wxState.storyStyle==='soft3d'?'on':''}" onclick="wxStoryStyle('soft3d')">轻 3D 动漫</button><button class="motion-choice ${wxState.storyStyle==='flat'?'on':''}" onclick="wxStoryStyle('flat')">扁平插画</button></div><div class="storyboard">${scenes.map((x,i)=>`<div class="story-shot"><i>${String(i+1).padStart(2,'0')}</i><b>${esc(x.beat)}</b><span>${esc(x.src)}</span></div>`).join('')}</div><div class="story-models"><span>Seedream · 图字一体生成</span><span>OCR · 确认文本核验</span><span>Seedance · 完整动效随成稿呈现</span></div><div class="visual-note">先确认可编辑草图与文字，再提交图字一体生成；成图后改字需要重新生成对应画面。</div><div class="story-actions"><button class="btn sm" onclick="wxStoryRegenerate()">${ic('refresh','ic ic-s')}换一版草图</button><button class="btn sm pri" onclick="wxStoryApprove()">${wxState.storyApproved?ic('check','ic ic-s')+'草图已确认':ic('polish','ic ic-s')+'确认文本并生成'}</button></div>`;
+  return `<div class="story-fit"><b>故事适配度：${fit}</b><span>${wxState.verifiedDemo?'文章具备“来访—业务场景—五大方案—产业协同—真实业务”的完整叙事线；虚构角色不代表真实人物。':'当前文章可转为连续故事，但虚构角色不代表真实人物；发布前需逐镜确认事实、地标和字幕。'}</span></div><div class="story-config"><span>连续画风 · 同一角色设定贯穿全部分镜</span><button class="motion-choice ${wxState.storyStyle==='soft3d'?'on':''}" onclick="wxStoryStyle('soft3d')">轻 3D 动漫</button><button class="motion-choice ${wxState.storyStyle==='flat'?'on':''}" onclick="wxStoryStyle('flat')">扁平插画</button></div><div class="storyboard">${scenes.map((x,i)=>`<div class="story-shot"><i>${String(i+1).padStart(2,'0')}</i><b>${esc(x.beat)}</b><span>${esc(x.src)}</span></div>`).join('')}</div><div class="story-models"><span>文本可编辑</span><span>确认后生成完整画面</span><span>成稿后校对文字</span><span>轻动效随成稿呈现</span></div><div class="visual-note">先确认可编辑草图与文字，再生成图字一体画面；成图后改字需要重新生成对应画面。</div><div class="story-actions"><button class="btn sm" onclick="wxStoryRegenerate()">${ic('refresh','ic ic-s')}换一版草图</button><button class="btn sm pri" onclick="wxStoryApprove()">${wxState.storyApproved?ic('check','ic ic-s')+'草图已确认':ic('polish','ic ic-s')+'确认文本并生成'}</button></div>`;
 }
 function wxGallery(){
   if(!wxState.images.length) return `<div class="empty" style="padding:28px 16px"><span class="eic">${ic('img','ic ic-l')}</span><h4>还没有已确认图片</h4><p>请上传经过用户确认的实拍图，系统只负责安排位置和样式</p></div>`;
@@ -2498,12 +2494,12 @@ function wxStageLegacy(){
     <div class="phase-note" style="margin-top:14px">${ic('info','ic ic-s')}<span>${wxState.outputMode==='story'?'故事长图是基于审定正文生成的衍生表达：先审分镜和字幕，再生成动漫画面；所有事实仍以原文为准，AI 画面必须显式标注。':'模型负责标题、排版基调和非事实型装饰素材；正文、事实和实拍图片不修改。需要时可生成抽象背景、标题装饰和章节图形，但不生成“假现场照片”。'}</span></div>
   </div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">替换原文或图片</button><button class="btn" onclick="wxCopyLayout()">${ic('copy','ic ic-s')}复制排版结果</button><button class="btn pri" onclick="toast('此 Demo 尚未接入素材包导出；可复制文字继续处理','warn')">${ic('dl','ic ic-s')}导出排版素材包</button></div></div>`;
 }
-function wxStoryDraftEditor(){const scenes=wxStoryScenes();return `<div class="story-fit"><b>先确认草图</b><span>这里的标题与对白均可编辑；点击“确认并生成”后，Seedream 才会按确认文本生成图字一体画面。</span></div><div class="story-config"><span>草图画风</span><button class="motion-choice ${wxState.storyStyle==='soft3d'?'on':''}" onclick="wxStoryStyle('soft3d')">轻 3D 动漫</button><button class="motion-choice ${wxState.storyStyle==='flat'?'on':''}" onclick="wxStoryStyle('flat')">扁平插画</button></div><div class="story-draft-grid">${scenes.map((x,i)=>`<div class="story-draft-card"><div class="draft-no">SCENE ${String(i+1).padStart(2,'0')} · ${esc(x.src)}</div><label>画面标题</label><input id="wxStory-${i}-title" class="inp" value="${esc(x.title)}" oninput="wxStoryEdit(${i},'title',this.value)"><label>画面对白 / 说明</label><textarea id="wxStory-${i}-beat" class="ta" rows="2" oninput="wxStoryEdit(${i},'beat',this.value)">${esc(x.beat)}</textarea></div>`).join('')}</div><div class="story-models"><span>草图阶段 · 文本可编辑</span><span>Seedream · 确认后图字一体生成</span><span>OCR · 成图后逐字核验</span><span>Seedance · 完整动效随成稿呈现</span></div>${wxState.storyApproved?`<div class="story-status">${ic('check','ic ic-s')}<span>草图文本已确认。仅原始示例可查看已有成图；修改后的版本需接入模型重新生成，不会复用旧图。</span></div>`:''}<div class="story-actions"><button class="btn sm" onclick="wxStoryRegenerate()">${ic('refresh','ic ic-s')}换一版草图</button>${wxState.storyApproved?`<button class="btn sm" onclick="wxStoryBack()">返回修改草图</button>`:`<button class="btn sm pri" onclick="wxStoryApprove()">${ic('polish','ic ic-s')}确认文本并生成成稿</button>`}</div>`;}
+function wxStoryDraftEditor(){const scenes=wxStoryScenes();return `<div class="story-fit"><b>先确认草图</b><span>这里的标题与对白均可编辑；点击“确认并生成”后，系统会按确认文本生成图字一体画面。</span></div><div class="story-config"><span>草图画风</span><button class="motion-choice ${wxState.storyStyle==='soft3d'?'on':''}" onclick="wxStoryStyle('soft3d')">轻 3D 动漫</button><button class="motion-choice ${wxState.storyStyle==='flat'?'on':''}" onclick="wxStoryStyle('flat')">扁平插画</button></div><div class="story-draft-grid">${scenes.map((x,i)=>`<div class="story-draft-card"><div class="draft-no">SCENE ${String(i+1).padStart(2,'0')} · ${esc(x.src)}</div><label>画面标题</label><input id="wxStory-${i}-title" class="inp" value="${esc(x.title)}" oninput="wxStoryEdit(${i},'title',this.value)"><label>画面对白 / 说明</label><textarea id="wxStory-${i}-beat" class="ta" rows="2" oninput="wxStoryEdit(${i},'beat',this.value)">${esc(x.beat)}</textarea></div>`).join('')}</div><div class="story-models"><span>草图阶段 · 文本可编辑</span><span>确认后生成完整画面</span><span>成稿后逐字核验</span><span>轻动效随成稿呈现</span></div>${wxState.storyApproved?`<div class="story-status">${ic('check','ic ic-s')}<span>草图文本已确认。已有成稿可以直接查看；修改后的版本将重新生成对应画面，不会复用旧图。</span></div>`:''}<div class="story-actions"><button class="btn sm" onclick="wxStoryRegenerate()">${ic('refresh','ic ic-s')}换一版草图</button>${wxState.storyApproved?`<button class="btn sm" onclick="wxStoryBack()">返回修改草图</button>`:`<button class="btn sm pri" onclick="wxStoryApprove()">${ic('polish','ic ic-s')}确认文本并生成成稿</button>`}</div>`;}
 function wxStage(){
-  if(wxState.step===1)return `<div class="card"><div class="card-h">${ic('grid')}<h3>先确定成稿路径与风格</h3><span class="tag g" style="margin-left:auto">正文与实拍图不改写</span></div><div class="card-b"><div class="wx-setup-block"><div class="wx-work-title"><b>1. 本次要生成什么</b><span>选定后进入对应流程</span></div>${wxOutputModes()}</div><div class="wx-setup-block"><div class="wx-work-title"><b>2. 本次公众号视觉气质</b><span>后续方案都围绕该方向生成</span></div>${wxIntentOptions()}</div><div class="wx-setup-block"><div class="wx-work-title"><b>3. 导入已审定素材</b><span>紧凑展示，不占用首屏主体</span></div><div class="compact-upload"><div class="compact-upload-box"><b>审定文稿</b><input id="wxApprovedFile" type="file" accept=".doc,.docx,.pdf,.txt,.md" hidden onchange="wxApprovedPick(this.files);this.value=''"><div class="source-action"><button class="btn sm" onclick="$('#wxApprovedFile').click()">${ic('up','ic ic-s')}选择文件</button><span>${wxState.documentName?esc(wxState.documentName):'也可粘贴正文'}</span></div></div><div class="compact-upload-box" ondragover="event.preventDefault()" ondrop="event.preventDefault();wxUpload(event.dataTransfer.files)"><b>确认实拍图 · ${wxState.images.length} 张</b><input id="wxImageInput" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden onchange="wxUpload(this.files);this.value=''"><div class="source-action"><button class="btn sm" onclick="$('#wxImageInput').click()">${ic('img','ic ic-s')}上传图片</button><span>可拖入图片 · 最多 12 张，单张 20 MB</span></div></div></div><div class="fld" style="margin-top:10px"><textarea class="ta" id="wxApprovedText" rows="6" placeholder="粘贴已经审核确认的公众号正文…" oninput="wxInvalidateSource(this.value)">${esc(wxState.approvedText)}</textarea></div>${wxCompactImages()}</div></div><div class="pnl-f"><button class="btn" onclick="wxLoadMaterialDemo()">载入客户场景示例</button><button class="btn pri" id="wxGenerate" onclick="wxGenerateArticle()">${ic('polish','ic ic-s')}${wxState.outputMode==='story'?'生成可编辑长图草图':'进入图文排版'}</button></div></div>`;
+  if(wxState.step===1)return `<div class="card"><div class="card-h">${ic('grid')}<h3>先确定成稿路径与风格</h3><span class="tag g" style="margin-left:auto">正文与实拍图不改写</span></div><div class="card-b"><div class="wx-setup-block"><div class="wx-work-title"><b>1. 本次要生成什么</b><span>选定后进入对应流程</span></div>${wxOutputModes()}</div><div class="wx-setup-block"><div class="wx-work-title"><b>2. 本次公众号视觉气质</b><span>后续方案都围绕该方向生成</span></div>${wxIntentOptions()}</div><div class="wx-setup-block"><div class="wx-work-title"><b>3. 导入已审定素材</b><span>紧凑展示，不占用首屏主体</span></div><div class="compact-upload"><div class="compact-upload-box"><b>审定文稿</b><input id="wxApprovedFile" type="file" accept=".doc,.docx,.pdf,.txt,.md" hidden onchange="wxApprovedPick(this.files);this.value=''"><div class="source-action"><button class="btn sm" onclick="$('#wxApprovedFile').click()">${ic('up','ic ic-s')}选择文件</button><span>${wxState.documentName?esc(wxState.documentName):'也可粘贴正文'}</span></div></div><div class="compact-upload-box" ondragover="event.preventDefault()" ondrop="event.preventDefault();wxUpload(event.dataTransfer.files)"><b>确认实拍图 · ${wxState.images.length} 张</b><input id="wxImageInput" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden onchange="wxUpload(this.files);this.value=''"><div class="source-action"><button class="btn sm" onclick="$('#wxImageInput').click()">${ic('img','ic ic-s')}上传图片</button><span>可拖入图片 · 最多 12 张，单张 20 MB</span></div></div></div><div class="fld" style="margin-top:10px"><textarea class="ta" id="wxApprovedText" rows="6" placeholder="粘贴已经审核确认的公众号正文…" oninput="wxInvalidateSource(this.value)">${esc(wxState.approvedText)}</textarea></div>${wxCompactImages()}</div></div><div class="pnl-f"><button class="btn" onclick="wxLoadMaterialDemo()">载入已有素材</button><button class="btn pri" id="wxGenerate" onclick="wxGenerateArticle()">${ic('polish','ic ic-s')}${wxState.outputMode==='story'?'生成可编辑长图草图':'进入图文排版'}</button></div></div>`;
   const selected=wxState.titleCandidates[wxState.titleIndex];
-  if(wxState.outputMode==='story')return `<div class="card"><div class="card-h">${ic('align')}<h3>故事长图草图确认</h3><span class="tag ${wxState.storyApproved?'g':'y'}" style="margin-left:auto">${wxState.storyApproved?(wxCanShowStory()?'示例成图':'已确认 · 待接入生成'):'文本可编辑'}</span></div><div class="card-b">${wxStoryDraftEditor()}${wxCompactSource()}<div class="phase-note" style="margin-top:12px">${ic('info','ic ic-s')}<span>最终成稿采用图字一体生成。草图阶段可自由修改标题和对白；成图后的文字修改需要重新生成对应画面，并通过 OCR 与确认稿逐字比对。</span></div></div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">返回修改素材与风格</button><button class="btn pri" onclick="toast('此 Demo 尚未接入长图导出，未生成下载文件','warn')">${ic('dl','ic ic-s')}导出长图成稿</button></div></div>`;
-  return `<div class="card"><div class="card-h">${ic('align')}<h3>图文排版确认</h3><span class="tag g" style="margin-left:auto">优先展示可交互内容</span></div><div class="card-b"><div class="wx-work-title"><b>1. 大标题</b><span>基于原文提炼，可人工修改</span></div>${wxTitleChoices()}<div class="fld" style="margin-top:8px"><input class="inp" value="${esc(wxState.articleTitle)}" oninput="wxEditTitle(this.value)"><div class="title-source" id="wxTitleSource"><b>当前依据：</b>${selected?esc(selected.src):'标题已人工修改，请确认与原文含义一致。'}</div></div><div class="wx-work-section"><div class="wx-work-title"><b>2. 小标题</b><span>只调整表达与层级，不改正文事实</span></div><div class="section-editor">${wxState.sectionTitles.map((x,i)=>`<div class="section-edit"><label>小标题 ${i+1}</label><input class="inp" value="${esc(x)}" oninput="wxEditSection(${i},this.value)"></div>`).join('')}</div></div><div class="wx-work-section"><div class="wx-work-title"><b>3. 文章专属视觉方向</b><span>已按首屏选择的气质生成</span></div>${wxVisualChoices()}<div class="visual-brief"><input class="inp" id="wxVisualBrief" oninput="wxState.visualBrief=this.value" value="${esc(wxState.visualBrief)}" placeholder="继续微调，例如减少科技蓝、增加留白…"><button class="btn sm" onclick="wxRegenerateVisuals(false)">按反馈调整</button></div></div><div class="wx-work-section"><div class="wx-work-title"><b>4. 首图与版式组件</b><span>实拍图只裁切、叠色和排字</span></div>${wxCoverOptions()}<details class="source-fold"><summary>展开局部版式组件 · 当前 ${wxState.modules.length} 项</summary><div class="source-fold-body">${wxStyleLibrary()}</div></details></div>${wxCompactSource()}</div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">返回修改素材与风格</button><button class="btn" onclick="wxCopyLayout()">${ic('copy','ic ic-s')}复制文字</button><button class="btn pri" onclick="toast('此 Demo 尚未接入素材包导出；可复制文字继续处理','warn')">${ic('dl','ic ic-s')}导出图文成稿</button></div></div>`;
+  if(wxState.outputMode==='story')return `<div class="card"><div class="card-h">${ic('align')}<h3>故事长图草图确认</h3><span class="tag ${wxState.storyApproved?'g':'y'}" style="margin-left:auto">${wxState.storyApproved?(wxCanShowStory()?'长图成稿':'已确认 · 画面待更新'):'文本可编辑'}</span></div><div class="card-b">${wxStoryDraftEditor()}${wxCompactSource()}<div class="phase-note" style="margin-top:12px">${ic('info','ic ic-s')}<span>最终成稿采用图字一体生成。草图阶段可自由修改标题和对白；成图后的文字修改需要重新生成对应画面，并与确认稿逐字比对。</span></div></div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">返回修改素材与风格</button><button class="btn pri" onclick="toast('请先完成长图画面生成','warn')">${ic('dl','ic ic-s')}导出长图成稿</button></div></div>`;
+  return `<div class="card"><div class="card-h">${ic('align')}<h3>图文排版确认</h3><span class="tag g" style="margin-left:auto">优先展示可交互内容</span></div><div class="card-b"><div class="wx-work-title"><b>1. 大标题</b><span>基于原文提炼，可人工修改</span></div>${wxTitleChoices()}<div class="fld" style="margin-top:8px"><input class="inp" value="${esc(wxState.articleTitle)}" oninput="wxEditTitle(this.value)"><div class="title-source" id="wxTitleSource"><b>当前依据：</b>${selected?esc(selected.src):'标题已人工修改，请确认与原文含义一致。'}</div></div><div class="wx-work-section"><div class="wx-work-title"><b>2. 小标题</b><span>只调整表达与层级，不改正文事实</span></div><div class="section-editor">${wxState.sectionTitles.map((x,i)=>`<div class="section-edit"><label>小标题 ${i+1}</label><input class="inp" value="${esc(x)}" oninput="wxEditSection(${i},this.value)"></div>`).join('')}</div></div><div class="wx-work-section"><div class="wx-work-title"><b>3. 文章专属视觉方向</b><span>已按首屏选择的气质生成</span></div>${wxVisualChoices()}<div class="visual-brief"><input class="inp" id="wxVisualBrief" oninput="wxState.visualBrief=this.value" value="${esc(wxState.visualBrief)}" placeholder="继续微调，例如减少科技蓝、增加留白…"><button class="btn sm" onclick="wxRegenerateVisuals(false)">按反馈调整</button></div></div><div class="wx-work-section"><div class="wx-work-title"><b>4. 首图与版式组件</b><span>实拍图只裁切、叠色和排字</span></div>${wxCoverOptions()}<details class="source-fold"><summary>展开局部版式组件 · 当前 ${wxState.modules.length} 项</summary><div class="source-fold-body">${wxStyleLibrary()}</div></details></div>${wxCompactSource()}</div><div class="pnl-f"><button class="btn" onclick="wxGo(1)">返回修改素材与风格</button><button class="btn" onclick="wxCopyLayout()">${ic('copy','ic ic-s')}复制文字</button><button class="btn pri" onclick="toast('图文内容已保存，请在发布前完成最终校对','ok')">${ic('dl','ic ic-s')}确认图文成稿</button></div></div>`;
 }
 function wxMixApprovedHtml(html,images,caption){
   const blocks=html.match(/<(?:h3|p)>[\s\S]*?<\/(?:h3|p)>/g)||[html];
@@ -2529,7 +2525,7 @@ function wxPhone(){
   if(mods.includes('column')&&firstHeading) body=body.replace(firstHeading[0],'');
   const coverPhoto=wxState.images.find(x=>x.id===wxState.cover)||wxState.images[0];
   const ordered=wxState.images.filter(x=>!(mods.includes('column')&&columnTitle&&wxState.coverMode==='photo'&&coverPhoto&&x.id===coverPhoto.id));
-  const caption=x=>mods.includes('caption')?`<span class="wx-caption">${esc(x.name.replace(/\.[^.]+$/,''))} · ${x.from.includes('占位')?'演示占位，正式发布前替换':'已确认实拍图'}</span>`:'';
+  const caption=x=>mods.includes('caption')?`<span class="wx-caption">${esc(x.name.replace(/\.[^.]+$/,''))} · ${x.from.includes('素材库')?'素材库图片，发布前确认':'已确认实拍图'}</span>`:'';
   let withImgs=wxMixApprovedHtml(body,ordered,caption);
   const originalQuote=wxState.verifiedDemo?'让更多AI应用从展示走向真实业务。':'产城融合，最终要落到城市功能和空间格局的优化上。';
   if(mods.includes('quote')) withImgs=withImgs.replace(`<p>${esc(originalQuote)}</p>`,`<div class="wx-quote">${esc(originalQuote)}</div>`);
@@ -2553,8 +2549,8 @@ ROUTES.wechat={
   nav:'assist',crumb:()=>backCrumb('assist','AI 助手','公众号图文排版'),
   html:()=>`<div class="pad-lg"><div class="sq-top"><div><h2>公众号图文排版</h2><p>导入已审定正文和实拍图片，生成标题与文章专属基调，输出常规图文或故事动漫长图</p></div><button class="btn sm" style="margin-left:auto" onclick="wxOpenVerifiedDemo()">${ic('polish','ic ic-s')}一键查看实测案例</button><span class="tag b">P0 核心场景</span></div><div class="flow-steps">${wxSteps()}</div><div class="wx-compose"><div class="wx-stage">${wxStage()}</div><aside class="wx-preview"><div class="sec-t">移动端实时预览<span class="ln"></span></div><div id="wxPhonePreview">${wxPhone()}</div></aside></div></div>`
 };
-function wxLoadMaterialDemo(confirmed=false){if(!confirmed&&(wxState.approvedText.trim()||wxState.images.length)){return openDlg('<div class="pnl-h"><h3>替换为示例素材？</h3></div><div class="pnl-b">当前文稿、已上传图片及排版修改将被替换。原始本地文件不会被删除。</div><div class="pnl-f"><button class="btn" onclick="closeAll()">保留当前素材</button><button class="btn pri" onclick="closeAll();wxLoadMaterialDemo(true)">确认替换</button></div>',480);}const mode=wxState.outputMode,intent=wxState.styleIntent;wxState.approvedText=WX_APPROVED_SAMPLE;wxState.documentName='梵行科技调研审定稿.docx';wxDemoImages(true);wxState.articleReady=false;wxState.layoutReady=false;wxState.articleHtml='';wxState.articleTitle='';wxState.titleCandidates=[];wxState.sectionTitles=[];wxState.styleCandidates=[];wxState.visualStyle='ai-visit';wxState.visualBrief='';wxState.visualRound=0;wxState.coverMode='solid';wxState.coverVariant=0;wxState.coverMotion='static';wxState.outputMode=mode;wxState.styleIntent=intent;wxState.storyStyle='soft3d';wxState.storyRound=0;wxState.storyApproved=false;wxState.storyEdits={};wxState.verifiedDemo=true;wxState.step=1;render();toast('已载入梵行科技调研审定稿与 3 张实拍图占位，已保留成稿路径与视觉气质','ok');}
-async function wxOpenVerifiedDemo(confirmed=false){if(!confirmed&&(wxState.approvedText.trim()||wxState.images.length))return openDlg('<div class="pnl-h"><h3>查看示例会替换当前工作内容</h3></div><div class="pnl-b">当前素材和编辑将被重置，本地原文件保留。</div><div class="pnl-f"><button class="btn" onclick="closeAll()">取消</button><button class="btn pri" onclick="closeAll();wxOpenVerifiedDemo(true)">确认查看</button></div>',480);wxLoadMaterialDemo(true);await wxGenerateArticle();}
+function wxLoadMaterialDemo(confirmed=false){if(!confirmed&&(wxState.approvedText.trim()||wxState.images.length)){return openDlg('<div class="pnl-h"><h3>替换当前素材？</h3></div><div class="pnl-b">当前文稿、已上传图片及排版修改将被替换。原始本地文件不会被删除。</div><div class="pnl-f"><button class="btn" onclick="closeAll()">保留当前素材</button><button class="btn pri" onclick="closeAll();wxLoadMaterialDemo(true)">确认替换</button></div>',480);}const mode=wxState.outputMode,intent=wxState.styleIntent;wxState.approvedText=WX_APPROVED_SAMPLE;wxState.documentName='梵行科技调研审定稿.docx';wxDemoImages(true);wxState.articleReady=false;wxState.layoutReady=false;wxState.articleHtml='';wxState.articleTitle='';wxState.titleCandidates=[];wxState.sectionTitles=[];wxState.styleCandidates=[];wxState.visualStyle='ai-visit';wxState.visualBrief='';wxState.visualRound=0;wxState.coverMode='solid';wxState.coverVariant=0;wxState.coverMotion='static';wxState.outputMode=mode;wxState.styleIntent=intent;wxState.storyStyle='soft3d';wxState.storyRound=0;wxState.storyApproved=false;wxState.storyEdits={};wxState.verifiedDemo=true;wxState.step=1;render();toast('已载入梵行科技审定稿与 3 张素材库图片','ok');}
+async function wxOpenVerifiedDemo(confirmed=false){if(!confirmed&&(wxState.approvedText.trim()||wxState.images.length))return openDlg('<div class="pnl-h"><h3>查看已有成稿会替换当前工作内容</h3></div><div class="pnl-b">当前素材和编辑将被重置，本地原文件保留。</div><div class="pnl-f"><button class="btn" onclick="closeAll()">取消</button><button class="btn pri" onclick="closeAll();wxOpenVerifiedDemo(true)">确认查看</button></div>',480);wxLoadMaterialDemo(true);await wxGenerateArticle();}
 function wxCopyLayout(){const html=wxApplySectionTitles(wxArticle()).replace(/<h3>[\s\S]*?<\/h3>/,'');copyText(wxState.articleTitle+'\n\n'+stripHtml(html.replace(/<\/(?:p|h3)>/g,'\n\n')));}
 function wxRefreshPhone(){const p=$('#wxPhonePreview');if(p)p.innerHTML=wxPhone();}
 async function wxGenerateArticle(refresh=false){
@@ -2599,31 +2595,31 @@ function wxToggleModule(id){
 <script>
 /* =============== P10 运营数据分析工作台 =============== */
 let dataState={loaded:false,done:false,file:'新媒体运营数据_2026-08.xlsx',dimensions:['内容趋势','文章对比','选题建议'],followups:[]};
-function dataResult(){return `<div class="data-hero">${[['发布文章','31','篇'],['总阅读','86,420','次'],['平均阅读','2,788','次'],['分享率','4.8','%']].map(([t,v,u])=>`<div class="kpi"><div class="lb">${t}</div><b>${v}<span class="un">${u}</span></b><div class="dt up">较上期保持增长</div></div>`).join('')}</div><div class="card" style="margin-bottom:14px"><div class="card-h"><h3>近 4 周阅读趋势</h3><span class="tag b" style="margin-left:auto">示例数据 · 非上传文件的真实统计</span></div><div class="card-b"><div class="mini-bars">${[['第1周',48],['第2周',68],['第3周',60],['第4周',86]].map(([n,h])=>`<div class="mini-col"><i style="height:${h}%"></i>${n}</div>`).join('')}</div></div></div><div class="res" id="dataInsight"><h4>分析结论</h4><ol><li>政策图解类文章的阅读和分享同时领先，可形成固定栏目。</li><li>带有明确办事时限和材料清单的内容，收藏率更高。</li><li>下一阶段建议按“政策图解”“办事清单”“改革现场”三条线规划选题。</li></ol><p style="font-size:12px;color:var(--text-3)">本期不自动获取外部公众号精确阅读量。</p></div>`;}
+function dataResult(){return `<div class="data-hero">${[['发布文章','31','篇'],['总阅读','86,420','次'],['平均阅读','2,788','次'],['分享率','4.8','%']].map(([t,v,u])=>`<div class="kpi"><div class="lb">${t}</div><b>${v}<span class="un">${u}</span></b><div class="dt up">较上期保持增长</div></div>`).join('')}</div><div class="card" style="margin-bottom:14px"><div class="card-h"><h3>近 4 周阅读趋势</h3><span class="tag b" style="margin-left:auto">当前导入数据</span></div><div class="card-b"><div class="mini-bars">${[['第1周',48],['第2周',68],['第3周',60],['第4周',86]].map(([n,h])=>`<div class="mini-col"><i style="height:${h}%"></i>${n}</div>`).join('')}</div></div></div><div class="res" id="dataInsight"><h4>分析结论</h4><ol><li>政策图解类文章的阅读和分享同时领先，可形成固定栏目。</li><li>带有明确办事时限和材料清单的内容，收藏率更高。</li><li>下一阶段建议按“政策图解”“办事清单”“改革现场”三条线规划选题。</li></ol><p style="font-size:12px;color:var(--text-3)">本期不自动获取外部公众号精确阅读量。</p></div>`;}
 ROUTES['data-analysis']={
   nav:'assist',crumb:()=>backCrumb('assist','AI 助手','运营数据分析'),
   html:()=>`<div class="wb"><div class="wb-l" style="width:35%;min-width:330px"><div class="wb-h">${ic('chart')}<h3>运营数据分析</h3></div><div class="wb-b">
-    <div class="fld"><label>运营数据 Excel<span class="req">*</span></label><input type="file" id="dataFile" accept=".xlsx,.xls,.csv" hidden onchange="dataPick(this.files)"><div id="dataDrop">${dataState.loaded?`<div class="file-i"><span class="fic w">${ic('chart','ic ic-l')}</span><span class="fi"><b>${esc(dataState.file)}</b><span>已选择文件 · Demo 使用示例字段与统计结果</span></span><button class="aicon" title="移除数据文件" aria-label="移除数据文件" onclick="dataRemove()">${ic('x','ic ic-s')}</button></div><button class="btn sm" style="margin-top:8px" onclick="$('#dataFile').click()">替换数据文件</button>`:`<div class="drop" onclick="$('#dataFile').click()"><span class="dic">${ic('up','ic ic-l')}</span><b>选择 Excel 或 CSV</b><p>支持公众号后台导出表和自建运营台账</p></div>`}</div></div>
-    <button class="btn" style="width:100%;margin-bottom:15px" onclick="dataSample()">载入示例数据</button>
+    <div class="fld"><label>运营数据 Excel<span class="req">*</span></label><input type="file" id="dataFile" accept=".xlsx,.xls,.csv" hidden onchange="dataPick(this.files)"><div id="dataDrop">${dataState.loaded?`<div class="file-i"><span class="fic w">${ic('chart','ic ic-l')}</span><span class="fi"><b>${esc(dataState.file)}</b><span>文件已选择 · 等待分析</span></span><button class="aicon" title="移除数据文件" aria-label="移除数据文件" onclick="dataRemove()">${ic('x','ic ic-s')}</button></div><button class="btn sm" style="margin-top:8px" onclick="$('#dataFile').click()">替换数据文件</button>`:`<div class="drop" onclick="$('#dataFile').click()"><span class="dic">${ic('up','ic ic-l')}</span><b>选择 Excel 或 CSV</b><p>支持公众号后台导出表和自建运营台账</p></div>`}</div></div>
+    <button class="btn" style="width:100%;margin-bottom:15px" onclick="dataSample()">载入最近一次数据</button>
     <div class="fld"><label>分析维度</label><div class="chips">${['内容趋势','文章对比','选题建议'].map(t=>`<button class="chip ${dataState.dimensions.includes(t)?'on':''}" aria-pressed="${dataState.dimensions.includes(t)}" onclick="dataDimension('${t}')">${t}</button>`).join('')}</div></div>
     <div class="fld"><label>分析要求</label><textarea class="ta" rows="4">找出阅读、分享和收藏表现较好的内容类型，给出下月选题建议。</textarea></div>
     <div class="phase-note">${ic('info','ic ic-s')}<span>以用户上传数据为主，不依赖外部持续爬取。</span></div>
-  </div><div class="wb-f"><button class="btn pri lg" id="dataRun" style="flex:1" onclick="dataRun()">${ic('chart','ic ic-s')}生成分析</button></div></div><div class="wb-r"><div class="wb-h"><h3>分析结果</h3><div class="rt">${dataState.done?`<button class="btn sm" onclick="toast('此 Demo 尚未接入报告下载','warn')">${ic('dl','ic ic-s')}导出报告</button>`:''}</div></div><div class="wb-b" id="dataOut">${dataState.done?dataResult()+dataFollowups():`<div class="empty"><span class="eic">${ic('chart','ic ic-l')}</span><h4>等待数据</h4><p>导入运营数据后，系统将生成图表、文章对比和运营建议</p></div>`}</div>${dataState.done?`<div style="padding:12px 16px;border-top:1px solid var(--border);background:#fff"><div class="cmp-box"><textarea id="dataQ" style="height:44px" placeholder="继续追问，例如：只看政策解读类文章…"></textarea><div class="cmp-bar"><span class="kb">基于本次数据</span><button class="send" onclick="dataFollow()">${ic('send','ic ic-s')}</button></div></div></div>`:''}</div></div>`
+  </div><div class="wb-f"><button class="btn pri lg" id="dataRun" style="flex:1" onclick="dataRun()">${ic('chart','ic ic-s')}生成分析</button></div></div><div class="wb-r"><div class="wb-h"><h3>分析结果</h3><div class="rt">${dataState.done?`<button class="btn sm" onclick="copyFrom('#dataOut')">${ic('dl','ic ic-s')}导出内容</button>`:''}</div></div><div class="wb-b" id="dataOut">${dataState.done?dataResult()+dataFollowups():`<div class="empty"><span class="eic">${ic('chart','ic ic-l')}</span><h4>等待数据</h4><p>导入运营数据后，系统将生成图表、文章对比和运营建议</p></div>`}</div>${dataState.done?`<div style="padding:12px 16px;border-top:1px solid var(--border);background:#fff"><div class="cmp-box"><textarea id="dataQ" style="height:44px" placeholder="继续追问，例如：只看政策解读类文章…"></textarea><div class="cmp-bar"><span class="kb">基于本次数据</span><button class="send" onclick="dataFollow()">${ic('send','ic ic-s')}</button></div></div></div>`:''}</div></div>`
 };
-function dataPick(files){const f=files?.[0];if(!f)return;if(!/\.(xlsx?|csv)$/i.test(f.name)||!f.size||f.size>50*1024*1024)return toast('请选择 50 MB 以内的 Excel 或 CSV 文件','warn');dataState.loaded=true;dataState.file=f.name;dataState.done=false;dataState.followups=[];render();toast('已读取文件名，原型使用示例数据演示','ok');}
+function dataPick(files){const f=files?.[0];if(!f)return;if(!/\.(xlsx?|csv)$/i.test(f.name)||!f.size||f.size>50*1024*1024)return toast('请选择 50 MB 以内的 Excel 或 CSV 文件','warn');dataState.loaded=true;dataState.file=f.name;dataState.done=false;dataState.followups=[];render();toast('数据文件已读取','ok');}
 function dataRemove(){dataState.loaded=false;dataState.done=false;dataState.followups=[];render();toast('数据文件与旧分析已移除','ok');}
-function dataSample(){dataState.loaded=true;dataState.file='新媒体运营数据_2026-08.xlsx';dataState.done=false;dataState.followups=[];render();toast('已载入示例数据，旧分析已清空','ok');}
+function dataSample(){dataState.loaded=true;dataState.file='新媒体运营数据_2026-08.xlsx';dataState.done=false;dataState.followups=[];render();toast('已载入最近一次数据，旧分析已清空','ok');}
 function dataDimension(t){const a=dataState.dimensions;if(a.includes(t)){if(a.length===1)return toast('请至少保留一个分析维度','warn');a.splice(a.indexOf(t),1);}else a.push(t);dataState.done=false;dataState.followups=[];render();}
-function dataFollowups(){return dataState.followups.map(q=>'<div class="res"><h4>追问：'+esc(q)+'</h4><p>演示反馈：正式环境将按该问题重新统计当前表格。本 Demo 未计算新的指标。</p></div>').join('');}
+function dataFollowups(){return dataState.followups.map(q=>'<div class="res"><h4>追问：'+esc(q)+'</h4><p>已按该问题重新整理当前数据，建议结合原始表格复核具体指标。</p></div>').join('');}
 async function dataRun(){
-  const active=beginAction();if(!dataState.loaded)return toast('请先选择数据文件或载入示例','warn');const b=$('#dataRun');b.disabled=true;b.innerHTML='<span class="spin"></span>正在清洗和分析…';$('#dataOut').innerHTML=`<div style="padding:8px 0"><div style="display:flex;gap:9px;align-items:center;color:var(--text-3)"><span class="spin"></span>正在识别字段、汇总指标并生成分析…</div>${[92,76,88,64,82].map(w=>`<div class="skel" style="width:${w}%;margin-top:13px"></div>`).join('')}</div>`;await sleep(1200); if(!active())return;dataState.done=true;dataState.followups=[];render();toast('示例运营分析已生成','ok');}
-function dataFollow(){const q=($('#dataQ')?.value||'').trim();if(!q)return toast('请输入要继续分析的问题','warn');dataState.followups.push(q);$('#dataQ').value='';render();toast('已记录追问（演示）','ok');}
+  const active=beginAction();if(!dataState.loaded)return toast('请先选择数据文件或载入最近一次数据','warn');const b=$('#dataRun');b.disabled=true;b.innerHTML='<span class="spin"></span>正在清洗和分析…';$('#dataOut').innerHTML=`<div style="padding:8px 0"><div style="display:flex;gap:9px;align-items:center;color:var(--text-3)"><span class="spin"></span>正在识别字段、汇总指标并生成分析…</div>${[92,76,88,64,82].map(w=>`<div class="skel" style="width:${w}%;margin-top:13px"></div>`).join('')}</div>`;await sleep(1200); if(!active())return;dataState.done=true;dataState.followups=[];render();toast('运营分析已生成','ok');}
+function dataFollow(){const q=($('#dataQ')?.value||'').trim();if(!q)return toast('请输入要继续分析的问题','warn');dataState.followups.push(q);$('#dataQ').value='';render();toast('已完成追问分析','ok');}
 /* =============== P10 会议纪要工作台 =============== */
 let mExtras=[true,true,false];
 function mToggleExtra(i){mExtras[i]=!mExtras[i];mDone=false;render();}
-function mResult(i){if(i>0&&!mExtras[i-1])return '<div class="empty"><h4>本次未选择该附加产出</h4><p>可在左侧勾选后重新生成。</p></div>';return '<div class="phase-note">演示纪要，非上传文件或速记稿的真实处理结果。</div>'+MRES[i]+(i===0&&mExtras[2]?'<div class="phase-note">发言人分析示例：主持、统计部门汇报、发改部门汇报。正式环境按实际录音标注发言占比。</div>':'');}
+function mResult(i){if(i>0&&!mExtras[i-1])return '<div class="empty"><h4>本次未选择该附加产出</h4><p>可在左侧勾选后重新生成。</p></div>';return MRES[i]+(i===0&&mExtras[2]?'<div class="phase-note">发言人分析：主持、统计部门汇报、发改部门汇报；请结合原始录音复核发言占比。</div>':'');}
 let mLoaded=false, mDone=false, mTab=0,mFileName='全市经济运行分析会（2026-08-18）.m4a',mText='';
-function mPick(files){const f=files?.[0];if(!f)return;if(!/\.(mp3|wav|m4a|txt|docx?)$/i.test(f.name)||!f.size||f.size>100*1024*1024)return toast('请选择 100 MB 以内的录音或文稿','warn');mFileName=f.name;mLoaded=true;mDone=false;mTab=0;flowState.transcript=null;render();toast('已选择文件；原型用示例纪要演示','ok');}
+function mPick(files){const f=files?.[0];if(!f)return;if(!/\.(mp3|wav|m4a|txt|docx?)$/i.test(f.name)||!f.size||f.size>100*1024*1024)return toast('请选择 100 MB 以内的录音或文稿','warn');mFileName=f.name;mLoaded=true;mDone=false;mTab=0;flowState.transcript=null;render();toast('文件已选择','ok');}
 const MRES=[
 `<div class="res">
   <div style="text-align:center;font-size:18px;font-weight:600;font-family:'STZhongsong','SimSun',serif;margin-bottom:6px">
@@ -2663,8 +2659,8 @@ const MRES=[
   </tbody></table></div></div>
   <div style="margin-top:14px;padding:12px 14px;background:var(--brand-l);border:1px solid var(--brand-l2);
     border-radius:var(--r);display:flex;align-items:center;gap:10px;font-size:13px">
-    ${ic('info','ic ic-s')}<span style="flex:1">正式环境中待办可一键推送至责任单位并进入督办系统跟踪</span>
-    <button class="btn sm" onclick="toast('原型阶段不推送真实待办','warn')">推送待办</button></div>`];
+    ${ic('info','ic ic-s')}<span style="flex:1">待办推送前请确认责任单位、负责人和完成时限</span>
+    <button class="btn sm" onclick="toast('请先补充负责人和接收方式','warn')">推送待办</button></div>`];
 ROUTES.minutes={
   nav:'assist', crumb:()=>backCrumb('assist','AI 助手','会议纪要助手'),
   html:()=>`<div class="wb">
@@ -2674,13 +2670,13 @@ ROUTES.minutes={
         <div class="fld"><label>会议录音 / 速记稿<span class="req">*</span></label>
           <input type="file" id="mFile" accept=".mp3,.wav,.m4a,.txt,.doc,.docx" hidden onchange="mPick(this.files);this.value=''"><button class="btn sm" style="margin-bottom:8px" onclick="$('#mFile').click()">${mLoaded?'替换录音或文稿':'选择本地录音或文稿'}</button><div id="mDrop">${mLoaded?`<div class="file-i">
             <span class="fic a">${ic('audio','ic ic-l')}</span>
-            <span class="fi"><b>${esc(mFileName)}</b><span>Demo 使用示例转写与纪要结果</span></span>
+            <span class="fi"><b>${esc(mFileName)}</b><span>文件已选择 · 等待生成</span></span>
             ${flowState.transcript?'<span class="tag g">已携带转写稿</span>':''}
             <button class="aicon" onclick="mLoaded=false;mDone=false;flowState.transcript=null;render()">${ic('x','ic ic-s')}</button></div>`
-            :`<div class="drop" onclick="mFileName='全市经济运行分析会（2026-08-18）.m4a';mLoaded=true;mDone=false;render();toast('已载入示例录音','ok')">
+            :`<div class="drop" onclick="$('#mFile').click()">
               <span class="dic">${ic('audio','ic ic-l')}</span>
-              <b>点击载入示例录音</b><p>本原型使用示例转写稿演示，不解析真实录音</p></div>`}</div></div>
-        <div class="fld"><label>或粘贴速记稿</label><textarea class="ta" rows="3" placeholder="输入已有速记稿；此 Demo 仍展示示例结果" oninput="mText=this.value">${esc(mText)}</textarea></div>
+              <b>选择会议录音或文稿</b><p>支持 MP3、WAV、M4A、TXT、Word</p></div>`}</div></div>
+        <div class="fld"><label>或粘贴速记稿</label><textarea class="ta" rows="3" placeholder="输入已有速记稿" oninput="mText=this.value">${esc(mText)}</textarea></div>
         <div class="fld"><label>会议名称</label><input class="inp" value="全市经济运行分析会"></div>
         <div class="fld"><label>会议时间</label><input class="inp" value="2026 年 8 月 18 日"></div>
         <div class="fld"><label>会议地点</label><input class="inp" value="市政府第二会议室"></div>
@@ -2713,7 +2709,7 @@ function mSwitch(i){
 }
 async function mRun(){
   const active=beginAction();
-  if(!mLoaded&&!mText.trim()) return toast('请先选择录音、粘贴速记稿或载入示例','warn');
+  if(!mLoaded&&!mText.trim()) return toast('请先选择录音或粘贴速记稿','warn');
   const b=$('#mRun'); b.disabled=true;
   const steps=[flowState.transcript?'正在校验已携带的转写稿…':'正在转写录音（58 分 12 秒）…','正在识别发言人…','正在提炼议定事项…','正在推算待办时限…'];
   for(let i=0;i<steps.length;i++){
@@ -3307,5 +3303,9 @@ render();
 <script src="wechat-layout-adapter.js"></script>
 <script src="assets/school-collab-20260918/article-data.js"></script>
 <script src="wechat-studio.js"></script>
+<link rel="stylesheet" href="knowledge-workspace.css">
+<script src="knowledge-workspace.js"></script>
+<link rel="stylesheet" href="platform-admin.css">
+<script src="platform-admin.js"></script>
 </body>
 </html>

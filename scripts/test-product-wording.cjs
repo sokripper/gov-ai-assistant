@@ -6,7 +6,7 @@ const dom=new JSDOM(html,{url:'https://demo.example/',runScripts:'dangerously',v
 const w=dom.window,e=s=>w.eval(s),q=s=>w.document.querySelector(s);let passed=0;
 function check(name){const t=q('#view').textContent;assert.doesNotMatch(t,/Seedream|Seedance|OCR|真实成图|真实头图|实测|接口尚未|模型接入|未调用|本地构图|静态交互原型|已接入你提供/i,name);passed++;console.log('PASS '+name);}
 (async()=>{
-e("go('wechat')");check('material entry');assert.equal(q('.ws-start-side').querySelectorAll('button').length,2);assert.equal(q('[onclick="wsLoadSchool(false,true)"]').textContent,'查看图文示例');
+e("go('wechat')");check('material entry');assert.equal(q('.ws-start-side').querySelectorAll('button').length,2);assert.equal(q('[onclick="wsLoadSchool(false,true)"]').textContent,'查看图文成稿');
 await e('wsLoadSchool(true,true)');check('article layout');e('wsHeadOpen()');check('existing cover choices');e("wsHeadChoose('photo')");check('photo composition');e("wsSelect('head');wsDraft('wsHeadTitle','新的头图文字');wsHeadConfirm();wsHeadChoose('creative');wsHeadRequest()");check('new cover requirements');assert.match(q('#view').textContent,/画面尚未更新/);e('wsFinish()');check('saved composition');
 await e('wsStoryExample(true)');check('finished story example');assert.ok(q('.story-baked'));assert.ok(q('.story-full-motion video'));e("wsSelect('scene-1');wsDraft('wsSceneTitle','修改后的草图');wsApply()");check('edited story draft');assert.equal(q('.story-baked'),null);e('wsFinish()');check('confirmed draft without fabricated result');assert.equal(q('.story-baked'),null);
 e("go('assist-form',{a:ASSIST.find(x=>x.id==='zw')});startAssistant(false)");check('office notice');assert.match(q('#paper').textContent,/待确认/);
