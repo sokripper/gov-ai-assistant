@@ -7,9 +7,9 @@
   const originalBlocks=wxBlocks;
   wxBlocks=function(text){return school&&text.trim()===schoolText?clone(school.blocks):originalBlocks(text);};
   const isSchool=()=>!!school&&wxState.approvedText.trim()===schoolText&&wxState.outputMode!=='story';
-  function resultKey(){const h=headState();return JSON.stringify([wxState.approvedText,wxState.articleTitle,h.title,h.brief,h.photoId,h.round,wxState.images.map(p=>[p.id,p.src])]);}
-  function headResult(kind){const h=headState();return isSchool()&&h.resultBinding===resultKey()&&headReady()&&kind==='creative'?'assets/school-collab-20260918/creative-header.png':null;}
-  function schoolTypeReady(){const h=headState();return isSchool()&&wxState.articleTitle===school.title&&h.title==='校企协同创新\n共育AI+未来设计人才'&&!h.brief&&headReady();}
+  function resultKey(){const h=headState();return JSON.stringify([wxState.approvedText,wxState.articleTitle,h.title,h.brief,h.round,wxState.studio.template,colors()]);}
+  function headResult(kind){const h=headState();return isSchool()&&h.resultBinding===resultKey()&&kind==='creative'?'assets/school-collab-20260918/creative-header.png':null;}
+  function schoolTypeReady(){const h=headState();return isSchool()&&wxState.articleTitle===school.title&&h.title==='校企协同创新\n共育AI+未来设计人才'&&h.photoId==='school-signing'&&h.designTemplate===wxState.studio.template&&!(h.letteringRound||0);}
   function seedSchool(){
     wxState.sectionTitles=clone(school.sections);wxState.studio.template='27';
     wxState.studio.photos={'school-plaque':{after:2},'school-signing':{after:9}};
@@ -46,7 +46,7 @@
     if(wxState.articleReady&&!ui.versions.length)saveVersion('初始方案',false);
   }
   function snapshot(){const s={};fields.forEach(k=>{if(wxState[k]!==undefined)s[k]=clone(wxState[k]);});s.requests=clone(ui.requests);s.imageOrder=wxState.images.map(x=>x.id);return s;}
-  function restore(s){fields.forEach(k=>{if(s[k]!==undefined)wxState[k]=clone(s[k]);else delete wxState[k];});wxState.images.sort((a,b)=>s.imageOrder.indexOf(a.id)-s.imageOrder.indexOf(b.id));if(!wxState.images.some(x=>x.id===wxState.cover))wxState.cover=wxState.images[0]?.id||null;ui.requests=clone(s.requests||[]);wxState.coverMotion='subtle';ui.drafts={};ui.done=false;}
+  function restore(s){fields.forEach(k=>{if(s[k]!==undefined)wxState[k]=clone(s[k]);else delete wxState[k];});wxState.images.sort((a,b)=>s.imageOrder.indexOf(a.id)-s.imageOrder.indexOf(b.id));if(!wxState.images.some(x=>x.id===wxState.cover))wxState.cover=wxState.images[0]?.id||null;ui.requests=clone(s.requests||[]);wxState.coverMotion='subtle';ui.drafts={};ui.done=false;if(wxState.studio?.head){wxState.studio.head.candidates={};headJobs.creative++;headJobs.photo++;}}
   function redraw(){const pos=['.ws-preview','.ws-editor-scroll','.ws-inspector-body'].map(s=>[s,$(s)?.scrollTop||0]);render();pos.forEach(([s,y])=>{if($(s))$(s).scrollTop=y;});}
   function change(label,fn){ui.undo.push({label,state:snapshot()});if(ui.undo.length>30)ui.undo.shift();ui.redo=[];fn();ui.done=false;redraw();}
   function saveVersion(label='手动保存',refresh=true){
@@ -66,15 +66,46 @@
   function attrs(key,label){return `data-ws="${key}" data-label="${label}" tabindex="0" role="button" aria-label="修改${label}" class="${ui.selected===key?'ws-selected':''}"`;}
   function bind(el,key,label){if(!el)return;el.dataset.ws=key;el.dataset.label=label;el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','修改'+label);el.classList.toggle('ws-selected',key===ui.selected);}
   function localArticle(id){return localLayouts.render(id,{title:wxState.articleTitle,blocks:wxBlocks(wxState.approvedText),sections:wxState.sectionTitles,images:wxState.images,studio:wxState.studio,markedText,decorate,selected:ui.selected});}
-  function headState(){const h=wxState.studio.head ||= {title:'',photoId:wxState.images[0]?.id||'',brief:'',round:0,confirmed:'',selected:'',request:null};h.treatment ||= 'direct';h.placement ||= 'bottom';h.designColors ||= clone(colors());h.designTemplate ||= wxState.studio.template;return h;}
-  function headKey(){const h=headState(),p=wxState.images.find(x=>x.id===h.photoId);return JSON.stringify([wxState.approvedText,wxState.articleTitle,h.title,h.brief,h.photoId,p?.src||'',h.treatment,h.placement,h.designColors]);}
+  const headJobs={creative:0,photo:0};
+  function headState(){
+    const h=wxState.studio.head ||= {title:wxState.articleTitle||'',photoId:wxState.images[0]?.id||'',brief:'',photoBrief:'',round:0,letteringRound:0,confirmed:'',selected:'',request:null,candidates:{}};
+    h.treatment ||= 'direct';h.placement ||= 'bottom';h.candidates ||= {};
+    return h;
+  }
+  function headKey(){
+    const h=headState(),p=wxState.images.find(x=>x.id===h.photoId);
+    return JSON.stringify([wxState.approvedText,wxState.articleTitle,h.title,h.brief,h.photoId,p?.src||'',h.treatment,h.placement,h.round,h.letteringRound||0,wxState.studio.template,colors()]);
+  }
   function headReady(){return !!headState().confirmed&&headState().confirmed===headKey();}
   function headOpen(){select('head');}
+  function headCandidateKey(kind){
+    const h=headState(),p=wxState.images.find(x=>x.id===h.photoId),base=[wxState.approvedText,wxState.articleTitle,h.title,wxState.studio.template,colors()];
+    return JSON.stringify(kind==='creative'?[...base,h.brief,h.round]:[...base,h.photoId,p?.src||'',h.treatment,h.placement,h.photoBrief,h.letteringRound||0]);
+  }
+  function syncHeadCandidates(){
+    if(wxState.outputMode==='story'||wxState.step!==2)return;
+    const h=headState();
+    ['creative','photo'].forEach(kind=>{
+      const c=h.candidates[kind] ||= {},key=headCandidateKey(kind),hasPhoto=wxState.images.some(x=>x.id===h.photoId);
+      if(c.key===key)return;
+      c.key=key;c.status=kind==='photo'&&!hasPhoto?'needs-photo':'loading';
+      const job=++headJobs[kind];
+      if(c.status!=='loading')return;
+      setTimeout(()=>{
+        const current=wxState.studio?.head;
+        if(headJobs[kind]!==job||current?.candidates?.[kind]?.key!==key)return;
+        current.candidates[kind].status='ready';
+        if(!current.selected)current.selected=kind;
+        if(cur==='wechat'&&wxState.step===2)redraw();
+      },kind==='photo'?950:1450);
+    });
+  }
   function headArt(kind){
     const asset=headResult(kind);if(asset)return `<div class="ws-head-real"><img src="${asset}" alt="${kind==='photo'?'实拍艺术字头图':'主题创意头图'}"></div>`;
-    const h=headState(),p=wxState.images.find(x=>x.id===h.photoId),c=h.designColors;
-    if(kind==='photo'&&p)return `<div class="ws-photo-overlay ws-photo-${h.treatment} ws-photo-at-${h.placement}"><img class="ws-photo-base" src="${esc(p.src)}" alt="${esc(p.name)}"><div class="ws-photo-lettering">${schoolTypeReady()?schoolLettering():`<strong>${esc(h.title)}</strong>`}</div></div>`;
-    return `<div class="ws-head-art ws-head-${kind} ws-head-v${h.round%3}" style="--head-accent:${c.accent};--head-tint:${c.tint}"><div class="ws-head-shape" aria-hidden="true"></div><div class="ws-head-copy"><small>创意头图</small><strong>${esc(h.title)}</strong></div></div>`;
+    const h=headState(),p=wxState.images.find(x=>x.id===h.photoId),c=colors();
+    const variant=(Math.max(0,localCatalog.findIndex(x=>x.id===wxState.studio.template))+(kind==='creative'?h.round:h.letteringRound||0))%3;
+    if(kind==='photo'&&p)return `<div class="ws-photo-overlay ws-photo-${h.treatment} ws-photo-at-${h.placement} ws-photo-v${variant}" style="--head-accent:${c.accent};--head-tint:${c.tint}"><img class="ws-photo-base" src="${esc(p.src)}" alt="${esc(p.name)}"><div class="ws-photo-lettering">${schoolTypeReady()?schoolLettering():`<strong>${esc(h.title)}</strong>`}</div></div>`;
+    return `<div class="ws-head-art ws-head-${kind} ws-head-v${variant}" style="--head-accent:${c.accent};--head-tint:${c.tint}"><div class="ws-head-shape" aria-hidden="true"></div><div class="ws-head-copy"><small>主题创意头图</small><strong>${esc(h.title)}</strong></div></div>`;
   }
   // Recompose the existing generated letterforms as a browser preview, not a new raster result.
   function schoolLettering(){
@@ -82,38 +113,48 @@
     const crop=(box,cls)=>`<svg class="${cls}" viewBox="${box}" aria-hidden="true"><image href="${src}" width="1536" height="2048"/></svg>`;
     return `<div class="ws-seed-lettering" role="img" aria-label="校企协同创新，共育AI+未来设计人才"><div class="ws-seed-main">${crop('150 325 1250 330','ws-seed-cooperate')}${crop('120 650 1280 700','ws-seed-innovation')}</div><div class="ws-seed-sub">${crop('175 1330 740 185','ws-seed-ai')}${crop('160 1540 1210 190','ws-seed-future')}</div></div>`;
   }
-  function photoControls(){const h=headState();return `<div class="ws-photo-controls"><b>照片内叠字</b><p class="ws-help">留白干净时直接放字；背景复杂时，只处理文字所在区域。避开人脸、牌匾和重要现场信息。</p>${dropdown('wsHeadTreatment','文字衬底',h.treatment,[['direct','直接叠字 · 保留留白'],['gradient','局部渐变 · 增强对比'],['glass','局部毛玻璃 · 弱化杂乱背景']])}${dropdown('wsHeadPlacement','文字位置',h.placement,[['bottom','画面下方'],['top','画面上方'],['left','画面左侧'],['right','画面右侧']])}<p class="ws-help">新照片默认直接叠字，可按画面留白调整位置和衬底。</p></div>`;}
+  function headLoading(label){return `<div class="ws-head-loading" role="status"><span class="ws-head-loader"></span><b>${label}</b><small>正在整理文章内容与当前排版风格…</small></div>`;}
   function headBlock(){
-    const h=headState(),valid=headReady(),selected=valid&&h.selected;
-    if(!selected)return `<button class="ws-head-empty" onclick="wsHeadOpen()"><b>${h.confirmed&&!valid?'头图输入已变化，请重新确认':'为这篇文章设计头图'}</b><span>实拍设计版 / AI 创意版 · 共用当前排版风格</span><em>进入头图设计 →</em></button>`;
-    return `<section class="ws-head-in-article" data-ws="head" data-label="头图设计" role="button" tabindex="0" aria-label="修改头图">${headArt(selected)}<div class="ws-head-status">${headResult(selected)?'头图预览 · 点击修改':selected==='photo'&&schoolTypeReady()?'实拍头图 · 点击修改':'头图方案 · 点击修改'}</div></section>`;
+    const h=headState(),kind=h.selected,c=h.candidates[kind];
+    const ready=kind&&c?.status==='ready';
+    return `<section class="ws-head-in-article" data-ws="head" data-label="头图设计" role="button" tabindex="0" aria-label="查看头图候选">${ready?headArt(kind):headLoading('头图生成中')}<div class="ws-head-status">${ready?(kind==='creative'?'模型画面＋艺术字':'实拍图＋艺术字')+' · 点击查看两版与修改':'右侧两种头图并行生成中'}</div></section>`;
   }
   function localPreview(){const doc=document.createElement('div');doc.innerHTML=localArticle(wxState.studio.template);doc.querySelector('header').insertAdjacentHTML('afterend',headBlock());return `<div class="phone ws-local-phone" data-template="${wxState.studio.template}" style="${Object.entries(colors()).map(([k,v])=>'--ws-'+k+':'+v).join(';')}"><div class="ws-layout-content">${doc.innerHTML}</div></div>`;}
+  function photoControls(){
+    const h=headState(),select=(field,label,items)=>`<div class="fld"><label>${label}</label><select class="inp" onchange="wsHeadPhotoSetting('${field}',this.value)">${items.map(([v,t])=>`<option value="${esc(v)}" ${String(h[field])===String(v)?'selected':''}>${esc(t)}</option>`).join('')}</select></div>`;
+    return `<div class="ws-photo-controls">${select('photoId','使用哪张实拍图',[['','选择照片'],...wxState.images.map(x=>[x.id,x.name])])}${select('treatment','文字衬底',[['direct','直接叠字'],['gradient','局部渐变 · 增强对比'],['glass','局部毛玻璃']])}${select('placement','文字位置',[['bottom','画面下方'],['top','画面上方'],['left','画面左侧'],['right','画面右侧']])}<p class="ws-help">调整后这张候选会单独更新。文字避开人脸、牌匾和重要现场信息。</p></div>`;
+  }
   function headPanel(){
-    if(headResult('creative'))return realHeadPanel();
-    const h=headState(),valid=headReady(),photo=wxState.images.find(x=>x.id===h.photoId),template=localCatalog.find(x=>x.id===wxState.studio.template);
-    return `<div class="ws-inspector-head"><h3>头图设计</h3><span class="tag">${valid?'02 比较方向':'01 确认文字'}</span></div><div class="ws-inspector-body"><div class="ws-notice">正文排版：${esc(template?.name||'当前模板')}。头图独立保存，切换正文模板不改变已选头图及其配色。</div>${input('wsHeadTitle','头图标题（与文章长标题分开）',h.title,2)}<p class="ws-help">建议提炼为易读短句，可手动换行；必须忠于原文。</p><details><summary>参考原文标题和小标题</summary><p class="ws-help">${esc(wxBlocks(wxState.approvedText)[0]?.text||'')}</p>${wxBuildSections(wxState.approvedText).map(x=>`<p class="ws-help">${esc(x)}</p>`).join('')}</details>${dropdown('wsHeadPhoto','实拍底图 / 创意参考图',h.photoId,[['','暂不使用图片'],...wxState.images.map(x=>[x.id,x.name])])}${photoControls()}${input('wsHeadBrief','想调整的地方（可选）',h.brief,2)}<div class="ws-head-controls"><button class="btn" onclick="wsDiscard()">放弃未应用修改</button><button class="btn pri" onclick="wsHeadConfirm()">确认文字，看两种构图</button></div>${h.confirmed&&!valid?'<p class="ws-head-warning">文章标题或参考图已变化，旧方案不再用于当前稿件，请重新确认。</p>':''}${valid?`<div class="ws-head-options">${['photo','creative'].map(kind=>`<section class="ws-head-option ${h.selected===kind?'on':''}">${kind==='photo'&&!photo?'<div class="ws-head-no-photo">添加一张已确认照片，启用实拍设计版</div>':headArt(kind)}<p>${kind==='photo'?'照片完整打底，文字放在画面内；只在需要时增加局部衬底。':'根据文章内容设计主题画面，与实拍头图区分使用。'}</p><button class="btn ws-wide" ${kind==='photo'&&!photo?'disabled':''} onclick="wsHeadChoose('${kind}')">${h.selected===kind?'已放入整篇草图':'选择此方向，放入整篇草图'}</button></section>`).join('')}</div><button class="btn ws-wide" onclick="wsHeadNext()">换一种构图</button><p class="ws-help">选好构图后，可继续调整标题与参考图片。</p>${h.selected?`<button class="btn pri ws-wide" onclick="wsHeadRequest()">保存设计要求</button>${h.request&&h.request.key===headKey()&&h.request.round===h.round&&h.request.kind===h.selected?'<div class="ws-notice">设计要求已保存，画面尚未更新。</div>':''}<button class="btn gho ws-wide" onclick="wsHeadRemove()">移除头图，保留正文排版</button>`:''}`:''}<p class="ws-help"></p></div>`;
+    const h=headState(),template=localCatalog.find(x=>x.id===wxState.studio.template);
+    const card=(kind,label)=>{const c=h.candidates[kind]||{},ready=c.status==='ready';return `<section class="ws-head-option ws-head-candidate ${h.selected===kind?'on':''}"><div class="ws-head-card-title"><b>${label}</b><span>${c.status==='loading'?'生成中':c.status==='needs-photo'?'待选照片':ready?'可预览':'准备中'}</span></div>${ready?headArt(kind):c.status==='needs-photo'?'<div class="ws-head-no-photo"><span>先上传或选择一张已确认的实拍图<br><button class="btn sm" onclick="wsPanel(\'photos\')">添加实拍图</button></span></div>':headLoading('正在生成这版头图')}${ready?`<button class="btn ${h.selected===kind?'':'pri'} ws-wide" onclick="wsHeadSelect('${kind}')">${h.selected===kind?'已用于整篇预览':'用于整篇预览'}</button>`:''}${kind==='photo'?`${photoControls()}<div class="fld"><label for="wsPhotoFeedback">实拍版还要调整什么</label><textarea id="wsPhotoFeedback" class="ta" rows="2" placeholder="例如避开左侧人物、文字更醒目…" oninput="wsDraft('wsPhotoFeedback',this.value)">${esc(val('wsPhotoFeedback',h.photoBrief||''))}</textarea></div><button class="btn ws-wide" ${c.status==='needs-photo'?'disabled':''} onclick="wsHeadRegenerate('photo')">重新生成艺术字效果</button>`:`<div class="fld"><label for="wsCreativeFeedback">模型画面哪里不满意</label><textarea id="wsCreativeFeedback" class="ta" rows="2" placeholder="例如画面更简洁、减少科技元素…" oninput="wsDraft('wsCreativeFeedback',this.value)">${esc(val('wsCreativeFeedback',h.brief||''))}</textarea></div><button class="btn ws-wide" onclick="wsHeadRegenerate('creative')">按意见重新生成这版</button>`}</section>`;};
+    return `<div class="ws-inspector-head"><h3>头图候选与修改</h3><span class="tag">两版并行</span></div><div class="ws-inspector-body"><div class="ws-notice">当前排版：${esc(template?.name||'当前模板')}。切换排版后，两张头图按新风格重新加载。</div><div class="fld"><label for="wsHeadTitle">两版共用的头图文字</label><textarea id="wsHeadTitle" class="ta" rows="2" oninput="wsDraft('wsHeadTitle',this.value)">${esc(val('wsHeadTitle',h.title))}</textarea></div><button class="btn sm" onclick="wsHeadApplyTitle()">更新标题并重生成两版</button><div class="ws-head-options">${card('creative','模型生成画面＋艺术字')}${card('photo','实拍图＋艺术字')}</div><p class="ws-help">当前为交互原型：加载时序与非实测画面为示意，模型接口接入后沿用这套操作。</p></div>`;
   }
-  function headConfirm(){
-    const read=(id,fallback)=>ui.drafts.head?.[id]??$('#'+id)?.value??fallback,h=headState(),title=read('wsHeadTitle',h.title).trim(),photoId=read('wsHeadPhoto',h.photoId),brief=read('wsHeadBrief',h.brief).trim(),treatment=read('wsHeadTreatment',h.treatment),placement=read('wsHeadPlacement',h.placement);
-    if(!title)return toast('请先确认头图上的标题文字','warn');
-    if(!['direct','gradient','glass'].includes(treatment)||!['top','bottom','left','right'].includes(placement))return toast('请选择有效的照片构图','warn');
-    if(photoId&&!wxState.images.some(x=>x.id===photoId))return toast('参考图片已移除，请重新选择','warn');
-    if(Object.keys(ui.drafts).some(k=>k!=='head'))return toast('请先应用其他区域未应用的修改','warn');
-    change('确认头图文字与参考图',()=>{Object.assign(h,{title,photoId,brief,treatment,placement,selected:'',request:null});h.confirmed=headKey();delete ui.drafts.head;});
+  function headSelect(kind){
+    const h=headState();if(h.candidates[kind]?.status!=='ready')return toast('这版头图还在生成','warn');
+    change('选择头图候选',()=>{h.selected=kind;});
   }
-  function headChoose(kind){if(pending())return toast('请先确认未应用的修改','warn');if(!headReady()||!['photo','creative'].includes(kind))return;if(kind==='photo'&&!wxState.images.some(x=>x.id===headState().photoId))return;change('选择头图构图',()=>{headState().selected=kind;headState().request=null;});}
-  function headNext(){if(pending())return toast('请先确认未应用的修改','warn');if(!headReady())return;change('更换头图构图示意',()=>{headState().round++;headState().placement=['bottom','top','right'][headState().round%3];headState().confirmed=headKey();headState().selected='';headState().request=null;});}
-  function headRemove(){if(pending())return toast('请先确认未应用的修改','warn');change('移除头图草图',()=>{headState().selected='';headState().request=null;});}
-  function headRequest(){
-    if(pending())return toast('请先确认未应用的修改','warn');if(!headReady()||!headState().selected)return;
-    change('保存头图生成要求',()=>{const h=headState();h.request={key:headKey(),kind:h.selected,round:h.round,status:'awaiting_connection',title:h.title,photoId:h.photoId,brief:h.brief,photoComposition:{treatment:h.treatment,placement:h.placement,policy:'照片为底图；优先使用留白，必要时仅在文字区加局部渐变或毛玻璃；避开人脸、牌匾和重要现场信息；禁止图文左右分栏',analysis:'manual_preview_not_model_analysis'},template:h.designTemplate,color:h.designColors.accent,model:'Seedream',createdAt:new Date().toISOString()};});
-    toast('设计要求已保存，画面尚未更新','warn');
+  function headApplyTitle(){
+    const h=headState(),title=(ui.drafts.head?.wsHeadTitle??$('#wsHeadTitle')?.value??h.title).trim();
+    if(!title)return toast('头图文字不能为空','warn');
+    change('更新两版头图文字',()=>{h.title=title;delete ui.drafts.head?.wsHeadTitle;if(ui.drafts.head&&!Object.keys(ui.drafts.head).length)delete ui.drafts.head;h.confirmed='';});
   }
-  function realHeadPanel(){
-    const h=headState();return `<div class="ws-inspector-head"><h3>头图设计与二次修改</h3><span class="tag g">头图预览</span></div><div class="ws-inspector-body"><div class="ws-notice">选择实拍或创意头图。切换正文排版不会改变头图；需要调整时可在下方修改。</div>${['photo','creative'].map(kind=>`<section class="ws-head-option ${h.selected===kind?'on':''}">${headArt(kind)}<p>${kind==='photo'?'实拍照片打底，艺术字融入画面。':'以文章主题为灵感的创意头图。'}</p><button class="btn ws-wide" onclick="wsHeadChoose('${kind}')">${h.selected===kind?'当前已选':'使用这版头图'}</button></section>`).join('')}<p class="ws-help">确认前请核对头图文字。</p>${input('wsHeadTitle','头图文字',h.title,2)}${dropdown('wsHeadPhoto','参考照片',h.photoId,wxState.images.map(x=>[x.id,x.name]))}${photoControls()}${input('wsHeadBrief','希望怎么改',h.brief,3)}<button class="btn pri ws-wide" onclick="wsHeadConfirm()">应用修改，重新确认生成要求</button><button class="btn ws-wide" onclick="wsDiscard()">放弃未应用修改</button><button class="btn gho ws-wide" onclick="wsHeadRemove()">移除头图</button><p class="ws-help">修改后请重新确认头图方案。</p></div>`;
+  function headPhotoSetting(field,value){
+    if(!['photoId','treatment','placement'].includes(field))return;
+    const h=headState();if(field==='photoId'&&value&&!wxState.images.some(x=>x.id===value))return;
+    change('更新实拍头图'+field,()=>{h[field]=value;h.confirmed='';});
   }
-  Object.assign(window,{wsHeadOpen:headOpen,wsHeadConfirm:headConfirm,wsHeadChoose:headChoose,wsHeadNext:headNext,wsHeadRemove:headRemove,wsHeadRequest:headRequest});
+  function headRegenerate(kind){
+    const h=headState(),field=kind==='photo'?'wsPhotoFeedback':'wsCreativeFeedback';
+    if(ui.drafts.head?.wsHeadTitle!==undefined)return toast('请先更新两版共用的头图文字','warn');
+    if(kind==='photo'&&!wxState.images.some(x=>x.id===h.photoId))return toast('请先选择已确认的实拍图','warn');
+    const note=(ui.drafts.head?.[field]??$('#'+field)?.value??'').trim();
+    change(kind==='photo'?'重生成实拍版艺术字':'重生成创意头图',()=>{
+      if(kind==='photo'){h.photoBrief=note;h.letteringRound=(h.letteringRound||0)+1;}
+      else{h.brief=note;h.round++;}
+      h.selected=kind;h.confirmed='';delete ui.drafts.head?.[field];if(ui.drafts.head&&!Object.keys(ui.drafts.head).length)delete ui.drafts.head;
+    });
+  }
+  Object.assign(window,{wsHeadOpen:headOpen,wsHeadSelect:headSelect,wsHeadApplyTitle:headApplyTitle,wsHeadPhotoSetting:headPhotoSetting,wsHeadRegenerate:headRegenerate});
   const layoutPageSize=10;
   const specimenCache=new Map();
   // A small sample of the actual template rules, not a miniature of the user's manuscript.
@@ -332,6 +373,7 @@
   }
   function page(){
     init();if(wxState.step===1)return setup();
+    syncHeadCandidates();
     const story=wxState.outputMode==='story';
     return `<div class="ws"><header class="ws-bar"><div><h2>${story?'故事长图':'公众号图文'} · ${ui.done?(story?(wxCanShowStory()?'成稿预览':'草图待生成'):'方案预览'):'编辑工作台'}</h2><div class="ws-sub">${story?'先确认文字，再图字一体生成 · 轻动效默认包含':'01 选排版 · 02 设计头图 · 03 整篇确认'}</div></div><div class="ws-actions"><button class="btn sm gho" onclick="wxGo(1)">返回素材</button><button class="btn sm" onclick="wsUndo()" ${ui.undo.length?'':'disabled'}>撤销</button><button class="btn sm" onclick="wsRedo()" ${ui.redo.length?'':'disabled'}>重做</button><button class="btn sm" onclick="wsVersions()">版本 · ${ui.versions.length}</button></div></header><div class="ws-grid"><section class="ws-editor" aria-label="内容编辑">${editor()}</section><main class="ws-preview"><div class="ws-preview-note"><span>${story?(wxCanShowStory()?'已有图字一体效果稿':'故事草图'):'整篇预览'}</span><span>点击区域即可修改</span></div><div id="wxPhonePreview">${preview()}</div></main><aside class="ws-inspector">${story?'':tabs()}${ui.done||story?inspector():library()}</aside></div><footer class="ws-workflow-foot"><div class="ws-workflow-status">${story?(pending()?'有未应用的修改，请先应用或放弃':wxState.storyApproved?(wxCanShowStory()?'成稿可预览 · 支持返回草图修改':'草图文字已确认 · 画面待更新'):'编辑各幕文字后，在这里确认草图'):(headResult(headState().selected)?'请核对头图与正文后确认':'排版与头图设计 · 修改后可保存版本')}</div><div class="ws-actions"><button class="btn" onclick="wsSave()">保存版本</button><button class="btn pri" onclick="wsFinish()">${ui.done?'继续修改':story?(!wxState.storyApproved?'确认草图文字':wxCanShowStory()?'确认本版':'保存已确认草图'):'确认本版'}</button></div></footer></div>`;
   }
@@ -346,6 +388,7 @@
     if(ui.done){select('overall');return;}
     if(pending())return toast('还有未应用的修改，请先应用或放弃','warn');
     if(wxState.outputMode==='story'&&!wxState.storyApproved){wxStoryApprove();if(!wxState.storyApproved)return;saveVersion('确认草图',false);render();return;}
+    if(wxState.outputMode!=='story'&&headState().candidates[headState().selected]?.status!=='ready'){select('head');return toast('请先确认一版头图','warn');}
     saveVersion(wxState.outputMode==='story'?(wxCanShowStory()?'长图确认版':'已确认草图（待生成）'):(headResult(headState().selected)?'图文排版确认版':'排版方案（头图待生成）'),false);ui.done=true;ui.panel='edit';render();
   }
   function versions(){ui.panel='versions';render();}
@@ -370,7 +413,7 @@
     const text=($('#wxApprovedText')?.value??wxState.approvedText).trim();if(!text)return toast('请先提供已审定正文','warn');
     const fresh=!wxState.articleReady||refresh;
     if(fresh){wxState.approvedText=text;wxState.articleHtml=wxParseApproved(text);wxState.titleCandidates=wxBuildTitles(text);wxState.articleTitle=wxBlocks(text)[0]?.text||'';wxState.titleIndex=-1;wxState.sectionTitles=wxBuildSections(text);wxState.verifiedDemo=text===WX_APPROVED_SAMPLE.trim();wxState.articleReady=true;wxState.layoutReady=true;wxState.styleCandidates=wxBuildVisualStyles(text,'',0);wxState.coverVariant=1;wxState.modules=['column','section','photo','caption'];}
-    wxState.step=2;init();if(fresh){if(isSchool())seedSchool();ui.versions=[];ui.next=1;saveVersion(isSchool()?'校企图文初稿':'排版初稿',false);}render();toast(isSchool()?'已打开图文成稿，可继续修改':'已载入原稿，请选择排版','ok');
+    wxState.step=2;init();if(fresh){if(isSchool())seedSchool();ui.panel='head';ui.selected='head';ui.versions=[];ui.next=1;saveVersion(isSchool()?'校企图文初稿':'排版初稿',false);}render();toast(isSchool()?'已打开图文成稿，可继续修改':'已载入原稿，请选择排版','ok');
   };
   const priorLoad=wxLoadMaterialDemo;wxLoadMaterialDemo=function(confirmed=false){if(confirmed||!wxState.approvedText&&!wxState.images.length)ui.source='';return priorLoad(confirmed);};
   Object.assign(window,{wsLayoutBatch:layoutBatch,wsSelect:select,wsActive:active,wsDraft:draft,wsDiscard:discard,wsApply:apply,wsUndo:undo,wsRedo:redo,wsSave:saveVersion,wsRecover:recover,wsVersions:versions,wsFinish:finish,wsStyle:style,wsNewDirections:directions,wsPickTitle:pickTitle,wsStoryExample:storyExample,wsPanel:panel,wsTemplate:template,wsPalette:palette,wsFormat:format,wsParagraph:focusParagraph,wsCapture:capture,wsFilter:filter,wsCustomColor:customColor,wsImagePicker:imagePicker,wsImagePick:imagePick,wsInsertImages:insertImages});
